@@ -43,7 +43,6 @@
         .page-section { display: none; animation: slideUp 0.5s ease-out; }
         .page-section.active { display: block; }
         
-        /* 修复层级显示错误 */
         #toast { visibility: hidden; min-width: 220px; background: rgba(255, 255, 255, 0.95); color: #4c1d95; text-align: center; border-radius: 50px; padding: 12px 24px; position: fixed; z-index: 3000; left: 50%; bottom: 30px; transform: translateX(-50%); opacity: 0; transition: 0.3s; font-weight: bold; }
         #toast.show { visibility: visible; opacity: 1; bottom: 50px; }
         
@@ -88,7 +87,6 @@
                         <span id="currentLangLabel">中文</span>
                         <i class="fa-solid fa-chevron-down text-[10px] opacity-70"></i>
                     </button>
-                    <!-- 恢复完整的多语言下拉菜单 -->
                     <div class="absolute right-0 pt-2 hidden group-hover:block w-40">
                         <div class="glass-panel rounded-2xl overflow-hidden bg-[#1A1625] shadow-2xl py-2 border border-white/10">
                             <button onclick="changeLanguage('zh')" class="block w-full text-left px-4 py-2 hover:bg-pink-500/20 text-xs">简体中文</button>
@@ -148,7 +146,6 @@
             <!-- 输入区域 -->
             <div class="w-full max-w-4xl glass-panel rounded-[2rem] p-6 md:p-10 shadow-3xl animate-float">
                 
-                <!-- 【重要】恢复了被误删的语音/文字切换标签 -->
                 <div class="flex gap-6 mb-6 border-b border-white/10 pb-4">
                     <button onclick="switchInputMode('text')" id="tab-text" class="text-pink-300 font-semibold border-b-2 border-pink-300 pb-4 -mb-4.5 px-2 transition-colors">
                         <i class="fa-solid fa-pen-nib mr-2"></i><span data-i18n="tab_write">记录梦境</span>
@@ -178,13 +175,14 @@
                 <div class="flex flex-col md:flex-row justify-between items-center gap-8">
                     <div class="flex items-center gap-4">
                         <p class="text-sm text-gray-400 flex items-center gap-2"><i class="fa-regular fa-eye-slash"></i> <span data-i18n="privacy_note">您的梦境将完全匿名处理</span></p>
-                        <div id="apiStatusBadge" class="flex items-center gap-2.5 px-3 py-1.5 bg-black/30 rounded-full border border-white/10 group cursor-help" title="API Status">
-                            <div id="apiStatusDot" class="w-2.5 h-2.5 rounded-full status-pulse bg-blue-500 shadow-[0_0_12px_rgba(59,130,246,0.6)]"></div>
-                            <span id="apiStatusText" class="hidden">Default</span>
+                        <!-- API 状态指示器 -->
+                        <div id="apiStatusBadge" class="flex items-center gap-2.5 px-3 py-1.5 bg-black/30 rounded-full border border-white/10 group cursor-help" title="Checking...">
+                            <div id="apiStatusDot" class="w-2.5 h-2.5 rounded-full status-pulse bg-gray-500"></div>
+                            <span id="apiStatusText" class="text-[10px] uppercase font-bold tracking-wider text-gray-400">Mode</span>
                         </div>
                     </div>
-                    <!-- 使用了修复后的样式，同时保留了真实的 API 调用功能 -->
-                    <button onclick="callGeminiAPI()" id="analyzeBtn" class="btn-gradient w-full md:w-auto px-16 py-5 rounded-full font-black text-lg text-white shadow-2xl flex items-center justify-center gap-4 active:scale-95 transition-all">
+                    <!-- 核心按钮 -->
+                    <button onclick="handleDreamAnalysis()" id="analyzeBtn" class="btn-gradient w-full md:w-auto px-16 py-5 rounded-full font-black text-lg text-white shadow-2xl flex items-center justify-center gap-4 active:scale-95 transition-all">
                         <i class="fa-solid fa-wand-magic-sparkles"></i> <span data-i18n="btn_analyze">开始解析</span>
                     </button>
                 </div>
@@ -317,7 +315,11 @@
         <div class="modal-content bg-[#1A1625]">
             <h2 class="text-2xl font-serif text-pink-200 mb-6 flex items-center gap-3"><i class="fa-solid fa-sliders"></i> API Configuration</h2>
             <div class="space-y-6">
-                <input type="password" id="apiKeyInput" class="w-full glass-input rounded-xl p-4 text-white font-mono text-sm text-left" placeholder="AIzaSy... (Google Gemini Key)">
+                <p class="text-gray-400 text-sm">
+                    Leave blank to use the built-in server proxy (Environment Variable).<br>
+                    Enter a key to use Local Client Mode.
+                </p>
+                <input type="password" id="apiKeyInput" class="w-full glass-input rounded-xl p-4 text-white font-mono text-sm text-left" placeholder="AIzaSy... (Optional)">
                 <div class="flex gap-4 text-center">
                     <button onclick="saveApiKey()" class="flex-grow py-4 btn-gradient rounded-xl font-black shadow-xl">保存配置</button>
                 </div>
@@ -326,10 +328,10 @@
     </div>
 
     <script>
-        // API Key 已填入
-        const DEFAULT_API_KEY = "AIzaSyCQbW5qLkdDvoWMdOb_poNe8Y-wBidE5rw";
+        // 【重要】移除硬编码的 DEFAULT_API_KEY，改用空字符串
+        // 这将强制代码在使用默认模式时走 Server Proxy
+        const DEFAULT_API_KEY = ""; 
         
-        // 【重要】完全保留了旧版所有的多语言支持，没有删减
         const translations = {
             'zh': {
                 nav_home: "首页", nav_square: "解梦广场", nav_dict: "象征字典", nav_about: "关于我们",
@@ -338,7 +340,7 @@
                 tab_write: "记录梦境", tab_voice: "语音述说", voice_listening: "正在聆听...", voice_stop: "停止录音",
                 placeholder_text: "昨晚，我梦见...", privacy_note: "您的梦境将完全匿名处理", btn_analyze: "开始解析",
                 result_title: "梦境回响", label_core: "核心隐喻", label_emotion: "情绪映射", label_guide: "生活指引", label_lucky: "建议幸运物",
-                status_ready: "就绪", status_default: "默认", status_local: "本地模式", status_proxy: "代理模式",
+                status_ready: "就绪", status_default: "代理模式", status_local: "本地模式", status_proxy: "服务器代理",
                 plaza_title: "解梦广场", plaza_desc: "在这里，梦境不再是个人的孤岛。共鸣，是治愈的开始。",
                 card_1_tag_1: "#追逐", card_1_tag_2: "#焦虑", label_ai_analyzed: "AI 已解析",
                 card_1_title: "总是梦见在旧学校里找不到教室", card_1_desc: "梦里我很着急，上课铃响了，但我怎么也找不到高三的教室。",
@@ -364,7 +366,7 @@
                 tab_write: "記錄夢境", tab_voice: "語音述說", voice_listening: "正在聆聽...", voice_stop: "停止錄音",
                 placeholder_text: "昨晚，我夢見...", privacy_note: "您的夢境將完全匿名處理", btn_analyze: "開始解析",
                 result_title: "夢境回響", label_core: "核心隱喻", label_emotion: "情緒映射", label_guide: "生活指引", label_lucky: "建議幸運物",
-                status_ready: "就緒", status_default: "默認", status_local: "本地模式", status_proxy: "代理模式",
+                status_ready: "就緒", status_default: "代理模式", status_local: "本地模式", status_proxy: "服務器代理",
                 plaza_title: "解夢廣場", plaza_desc: "在這裡，夢境不再是個人的孤島。共鳴，是治愈的開始。",
                 card_1_tag_1: "#追逐", card_1_tag_2: "#焦慮", label_ai_analyzed: "AI 已解析",
                 card_1_title: "總是夢見在舊學校裡找不到教室", card_1_desc: "夢裡我很著急，上課鈴響了。",
@@ -386,7 +388,7 @@
                 tab_write: "Write", tab_voice: "Speak", voice_listening: "Listening...", voice_stop: "Stop",
                 placeholder_text: "Last night...", privacy_note: "Processed anonymously", btn_analyze: "Analyze",
                 result_title: "Dream Echo", label_core: "Metaphor", label_emotion: "Emotions", label_guide: "Guidance", label_lucky: "Lucky Item",
-                status_ready: "Ready", status_default: "Default", status_local: "Local", status_proxy: "Proxy",
+                status_ready: "Ready", status_default: "Proxy Mode", status_local: "Local Mode", status_proxy: "Server Proxy",
                 plaza_title: "Plaza", plaza_desc: "Dreams are no longer isolated islands.",
                 card_1_tag_1: "#Chase", card_1_tag_2: "#Anxiety", label_ai_analyzed: "AI Analyzed",
                 card_1_title: "Lost in Old School", card_1_desc: "I was in a rush but couldn't find the classroom.",
@@ -407,7 +409,7 @@
                 tab_write: "Писать", tab_voice: "Говорить", voice_listening: "Слушаю...", voice_stop: "Стоп",
                 placeholder_text: "Прошлой ночью...", btn_analyze: "Анализ",
                 result_title: "Эхо сна", label_core: "Метафора", label_emotion: "Эмоции", label_guide: "Совет", label_lucky: "Талисман",
-                status_ready: "Готово", status_default: "Стандарт", status_local: "Локал", status_proxy: "Прокси",
+                status_ready: "Готово", status_default: "Прокси", status_local: "Локал", status_proxy: "Прокси",
                 plaza_title: "Площадь", plaza_desc: "Сны больше не одинокие острова.",
                 dict_title: "Словарь", cat_animals: "Животные", cat_nature: "Природа", cat_behavior: "Поведение",
                 footer_terms: "Условия", footer_privacy: "Приватность", footer_contact: "Контакты", footer_copyright: "dreamwhisperai",
@@ -544,52 +546,105 @@
 
         function stopVoiceRecognition() { if (recognition) recognition.stop(); document.getElementById('voiceIndicator').classList.add('hidden'); }
 
+        // 更新状态指示灯：本地Key显示绿色，服务器代理模式显示蓝色
         function updateApiStatus() {
             const dot = document.getElementById('apiStatusDot');
             const badge = document.getElementById('apiStatusBadge');
+            const text = document.getElementById('apiStatusText');
             const localKey = localStorage.getItem('dreamwhisper_api_key');
             const trans = translations[currentLang];
-            if (localKey) {
+            
+            if (localKey && localKey.trim() !== '') {
                 dot.className = "w-2.5 h-2.5 rounded-full status-pulse bg-green-500 shadow-[0_0_12px_rgba(34,197,94,0.7)]";
-                badge.title = "Status: " + (trans.status_local || "Local Mode");
+                badge.title = trans.status_local || "Local Mode";
+                text.innerText = "LOCAL";
+                text.className = "text-[10px] uppercase font-bold tracking-wider text-green-400/80 ml-1";
             } else {
-                // 现在 Default 也有 Key 了，所以状态也是 OK 的
+                // 如果没有本地 Key，则使用 Server Proxy 模式 (Env Var)
                 dot.className = "w-2.5 h-2.5 rounded-full status-pulse bg-blue-500 shadow-[0_0_12px_rgba(59,130,246,0.7)]";
-                badge.title = "Status: " + (trans.status_default || "Default Mode");
+                badge.title = trans.status_proxy || "Server Proxy";
+                text.innerText = "PROXY";
+                text.className = "text-[10px] uppercase font-bold tracking-wider text-blue-400/80 ml-1";
+            }
+            document.getElementById('apiStatusText').classList.remove('hidden');
+        }
+
+        // 统一的 AI 调用入口：根据是否有 Key 决定走本地还是走代理
+        async function queryAI(type, payload) {
+            const localKey = localStorage.getItem('dreamwhisper_api_key');
+            
+            if (localKey && localKey.trim() !== "") {
+                // 1. 本地模式：直接在前端构建 Prompt 并调用 Google API
+                let prompt = "";
+                const languageNames = { 'zh': 'Chinese', 'en': 'English', 'es': 'Spanish', 'fr': 'French', 'ru': 'Russian', 'hi': 'Hindi', 'pl': 'Polish', 'zh-TW': 'Traditional Chinese' };
+                const targetLang = languageNames[currentLang] || 'Chinese';
+
+                if (type === 'dream') {
+                    prompt = `
+                      You are a professional Jungian dream interpreter.
+                      Analyze this dream: "${payload.dream}"
+                      Return raw JSON:
+                      {
+                          "core_metaphor": "One sentence summary.",
+                          "emotions": "Emotional analysis.",
+                          "guidance": "Actionable life guidance.",
+                          "lucky_item": "A suggested lucky color or item."
+                      }
+                      Language: ${targetLang}.
+                    `;
+                } else if (type === 'symbol') {
+                    prompt = `Define dream symbol "${payload.symbol}" as JSON: {"psych": "", "trad": ""}. Language: ${targetLang}.`;
+                }
+                
+                return await callGeminiClientSide(prompt, localKey);
+
+            } else {
+                // 2. 代理模式：调用 /api/interpret，让服务器用环境变量的 Key
+                // 也可以把本地 Key 传给服务器（虽然直接走 client side 更快，但这里作为 fallback）
+                const response = await fetch('/api/interpret', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        type: type,
+                        lang: currentLang,
+                        ...payload
+                    })
+                });
+                
+                if (!response.ok) {
+                    let errData;
+                    try { errData = await response.json(); } catch(e) {}
+                    throw new Error(errData?.error || `Server Error: ${response.status}`);
+                }
+                
+                return await response.json();
             }
         }
 
-        async function callGeminiAPI(customPrompt = null) {
+        // 梦境解析按钮处理函数
+        async function handleDreamAnalysis() {
             const input = document.getElementById('dreamInput').value.trim();
             const btn = document.getElementById('analyzeBtn');
-            const localKey = localStorage.getItem('dreamwhisper_api_key');
-            const activeKey = localKey || DEFAULT_API_KEY; 
-            const rawDreamInput = customPrompt || input;
             
-            if (!rawDreamInput) { showToast("请输入内容"); return; }
+            if (!input) { showToast("请输入内容"); return; }
             
             btn.disabled = true;
             btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Analyzing...`;
             showToast(translations[currentLang].toast_analyzing);
             
             try {
-                // 完全恢复老版本的调用逻辑
-                const data = await callGeminiClientSide(rawDreamInput, currentLang, activeKey, !!customPrompt);
-                
-                if (customPrompt) return data;
+                // 调用统一接口
+                const data = await queryAI('dream', { dream: input });
                 renderResult(data);
             } catch (error) {
                 console.error(error);
-                // 恢复老版本的详细错误提示，不再只是“网络连接错误”
                 let displayMsg = "解析遇到问题";
                 if (error.message.includes('Failed to fetch')) {
-                    displayMsg = "网络连接失败 (请检查网络或VPN)";
-                } else if (error.message.includes('400')) {
-                    displayMsg = "请求无效 (400) - 请检查内容";
+                    displayMsg = "网络连接失败";
                 } else if (error.message.includes('403')) {
-                    displayMsg = "权限拒绝 (403) - Key可能无效";
+                    displayMsg = "Key 无效或额度不足";
                 } else {
-                    displayMsg = "发生错误: " + error.message;
+                    displayMsg = "Error: " + error.message;
                 }
                 showToast(displayMsg);
             } finally {
@@ -598,25 +653,8 @@
             }
         }
 
-        // 完全恢复老版本的 Client Side 调用逻辑（包括 Prompt 结构和 fetch 方式）
-        async function callGeminiClientSide(dream, lang, apiKey) {
-            const languageNames = { 'zh': 'Chinese', 'en': 'English', 'es': 'Spanish', 'fr': 'French', 'ru': 'Russian', 'hi': 'Hindi', 'pl': 'Polish', 'zh-TW': 'Traditional Chinese' };
-            const targetLang = languageNames[lang] || 'Chinese';
-            
-            const promptText = `
-              You are a professional Jungian dream interpreter.
-              Analyze this dream: "${dream}"
-              Return raw JSON:
-              {
-                  "core_metaphor": "One sentence summary.",
-                  "emotions": "Emotional analysis.",
-                  "guidance": "Actionable life guidance.",
-                  "lucky_item": "A suggested lucky color or item."
-              }
-              Language: ${targetLang}.
-            `;
-
-            // 使用 stable 模型以保证稳定性 (这里保留了你指定的 2.5 flash preview)
+        // 客户端直接调用逻辑 (保留作为 Local Mode)
+        async function callGeminiClientSide(promptText, apiKey) {
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
             
             const response = await fetch(apiUrl, {
@@ -629,7 +667,6 @@
 
             if (!response.ok) {
                 const err = await response.json();
-                // 抛出具体的 Google API 错误信息
                 throw new Error(err.error?.message || `API Error: ${response.status}`);
             }
 
@@ -700,15 +737,19 @@
             container.classList.add('hidden');
             container.innerHTML = `<div class="glass-card p-6 rounded-3xl skeleton h-32 opacity-20"></div>`;
             try {
-                // 这里也恢复了老版本的 prompt 逻辑
-                const prompt = `Define dream symbol "${keyword}" as JSON: {"psych": "", "trad": ""}. Language: ${currentLang}.`;
-                const data = await callGeminiAPI(prompt); 
+                // 使用新的统一调用接口
+                const data = await queryAI('symbol', { symbol: keyword });
+                
                 if (data) {
                     noResult.classList.add('hidden');
                     container.classList.remove('hidden');
                     container.innerHTML = `<div class="glass-card p-8 rounded-3xl border-t-4 border-pink-500/40 animate-fade-in text-left"><h3 class="text-2xl font-serif font-bold text-white mb-4">${keyword}</h3><p class="text-[10px] text-gray-500 uppercase mb-2">Psychology</p><p class="text-gray-300 text-sm mb-4">${data.psych || ""}</p><p class="text-[10px] text-gray-500 uppercase mb-2">Folklore</p><p class="text-gray-300 text-sm">${data.trad || ""}</p></div>`;
                 }
-            } catch (e) { container.classList.add('hidden'); }
+            } catch (e) { 
+                console.error(e);
+                container.classList.add('hidden'); 
+                showToast("Symbol search failed: " + e.message);
+            }
         }
     </script>
 </body>
