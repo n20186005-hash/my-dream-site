@@ -2,10 +2,10 @@
  * Cloudflare Pages Function
  * 处理 /api/interpret 的 POST 请求
  * 功能：作为网关，处理“解梦”和“象征查询”两种请求
- * 更新：增加 CORS 支持；增加 API Key Body 优先逻辑；优化为 Header 鉴权
- * 修复：
- * 1. 解决 429 错误：增加指数退避 (Exponential Backoff) 重试机制
- * 2. 保持模型为 gemini-2.0-flash
+ * 更新日志：
+ * 1. 升级模型至 gemini-2.5-flash 以提升基准速度
+ * 2. 显式关闭 thinkingConfig (includeThoughts: false) 以减少推理延迟
+ * 3. 保留 CORS 和 指数退避重试机制
  */
 
 // 定义通用的 CORS 头部
@@ -47,7 +47,6 @@ async function fetchWithRetry(url, options, maxRetries = 3) {
       }
 
       // 其他错误 (如 400 Bad Request, 401 Unauthorized, 403 Forbidden, 500 Internal Server Error)
-      // 这些通常是配置错误或不可恢复的错误，不应重试，直接返回
       return response;
 
     } catch (error) {
@@ -119,7 +118,6 @@ export async function onRequestPost(context) {
     // ---------------------------------------------------------
     // API Key 获取逻辑
     // ---------------------------------------------------------
-    // 优先从 env 获取，确保使用了 Cloudflare 托管的密钥
     const apiKey = body.apiKey || env.GEMINI_API_KEY;
 
     if (!apiKey) {
@@ -184,21 +182,25 @@ export async function onRequestPost(context) {
 
     // ---------------------------------------------------------
     // 调用 Google Gemini API
-    // 修复：使用 gemini-2.0-flash 并加入重试逻辑
+    // 升级：使用 gemini-2.5-flash 并关闭 thinkingConfig 以提高速度
     // ---------------------------------------------------------
-    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent`;
+    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent`;
 
     try {
-      // 使用 fetchWithRetry 替代 fetch
       const geminiResponse = await fetchWithRetry(apiUrl, {
         method: 'POST',
         headers: { 
             'Content-Type': 'application/json',
-            'X-goog-api-key': apiKey // 使用 Header 鉴权
+            'X-goog-api-key': apiKey
         },
         body: JSON.stringify({
           contents: [{ parts: [{ text: promptText }] }],
-          generationConfig: { responseMimeType: "application/json" }
+          generationConfig: { 
+            responseMimeType: "application/json",
+            // 关键优化：显式关闭思考功能，避免推理带来的额外延迟
+            // 在 SDK 中对应 thinkingBudget: 0，在 REST API 中通常通过 includeThoughts: false 控制
+            thinkingConfig: { includeThoughts: false } 
+          }
         })
       });
 
@@ -208,7 +210,6 @@ export async function onRequestPost(context) {
         
         const status = (geminiResponse.status >= 400 && geminiResponse.status < 500) ? geminiResponse.status : 502;
         
-        // 优化错误信息，帮助前端判断是否需要清除本地Key
         let errorMsg = `Upstream API Error: ${geminiResponse.status}`;
         if (geminiResponse.status === 400 && errText.includes('API_KEY')) {
             errorMsg = "API Key Invalid or Expired";
