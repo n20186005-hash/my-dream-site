@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# 告诉爬虫你的站点地图在哪里（非常重要！）
+Sitemap: https://dreamwhisperai.com/sitemap.xml

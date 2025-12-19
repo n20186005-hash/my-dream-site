@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>象征字典 - 蛇 (Snake)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Nunito:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body { background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%); color: white; font-family: 'Nunito', sans-serif; min-height: 100vh; }
+        .glass-panel { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.1); }
+    </style>
+</head>
+<body class="pb-20 flex flex-col min-h-screen">
+
+    <!-- Navigation -->
+    <nav class="w-full p-6 flex justify-between items-center bg-black/20 backdrop-blur-md sticky top-0 z-50 border-b border-white/5">
+        <a href="index.html" class="flex items-center gap-2 hover:text-green-300 transition group">
+            <i class="fa-solid fa-moon text-green-400/80 group-hover:animate-pulse"></i>
+            <span class="font-serif font-bold text-xl tracking-wide">DreamWhisper</span>
+        </a>
+        
+        <!-- Language Selector -->
+        <div class="relative group cursor-pointer z-50">
+            <button class="flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 hover:bg-white/5 transition-all text-sm">
+                <i class="fa-solid fa-globe text-green-300"></i>
+                <span id="currentLang">中文</span>
+                <i class="fa-solid fa-chevron-down text-xs opacity-70"></i>
+            </button>
+            <div class="absolute right-0 pt-2 hidden group-hover:block w-32">
+                <div class="glass-panel rounded-xl overflow-hidden shadow-xl border-green-300/20 bg-[#0f172a]">
+                    <button onclick="changeLanguage('zh')" class="block w-full text-left px-4 py-2 hover:bg-green-500/20 text-white transition-colors text-sm">中文</button>
+                    <button onclick="changeLanguage('en')" class="block w-full text-left px-4 py-2 hover:bg-green-500/20 text-white transition-colors text-sm">English</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 mt-8 max-w-3xl flex-grow">
+        
+        <!-- Back Link -->
+        <div class="mb-4">
+            <a href="index.html" class="text-green-300/70 hover:text-green-300 text-sm flex items-center gap-1 transition-colors w-fit">
+                <i class="fa-solid fa-arrow-left"></i> <span data-i18n="back_dict">返回首页</span>
+            </a>
+        </div>
+
+        <!-- Symbol Header (Compact Version) -->
+        <div class="text-center mb-8">
+            <div class="w-20 h-20 mx-auto bg-green-500/20 rounded-2xl flex items-center justify-center border border-green-500/30 mb-4 shadow-xl shadow-green-900/20">
+                <i class="fa-solid fa-staff-snake text-4xl text-green-400"></i>
+            </div>
+            <h1 class="text-4xl font-serif font-bold mb-1" data-i18n="sym_name">蛇</h1>
+            <p class="text-lg text-gray-400 font-serif italic" data-i18n="sym_subname">Snake / Serpent</p>
+        </div>
+
+        <!-- Quick Summary (Compact Padding) -->
+        <div class="glass-panel rounded-2xl p-5 text-center mb-8 border-t-2 border-green-500/50">
+            <p class="text-base md:text-lg leading-relaxed text-green-50" data-i18n="sym_summary">
+                "它是治愈与毒药的统一体，象征着生命力、潜意识的智慧以及转化的可能。"
+            </p>
+        </div>
+
+        <!-- Detailed Content -->
+        <div class="space-y-8">
+            
+            <!-- Section 1: Psychology -->
+            <div class="glass-panel rounded-2xl p-8">
+                <h2 class="text-2xl font-serif font-bold mb-4 flex items-center gap-3 text-purple-300">
+                    <i class="fa-solid fa-brain"></i> <span data-i18n="title_psych">心理学视角 (荣格/弗洛伊德)</span>
+                </h2>
+                <div class="space-y-4 text-gray-300 leading-relaxed">
+                    <p data-i18n="psych_1"><strong>1. 生命力与力比多：</strong> 在弗洛伊德看来，蛇通常是阳具的象征，代表着被压抑的性能量或原始的生命驱动力。</p>
+                    <p data-i18n="psych_2"><strong>2. 转化与重生：</strong> 荣格学派认为，蛇会蜕皮，因此象征着从一种状态向另一种状态的“转化”。如果你正处于人生的转折点，梦见蛇是潜意识在提示你必须要“蜕去旧皮”。</p>
+                    <p data-i18n="psych_3"><strong>3. 潜意识的智慧：</strong> 蛇生活在地下（潜意识深处），当它出现在梦中，往往带来了你平时觉察不到的直觉或智慧。</p>
+                </div>
+            </div>
+
+            <!-- Section 2: Traditional -->
+            <div class="glass-panel rounded-2xl p-8">
+                <h2 class="text-2xl font-serif font-bold mb-4 flex items-center gap-3 text-yellow-300">
+                    <i class="fa-solid fa-scroll"></i> <span data-i18n="title_trad">传统与文化解读</span>
+                </h2>
+                <ul class="space-y-3 text-gray-300">
+                    <li class="flex gap-3">
+                        <span class="text-yellow-500 font-bold" data-i18n="trad_good_label">吉：</span>
+                        <span data-i18n="trad_good_desc">梦见蛇当道者，大吉；蛇入怀中，主生贵子。</span>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-red-400 font-bold" data-i18n="trad_bad_label">凶：</span>
+                        <span data-i18n="trad_bad_desc">梦见被蛇咬，需防小人（但在某些语境下也主得财）。</span>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-blue-400 font-bold" data-i18n="trad_spirit_label">灵性：</span>
+                        <span data-i18n="trad_spirit_desc">在瑜伽文化中，蛇象征着“昆达里尼”能量，即盘踞在脊柱底部的灵性力量。</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Related Symbols -->
+            <div class="mb-32">
+                <h3 class="text-xl font-bold mb-4 text-gray-400" data-i18n="title_related">相关意象</h3>
+                <div class="flex gap-3 flex-wrap">
+                    <a href="#" class="px-4 py-2 rounded-full glass-panel hover:bg-white/10 transition text-sm" data-i18n="rel_1">咬伤</a>
+                    <a href="#" class="px-4 py-2 rounded-full glass-panel hover:bg-white/10 transition text-sm" data-i18n="rel_2">草丛</a>
+                    <a href="#" class="px-4 py-2 rounded-full glass-panel hover:bg-white/10 transition text-sm" data-i18n="rel_3">龙</a>
+                    <a href="#" class="px-4 py-2 rounded-full glass-panel hover:bg-white/10 transition text-sm" data-i18n="rel_4">医生/医药</a>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer Removed -->
+
+    <script>
+        const translations = {
+            zh: {
+                back_dict: "返回首页",
+                sym_name: "蛇", sym_subname: "Snake / Serpent",
+                sym_summary: "\"它是治愈与毒药的统一体，象征着生命力、潜意识的智慧以及转化的可能。\"",
+                title_psych: "心理学视角 (荣格/弗洛伊德)",
+                psych_1: "<strong>1. 生命力与力比多：</strong> 在弗洛伊德看来，蛇通常是阳具的象征，代表着被压抑的性能量或原始的生命驱动力。",
+                psych_2: "<strong>2. 转化与重生：</strong> 荣格学派认为，蛇会蜕皮，因此象征着从一种状态向另一种状态的“转化”。如果你正处于人生的转折点，梦见蛇是潜意识在提示你必须要“蜕去旧皮”。",
+                psych_3: "<strong>3. 潜意识的智慧：</strong> 蛇生活在地下（潜意识深处），当它出现在梦中，往往带来了你平时觉察不到的直觉或智慧。",
+                title_trad: "传统与文化解读",
+                trad_good_label: "吉：", trad_good_desc: "梦见蛇当道者，大吉；蛇入怀中，主生贵子。",
+                trad_bad_label: "凶：", trad_bad_desc: "梦见被蛇咬，需防小人（但在某些语境下也主得财）。",
+                trad_spirit_label: "灵性：", trad_spirit_desc: "在瑜伽文化中，蛇象征着“昆达里尼”能量，即盘踞在脊柱底部的灵性力量。",
+                title_related: "相关意象",
+                rel_1: "咬伤", rel_2: "草丛", rel_3: "龙", rel_4: "医生/医药"
+            },
+            en: {
+                back_dict: "Back Home",
+                sym_name: "Snake", sym_subname: "Serpent / Snake",
+                sym_summary: "\"It is the unity of cure and poison, symbolizing vitality, subconscious wisdom, and the potential for transformation.\"",
+                title_psych: "Psychological Perspective (Jung/Freud)",
+                psych_1: "<strong>1. Vitality & Libido:</strong> For Freud, the snake is a phallic symbol representing repressed sexual energy or primal life drives.",
+                psych_2: "<strong>2. Transformation & Rebirth:</strong> Jungians believe snakes shedding skin symbolize 'transformation' from one state to another. If you are at a turning point, the snake prompts you to shed your 'old skin'.",
+                psych_3: "<strong>3. Subconscious Wisdom:</strong> Living underground (deep subconscious), snakes often bring intuition or wisdom you are usually unaware of.",
+                title_trad: "Traditional Interpretation",
+                trad_good_label: "Good:", trad_good_desc: "A snake blocking your path is very auspicious; a snake entering your bosom predicts a noble child.",
+                trad_bad_label: "Bad:", trad_bad_desc: "Being bitten suggests beware of villains (though in some contexts it implies wealth).",
+                trad_spirit_label: "Spiritual:", trad_spirit_desc: "In Yoga culture, the snake symbolizes 'Kundalini' energy coiled at the base of the spine.",
+                title_related: "Related Symbols",
+                rel_1: "Bite", rel_2: "Grass", rel_3: "Dragon", rel_4: "Doctor/Medicine"
+            }
+        };
+
+        // Initialize
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const langParam = urlParams.get('lang');
+            if (langParam && translations[langParam]) {
+                changeLanguage(langParam);
+            }
+        });
+
+        function changeLanguage(lang) {
+            // Update URL without refresh (Wrapped in try-catch to prevent SecurityError in iframe/sandbox)
+            try {
+                const url = new URL(window.location);
+                url.searchParams.set('lang', lang);
+                window.history.pushState({}, '', url);
+            } catch (e) {
+                console.log("URL update skipped (sandbox environment)");
+            }
+
+            // Update Label
+            document.getElementById('currentLang').innerText = lang === 'zh' ? '中文' : 'English';
+
+            // Update Content
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    // Use innerHTML for content containing <strong> tags
+                    el.innerHTML = translations[lang][key];
+                }
+            });
+        }
+    </script>
+</body>
+</html>

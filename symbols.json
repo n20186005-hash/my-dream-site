@@ -1,0 +1,46 @@
+[
+  {
+    "id": "snake",
+    "filename": "symbol-snake.html",
+    "zh": {
+      "name": "蛇",
+      "subname": "Snake / Serpent",
+      "summary": "它是治愈與毒药的统一体，象征着生命力、潜意识的智慧以及转化的可能。",
+      "psych_1": "<strong>1. 生命力與力比多：</strong> 在弗洛伊德看来，蛇通常是阳具的象征，代表着被压抑的性能量。",
+      "psych_2": "<strong>2. 转化与重生：</strong> 荣格学派认为，蛇会蜕皮，因此象征着从一种状态向另一种状态的“转化”。",
+      "trad_good": "梦见蛇当道者，大吉；蛇入怀中，主生贵子。",
+      "trad_bad": "梦见被蛇咬，需防小人。"
+    },
+    "en": {
+      "name": "Snake",
+      "subname": "Serpent",
+      "summary": "Unity of cure and poison, symbolizing vitality and transformation.",
+      "psych_1": "<strong>1. Vitality:</strong> Represents repressed sexual energy.",
+      "psych_2": "<strong>2. Rebirth:</strong> Shedding skin symbolizes transformation.",
+      "trad_good": "Snake blocking path is auspicious.",
+      "trad_bad": "Being bitten suggests beware of villains."
+    }
+  },
+  {
+    "id": "teeth",
+    "filename": "symbol-teeth.html",
+    "zh": {
+      "name": "掉牙",
+      "subname": "Teeth Falling",
+      "summary": "极其常见的焦虑梦，通常关联于对自身形象的担忧、无力感或害怕失去控制。",
+      "psych_1": "<strong>1. 焦虑与无力：</strong> 牙齿是我们攻击和进食的工具，掉牙代表失去了力量。",
+      "psych_2": "<strong>2. 成长痛：</strong> 也可能象征着必须要放弃某些旧观念才能成长。",
+      "trad_good": "齿落更生，子孙兴旺。",
+      "trad_bad": "齿自落者，父母有凶险。"
+    },
+    "en": {
+      "name": "Teeth Falling",
+      "subname": "Loss of Control",
+      "summary": "Common anxiety dream linking to self-image and powerlessness.",
+      "psych_1": "<strong>1. Powerlessness:</strong> Teeth are tools of aggression; losing them means losing power.",
+      "psych_2": "<strong>2. Growth:</strong> Symbolizes growing pains.",
+      "trad_good": "Regrowing teeth brings prosperity.",
+      "trad_bad": "Teeth falling out suggests bad luck for parents."
+    }
+  }
+]
