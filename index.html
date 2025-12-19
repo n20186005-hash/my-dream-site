@@ -322,6 +322,7 @@
                 <input type="password" id="apiKeyInput" class="w-full glass-input rounded-xl p-4 text-white font-mono text-sm text-left" placeholder="AIzaSy... (Optional)">
                 <div class="flex gap-4 text-center">
                     <button onclick="saveApiKey()" class="flex-grow py-4 btn-gradient rounded-xl font-black shadow-xl">保存配置</button>
+                    <button onclick="clearApiKey()" class="flex-grow py-4 bg-red-500/20 hover:bg-red-500/40 text-red-200 border border-red-500/30 rounded-xl font-bold shadow-xl transition-all">清除本地 Key</button>
                 </div>
             </div>
         </div>
@@ -568,6 +569,9 @@
             }
             document.getElementById('apiStatusText').classList.remove('hidden');
         }
+        
+        // 辅助函数：休眠
+        const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
         // 统一的 AI 调用入口：根据是否有 Key 决定走本地还是走代理
         async function queryAI(type, payload) {
@@ -611,10 +615,19 @@
                     })
                 });
                 
+                // 处理特定的 400 错误 (可能因为 Cloudflare 上的 Key 过期，或者后端返回了错误)
                 if (!response.ok) {
                     let errData;
                     try { errData = await response.json(); } catch(e) {}
-                    throw new Error(errData?.error || `Server Error: ${response.status}`);
+                    
+                    const errMsg = errData?.error || `Server Error: ${response.status}`;
+                    
+                    // 如果后端返回 API Key 失效，提示用户
+                    if (errMsg.includes('API Key Invalid or Expired')) {
+                        throw new Error("Server API Key Expired. Please contact admin.");
+                    }
+                    
+                    throw new Error(errMsg);
                 }
                 
                 return await response.json();
@@ -639,10 +652,23 @@
             } catch (error) {
                 console.error(error);
                 let displayMsg = "解析遇到问题";
+                
+                // 智能错误提示
                 if (error.message.includes('Failed to fetch')) {
-                    displayMsg = "网络连接失败";
-                } else if (error.message.includes('403')) {
-                    displayMsg = "Key 无效或额度不足";
+                    displayMsg = "网络连接失败 (请检查VPN)";
+                } else if (error.message.includes('403') || error.message.includes('API key expired') || error.message.includes('API Key Invalid')) {
+                    // 关键修复：如果在本地模式遇到 Key 错误，提示清除
+                    if (localStorage.getItem('dreamwhisper_api_key')) {
+                        displayMsg = "本地 Key 已失效，建议清除";
+                        if(confirm("检测到您的本地 API Key 可能已过期或无效。是否清除并切换回服务器代理模式？")) {
+                            clearApiKey();
+                            return; // 清除后退出，用户需重试
+                        }
+                    } else {
+                        displayMsg = "服务器配置错误 (API Key)";
+                    }
+                } else if (error.message.includes('429')) {
+                    displayMsg = "服务器繁忙 (429)，请稍后重试";
                 } else {
                     displayMsg = "Error: " + error.message;
                 }
@@ -654,28 +680,53 @@
         }
 
         // 客户端直接调用逻辑 (保留作为 Local Mode)
-        async function callGeminiClientSide(promptText, apiKey) {
-            // 修正：更新为 gemini-2.0-flash，解决 404 错误，与 interpret.js 保持一致
+        // 修复：增加指数退避重试
+        async function callGeminiClientSide(promptText, apiKey, maxRetries = 3) {
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent`;
-            
-            const response = await fetch(apiUrl, {
-                method: 'POST',
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'X-goog-api-key': apiKey
-                },
-                body: JSON.stringify({
-                    contents: [{ parts: [{ text: promptText }] }]
-                })
-            });
+            let delay = 1000;
 
-            if (!response.ok) {
-                const err = await response.json();
-                throw new Error(err.error?.message || `API Error: ${response.status}`);
+            for (let i = 0; i <= maxRetries; i++) {
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 
+                            'Content-Type': 'application/json',
+                            'X-goog-api-key': apiKey
+                        },
+                        body: JSON.stringify({
+                            contents: [{ parts: [{ text: promptText }] }]
+                        })
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        return extractJson(data.candidates[0].content.parts[0].text);
+                    }
+
+                    // 429 或 503 重试
+                    if (response.status === 429 || response.status === 503) {
+                        if (i === maxRetries) throw new Error(`API Busy (${response.status}) after retries`);
+                        console.warn(`Local Mode Hit ${response.status}. Retrying...`);
+                        await sleep(delay);
+                        delay *= 2;
+                        continue;
+                    }
+
+                    // 其他错误抛出
+                    const err = await response.json();
+                    throw new Error(err.error?.message || `API Error: ${response.status}`);
+
+                } catch (e) {
+                    if (i === maxRetries) throw e;
+                    if (e.message.includes('Failed to fetch')) {
+                        // 网络错误也重试
+                        await sleep(delay);
+                        delay *= 2;
+                        continue;
+                    }
+                    throw e;
+                }
             }
-
-            const data = await response.json();
-            return extractJson(data.candidates[0].content.parts[0].text);
         }
 
         function extractJson(text) { try { return JSON.parse(text); } catch (e) { const match = text.match(/\{[\s\S]*\}/); return match ? JSON.parse(match[0]) : {}; } }
@@ -705,6 +756,14 @@
         function closeModal(e) { if (!e || e.target.classList.contains('modal') || e.target.innerText === '×') { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); } }
 
         function saveApiKey() { localStorage.setItem('dreamwhisper_api_key', document.getElementById('apiKeyInput').value.trim()); updateApiStatus(); closeModal(); showToast("Saved"); }
+        
+        function clearApiKey() { 
+            localStorage.removeItem('dreamwhisper_api_key'); 
+            document.getElementById('apiKeyInput').value = ''; 
+            updateApiStatus(); 
+            closeModal(); 
+            showToast("本地 Key 已清除，切换至代理模式"); 
+        }
 
         function toggleMobileMenu(open) { document.getElementById('mobileMenu').classList.toggle('open', open); document.getElementById('menuOverlay').classList.toggle('hidden', !open); }
 
@@ -752,6 +811,14 @@
             } catch (e) { 
                 console.error(e);
                 container.classList.add('hidden'); 
+                
+                // 同样增加智能提示
+                if (e.message.includes('API key expired') && localStorage.getItem('dreamwhisper_api_key')) {
+                    if(confirm("本地 Key 已失效，是否清除？")) {
+                        clearApiKey();
+                    }
+                }
+                
                 showToast("Symbol search failed: " + e.message);
             }
         }
