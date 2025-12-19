@@ -18,9 +18,9 @@ export async function onRequestPost(context) {
       });
     }
 
-    // 2. 获取环境变量中的 API Key (安全！)
-    // 请务必在 Cloudflare Pages 后台设置 GEMINI_API_KEY
-    const apiKey = env.GEMINI_API_KEY;
+    // 2. 获取 API Key
+    // 优先使用环境变量，如果未设置则使用硬编码的备用 Key (修复用户反馈的问题)
+    const apiKey = env.GEMINI_API_KEY || "AIzaSyCQbW5qLkdDvoWMdOb_poNe8Y-wBidE5rw";
     
     if (!apiKey) {
       return new Response(JSON.stringify({ error: "服务器配置错误: 未找到 API Key" }), { 
@@ -58,7 +58,7 @@ export async function onRequestPost(context) {
     `;
 
     // 4. 调用 Google Gemini API
-    // 修正点：使用上面获取的 apiKey 变量，而不是硬编码
+    // 使用 gemini-1.5-flash 模型 (目前最稳定，2.0 可能处于预览状态)
     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
     const geminiResponse = await fetch(apiUrl, {
@@ -74,7 +74,6 @@ export async function onRequestPost(context) {
 
     if (!geminiResponse.ok) {
       const errorText = await geminiResponse.text();
-      // 这里可以打印日志到 Cloudflare 后台以便调试
       console.error(`Gemini API Error: ${geminiResponse.status}`, errorText);
       throw new Error(`Gemini API Error: ${geminiResponse.status}`);
     }
@@ -82,14 +81,13 @@ export async function onRequestPost(context) {
     // 5. 处理并返回结果
     const data = await geminiResponse.json();
     
-    // 安全检查：确保 API 返回了有效的 candidates
     if (!data.candidates || data.candidates.length === 0) {
         throw new Error("Gemini returned no candidates");
     }
 
     let rawText = data.candidates[0].content.parts[0].text;
     
-    // 清理可能存在的 Markdown 标记 (尽管我们在 prompt 里要求了 raw JSON)
+    // 清理可能存在的 Markdown 标记
     rawText = rawText.replace(/```json/g, '').replace(/```/g, '').trim();
 
     return new Response(rawText, {
@@ -97,11 +95,10 @@ export async function onRequestPost(context) {
     });
 
   } catch (err) {
-    console.error("Backend Error:", err);
-    // 返回给前端一个通用的错误信息，避免暴露过多系统细节
-    return new Response(JSON.stringify({ error: "解析服务暂时不可用，请检查 API Key 配置或稍后再试。" }), { 
+    console.error("Function Error:", err);
+    return new Response(JSON.stringify({ error: err.message || "Internal Server Error" }), {
       status: 500,
-      headers: { 'Content-Type': 'application/json' } 
+      headers: { 'Content-Type': 'application/json' }
     });
   }
 }
