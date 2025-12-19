@@ -6,8 +6,6 @@
     <title>DreamWhisper - 听见梦的低语</title>
     <link rel="canonical" href="https://dreamwhisperai.com/index.html">
     <meta property="og:url" content="https://dreamwhisperai.com/index.html">
-    <meta name="yandex-verification" content="a6c6d23b90b7cdb9" />
-    <meta name="yandex-verification" content="91687a881053ff13" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Nunito:wght@300;400;600&display=swap" rel="stylesheet">
@@ -222,36 +220,44 @@
     <!-- Navigation -->
     <nav class="fixed w-full z-50 transition-all duration-300 bg-[#1A1625]/80 backdrop-blur-md border-b border-white/5" id="navbar">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center gap-2 cursor-pointer" onclick="navigateTo('home')">
+            <a href="?page=home" class="flex items-center gap-2 cursor-pointer no-underline">
                 <i class="fa-solid fa-moon text-pink-400 text-2xl animate-pulse"></i>
-                <span class="text-2xl font-serif font-bold tracking-wide">DreamWhisper</span>
-            </div>
+                <span class="text-2xl font-serif font-bold tracking-wide text-white">DreamWhisper</span>
+            </a>
             
             <div class="hidden md:flex items-center gap-8 text-sm font-semibold tracking-wide text-gray-200">
-                <button onclick="navigateTo('plaza')" class="nav-item hover:text-pink-300 transition-colors flex items-center gap-2">
+                <!-- Modified: Changed to <a> tag with target="_blank" and href query param -->
+                <a href="?page=plaza" target="_blank" class="nav-item hover:text-pink-300 transition-colors flex items-center gap-2">
                     <i class="fa-solid fa-users-rays text-xs"></i> <span data-i18n="nav_square">解梦广场</span>
-                </button>
-                <button onclick="navigateTo('dictionary')" class="nav-item hover:text-pink-300 transition-colors flex items-center gap-2">
+                </a>
+                <a href="?page=dictionary" target="_blank" class="nav-item hover:text-pink-300 transition-colors flex items-center gap-2">
                     <i class="fa-solid fa-book-journal-whills text-xs"></i> <span data-i18n="nav_dict">象征字典</span>
-                </button>
+                </a>
                 <button onclick="openModal('about')" class="hover:text-pink-300 transition-colors" data-i18n="nav_about">关于我们</button>
                 
-                <!-- Language Selector -->
-                <div class="relative group cursor-pointer z-50 ml-4">
-                    <button class="flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 hover:bg-white/5 transition-all">
-                        <i class="fa-solid fa-globe text-pink-300"></i>
-                        <span id="currentLang">中文</span>
-                        <i class="fa-solid fa-chevron-down text-xs opacity-70"></i>
-                    </button>
-                    <!-- Dropdown Menu -->
-                    <div class="absolute right-0 pt-2 hidden group-hover:block w-32">
-                        <div class="glass-panel rounded-xl overflow-hidden shadow-xl border-pink-300/20 bg-[#1A1625]">
-                            <button onclick="changeLanguage('zh')" class="block w-full text-left px-4 py-2 hover:bg-pink-500/20 text-white transition-colors">中文</button>
-                            <button onclick="changeLanguage('en')" class="block w-full text-left px-4 py-2 hover:bg-pink-500/20 text-white transition-colors">English</button>
-                            <button onclick="changeLanguage('es')" class="block w-full text-left px-4 py-2 hover:bg-pink-500/20 text-white transition-colors">Español</button>
-                            <button onclick="changeLanguage('fr')" class="block w-full text-left px-4 py-2 hover:bg-pink-500/20 text-white transition-colors">Français</button>
+                <div class="flex items-center gap-3">
+                    <!-- Language Selector -->
+                    <div class="relative group cursor-pointer z-50">
+                        <button class="flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 hover:bg-white/5 transition-all">
+                            <i class="fa-solid fa-globe text-pink-300"></i>
+                            <span id="currentLang">中文</span>
+                            <i class="fa-solid fa-chevron-down text-xs opacity-70"></i>
+                        </button>
+                        <!-- Dropdown Menu -->
+                        <div class="absolute right-0 pt-2 hidden group-hover:block w-32">
+                            <div class="glass-panel rounded-xl overflow-hidden shadow-xl border-pink-300/20 bg-[#1A1625]">
+                                <button onclick="changeLanguage('zh')" class="block w-full text-left px-4 py-2 hover:bg-pink-500/20 text-white transition-colors">中文</button>
+                                <button onclick="changeLanguage('en')" class="block w-full text-left px-4 py-2 hover:bg-pink-500/20 text-white transition-colors">English</button>
+                                <button onclick="changeLanguage('es')" class="block w-full text-left px-4 py-2 hover:bg-pink-500/20 text-white transition-colors">Español</button>
+                                <button onclick="changeLanguage('fr')" class="block w-full text-left px-4 py-2 hover:bg-pink-500/20 text-white transition-colors">Français</button>
+                            </div>
                         </div>
                     </div>
+
+                    <!-- Settings Button (New) -->
+                    <button onclick="openModal('settings')" class="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/10 hover:text-pink-300 transition-all text-gray-300" title="API Settings">
+                        <i class="fa-solid fa-gear"></i>
+                    </button>
                 </div>
             </div>
 
@@ -326,6 +332,7 @@
                         <div class="flex items-center gap-2 text-sm text-gray-400">
                             <i class="fa-regular fa-eye-slash"></i>
                             <span data-i18n="privacy_note">您的梦境将完全匿名处理</span>
+                            <span id="apiStatusBadge" class="hidden ml-2 px-2 py-0.5 rounded bg-green-500/20 text-green-300 text-xs border border-green-500/30">客户端 API 模式</span>
                         </div>
                         <button onclick="callGeminiAPI()" id="analyzeBtn" class="btn-gradient w-full md:w-auto px-10 py-4 rounded-full font-bold text-white shadow-lg flex items-center justify-center gap-3">
                             <i class="fa-solid fa-wand-magic-sparkles"></i>
@@ -394,7 +401,16 @@
             <!-- Quick Link to Plaza -->
             <div class="mt-16 text-center">
                 <p class="text-gray-400 mb-4" data-i18n="plaza_preview_text">看看其他人都在梦些什么</p>
-                <button onclick="navigateTo('plaza')" class="text-pink-300 border-b border-pink-300/50 hover:text-pink-200 pb-1" data-i18n="plaza_preview_btn">浏览解梦广场 &rarr;</button>
+                <div class="flex justify-center gap-4">
+                     <!-- Modified: Changed to <a> tag for Plaza -->
+                    <a href="?page=plaza" target="_blank" class="text-pink-300 border-b border-pink-300/50 hover:text-pink-200 pb-1 cursor-pointer">
+                        <span data-i18n="plaza_preview_btn">浏览解梦广场</span> &rarr;
+                    </a>
+                    <!-- Added: Link for Dictionary -->
+                    <a href="?page=dictionary" target="_blank" class="text-purple-300 border-b border-purple-300/50 hover:text-purple-200 pb-1 cursor-pointer">
+                        <span data-i18n="nav_dict">象征字典</span> &rarr;
+                    </a>
+                </div>
             </div>
         </div>
 
@@ -519,7 +535,42 @@
         </div>
     </div>
     
-    <!-- Share Modal Container (NEW) -->
+    <!-- Settings Modal (New) -->
+    <div id="settingsModal" class="modal" onclick="closeModal(event)">
+        <div class="modal-content relative bg-[#1A1625]">
+            <span class="absolute top-4 right-4 text-gray-400 cursor-pointer hover:text-white text-2xl" onclick="document.getElementById('settingsModal').style.display='none'">&times;</span>
+            <h2 class="text-2xl font-serif text-pink-200 mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-sliders"></i> 设置
+            </h2>
+            
+            <div class="space-y-6">
+                <div>
+                    <label class="block text-gray-300 text-sm font-bold mb-2">Google Gemini API Key</label>
+                    <p class="text-xs text-gray-400 mb-2">
+                        如果您在本地测试或后端不可用，请在此输入 API Key。
+                        <br><span class="text-pink-400">* Key 将仅存储在您的浏览器本地缓存中，不会发送到我们的服务器。</span>
+                    </p>
+                    <div class="relative">
+                        <input type="password" id="settingsApiKey" 
+                               class="w-full glass-input rounded-lg p-3 text-white focus:ring-2 focus:ring-pink-500" 
+                               placeholder="AIzaSy...">
+                        <button onclick="toggleKeyVisibility()" class="absolute right-3 top-3 text-gray-400 hover:text-white">
+                            <i class="fa-solid fa-eye" id="keyEyeIcon"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="flex justify-end gap-3 pt-4 border-t border-white/10">
+                    <button onclick="document.getElementById('settingsModal').style.display='none'" class="px-4 py-2 rounded-lg hover:bg-white/10 text-gray-300 transition">取消</button>
+                    <button onclick="saveSettings()" class="px-6 py-2 rounded-lg bg-pink-600 hover:bg-pink-500 text-white font-bold shadow-lg transition">
+                        保存并生效
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Share Modal Container -->
     <div id="shareModal" class="modal" onclick="closeShareModal(event)">
         <div class="modal-content relative">
             <span class="absolute top-4 right-4 text-gray-400 cursor-pointer hover:text-white text-2xl" onclick="document.getElementById('shareModal').style.display='none'">&times;</span>
@@ -562,7 +613,7 @@
                 analysis_emotion: "检测到明显的情绪波动：期待 (40%)、焦虑 (30%)。你既害怕失去现状，又渴望突破。",
                 analysis_guide: "建议您在本周多关注自己的直觉。幸运色是淡蓝色，适合佩戴月光石。",
                 plaza_preview_text: "看看其他人都在梦些什么",
-                plaza_preview_btn: "浏览解梦广场 &rarr;",
+                plaza_preview_btn: "浏览解梦广场",
                 plaza_title: "解梦广场",
                 plaza_desc: "在这里，梦境不再是个人的孤岛。共鸣，是治愈的开始。",
                 filter_latest: "最新发布", filter_popular: "热门梦境", filter_lucid: "清醒梦", filter_nightmare: "噩梦化解",
@@ -606,7 +657,7 @@
                 analysis_emotion: "Emotions detected: Expectation (40%), Anxiety (30%).",
                 analysis_guide: "Focus on your intuition this week. Lucky color is pale blue.",
                 plaza_preview_text: "See what others are dreaming about",
-                plaza_preview_btn: "Browse Dream Plaza &rarr;",
+                plaza_preview_btn: "Browse Dream Plaza",
                 plaza_title: "Dream Plaza",
                 plaza_desc: "Here, dreams are no longer isolated islands. Resonance is the beginning of healing.",
                 filter_latest: "Latest", filter_popular: "Popular", filter_lucid: "Lucid Dreams", filter_nightmare: "Nightmares",
@@ -644,7 +695,7 @@
                 footer_terms: "Términos", footer_privacy: "Privacidad", footer_contact: "Contacto",
                 toast_saved: "¡Guardado!",
                 plaza_preview_text: "Mira lo que sueñan los demás",
-                plaza_preview_btn: "Explorar Plaza &rarr;",
+                plaza_preview_btn: "Explorar Plaza",
                 label_lucky: "Objeto de la Suerte",
                 label_core: "Metáfora central", label_emotion: "Emociones", label_guide: "Guía",
                 plaza_title: "Plaza de Sueños", plaza_desc: "Aquí, los sueños ya no son islas aisladas.",
@@ -680,7 +731,7 @@
                 footer_terms: "Conditions", footer_privacy: "Confidentialité", footer_contact: "Contact",
                 toast_saved: "Sauvegardé !",
                 plaza_preview_text: "Voir ce que les autres rêvent",
-                plaza_preview_btn: "Parcourir la Place &rarr;",
+                plaza_preview_btn: "Parcourir la Place",
                 label_lucky: "Porte-bonheur",
                 label_core: "Métaphore centrale", label_emotion: "Émotions", label_guide: "Conseils",
                 plaza_title: "Place des Rêves", plaza_desc: "Ici, les rêves ne sont plus des îles isolées.",
@@ -692,7 +743,7 @@
                 dict_title: "Dictionnaire", dict_desc: "Tout est métaphore. Explorez ici.",
                 dict_search_placeholder: "Chercher des symboles...",
                 cat_animals: "Animaux", cat_behavior: "Comportement",
-                label_psych: "Psychologie", label_trad: "Traditionnel", btn_details: "Détails &rarr;",
+                label_psych: "Psicología", label_trad: "Traditionnel", btn_details: "Détails &rarr;",
                 sym_snake_title: "Serpent", sym_snake_psych: "Sagesse subconsciente ou pulsions refoulées.", sym_snake_trad: "Un serpent sur le chemin est de bon augure.",
                 modal_about_body: `<p>DreamWhisper est une plateforme d'interprétation des rêves par IA.</p>`,
                 modal_terms_body: `<p>Ce service est uniquement à des fins de divertissement.</p>`,
@@ -708,20 +759,42 @@
         window.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
             const langParam = urlParams.get('lang');
+            const pageParam = urlParams.get('page'); // New: Check for page param
+
             if (langParam && translations[langParam]) {
                 currentLang = langParam;
             }
             changeLanguage(currentLang, false);
+            
+            // Check for saved API key
+            const savedKey = localStorage.getItem('dreamwhisper_api_key');
+            if (savedKey) {
+                document.getElementById('settingsApiKey').value = savedKey;
+                document.getElementById('apiStatusBadge').classList.remove('hidden');
+            }
+
+            // New: Handle page routing on load
+            if (pageParam) {
+                navigateTo(pageParam);
+            }
         });
 
         window.onpopstate = function(event) {
             const urlParams = new URLSearchParams(window.location.search);
             const langParam = urlParams.get('lang');
+            const pageParam = urlParams.get('page');
+            
             const targetLang = (langParam && translations[langParam]) ? langParam : 'zh';
             if (targetLang !== currentLang) {
                 changeLanguage(targetLang, false);
             }
-            navigateTo('home');
+            
+            // Handle back/forward navigation for pages
+            if (pageParam) {
+                navigateTo(pageParam);
+            } else {
+                navigateTo('home');
+            }
         };
 
         function changeLanguage(lang, updateHistory = true) {
@@ -816,11 +889,12 @@
             input.focus();
         }
 
-        // --- GEMINI API INTEGRATION ---
+        // --- GEMINI API INTEGRATION (HYBRID) ---
         async function callGeminiAPI() {
             const input = document.getElementById('dreamInput').value;
             const btn = document.getElementById('analyzeBtn');
             const resultSection = document.getElementById('resultSection');
+            const localKey = localStorage.getItem('dreamwhisper_api_key');
 
             if (!input.trim()) {
                 showToast("请先告诉我们您的梦境...");
@@ -833,33 +907,59 @@
             btn.classList.add('opacity-80', 'cursor-not-allowed');
 
             try {
-                // Modified to call local Cloudflare Function
-                const response = await fetch('/api/interpret', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        dream: input,
-                        lang: currentLang
-                    })
-                });
+                let data;
 
-                if (!response.ok) {
-                    const errData = await response.json();
-                    throw new Error(errData.error || `Server Error: ${response.status}`);
+                // STRATEGY 1: CLIENT-SIDE DIRECT (If Key Exists)
+                if (localKey && localKey.startsWith('AIza')) {
+                    console.log("Using Client-Side API Call");
+                    data = await callGeminiClientSide(input, currentLang, localKey);
+                } 
+                // STRATEGY 2: SERVER-SIDE PROXY (Default)
+                else {
+                    console.log("Using Server-Side API Call");
+                    const response = await fetch('/api/interpret', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            dream: input,
+                            lang: currentLang
+                        })
+                    });
+
+                    // 增强错误处理：先获取文本，再尝试解析 JSON
+                    const responseText = await response.text();
+                    
+                    if (!response.ok) {
+                        try {
+                            const errJson = JSON.parse(responseText);
+                            throw new Error(errJson.error || `Server Error: ${response.status}`);
+                        } catch (e) {
+                            throw new Error(`Server Error: ${response.status} - ${responseText.substring(0, 50)}...`);
+                        }
+                    }
+
+                    // 尝试从返回文本中提取 JSON (后端可能返回了 markdown)
+                    data = extractJson(responseText);
                 }
 
-                const data = await response.json();
                 renderResult(data);
 
             } catch (error) {
                 console.error("API Error:", error);
-                // Fallback / Mock Data for demonstration if backend fails
-                // In production, you might want to show a real error message
-                showToast("连接潜意识失败: " + error.message);
                 
-                // Optional: Fallback to mock data if you want to keep the demo feeling alive even on error
-                // const mockData = { ... }; 
-                // renderResult(mockData);
+                let errorMsg = "连接潜意识失败";
+                if (error.message.includes('404')) {
+                    errorMsg = "找不到后端服务。请尝试在设置中输入 API Key 使用客户端模式。";
+                } else if (error.message.includes('Key')) {
+                    errorMsg = "API Key 无效，请检查设置。";
+                } else {
+                    errorMsg += ": " + error.message;
+                }
+                
+                showToast(errorMsg);
+                
+                // Fallback for demo purposes if strictly needed, but better to show error
+                // const mockData = { ... }; renderResult(mockData);
             } finally {
                 btn.innerHTML = `<i class="fa-solid fa-wand-magic-sparkles"></i> <span data-i18n="btn_analyze">开始解析</span>`;
                 btn.disabled = false;
@@ -867,16 +967,123 @@
             }
 
             function renderResult(data) {
-                document.getElementById('resultCore').innerText = data.core_metaphor;
-                document.getElementById('resultEmotion').innerText = data.emotions;
-                document.getElementById('resultGuide').innerText = data.guidance;
-                document.getElementById('resultLucky').innerText = data.lucky_item;
+                // Ensure data fields exist
+                document.getElementById('resultCore').innerText = data.core_metaphor || "解析完成";
+                document.getElementById('resultEmotion').innerText = data.emotions || "无详细数据";
+                document.getElementById('resultGuide').innerText = data.guidance || "请参考核心隐喻";
+                document.getElementById('resultLucky').innerText = data.lucky_item || "幸运星";
                 
                 resultSection.classList.remove('hidden');
                 resultSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
         }
+
+        // --- Client Side Logic (Mirroring Backend) ---
+        async function callGeminiClientSide(dream, lang, apiKey) {
+            const languageNames = {
+                'zh': 'Chinese (Simplified)',
+                'en': 'English',
+                'es': 'Spanish',
+                'fr': 'French'
+            };
+            const targetLang = languageNames[lang] || 'Chinese (Simplified)';
+            
+            const promptText = `
+              You are a professional Jungian dream interpreter and therapist.
+              The user has shared the following dream:
+              "${dream}"
+              
+              Please analyze this dream and return a raw JSON object (no markdown, no code blocks) with the following structure.
+              Ensure the content is written in the following language: ${targetLang}.
+              
+              Keep the tone gentle, mysterious, but professional.
         
+              JSON Structure:
+              {
+                  "core_metaphor": "One sentence summary of the core metaphor.",
+                  "emotions": "Analysis of emotions (e.g., Anxiety 30%, Hope 70%).",
+                  "guidance": "Warm, actionable life guidance based on the dream.",
+                  "lucky_item": "A suggested lucky color or item (e.g., 'Moonstone' or 'Pale Blue')."
+              }
+            `;
+
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+            
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    contents: [{ parts: [{ text: promptText }] }],
+                    generationConfig: { responseMimeType: "application/json" }
+                })
+            });
+
+            if (!response.ok) {
+                const err = await response.json();
+                throw new Error(err.error?.message || "Google API Error");
+            }
+
+            const data = await response.json();
+            if (!data.candidates || data.candidates.length === 0) {
+                throw new Error("No response from AI");
+            }
+
+            const rawText = data.candidates[0].content.parts[0].text;
+            return extractJson(rawText);
+        }
+
+        // Helper: Robust JSON Extractor
+        function extractJson(text) {
+            try {
+                // 1. Try direct parse
+                return JSON.parse(text);
+            } catch (e) {
+                // 2. Try to find JSON blob
+                const jsonMatch = text.match(/\{[\s\S]*\}/);
+                if (jsonMatch) {
+                    try {
+                        return JSON.parse(jsonMatch[0]);
+                    } catch (e2) {
+                        console.error("JSON Extraction Failed", e2);
+                    }
+                }
+                // 3. Fallback: Return text in a wrapper
+                return {
+                    core_metaphor: "解析数据格式错误",
+                    emotions: "无法解析详细情绪",
+                    guidance: text.substring(0, 100) + "...",
+                    lucky_item: "未知"
+                };
+            }
+        }
+
+        // --- Settings Logic ---
+        function toggleKeyVisibility() {
+            const input = document.getElementById('settingsApiKey');
+            const icon = document.getElementById('keyEyeIcon');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        }
+
+        function saveSettings() {
+            const key = document.getElementById('settingsApiKey').value.trim();
+            if (key) {
+                localStorage.setItem('dreamwhisper_api_key', key);
+                document.getElementById('apiStatusBadge').classList.remove('hidden');
+                showToast("API Key 已保存 (本地)");
+            } else {
+                localStorage.removeItem('dreamwhisper_api_key');
+                document.getElementById('apiStatusBadge').classList.add('hidden');
+                showToast("已切换回后端模式");
+            }
+            document.getElementById('settingsModal').style.display = 'none';
+        }
+
         // --- SHARE FUNCTION ---
         function openShareModal() {
             const core = document.getElementById('resultCore').innerText;
@@ -902,7 +1109,7 @@
         function copyShareText() {
             const textarea = document.getElementById('shareTextarea');
             textarea.select();
-            textarea.setSelectionRange(0, 99999); /* For mobile devices */
+            textarea.setSelectionRange(0, 99999); 
             
             try {
                 navigator.clipboard.writeText(textarea.value).then(() => {
@@ -912,11 +1119,6 @@
                 document.execCommand('copy');
                 showToast("解析已复制到剪贴板");
             }
-        }
-        
-        // Kept for backward compatibility if needed, but openShareModal is preferred
-        function shareResult() {
-            openShareModal();
         }
 
         function showToast(message) {
@@ -939,6 +1141,14 @@
         }
 
         function openModal(type) {
+            if (type === 'settings') {
+                document.getElementById('settingsModal').style.display = 'flex';
+                // Load saved key if exists
+                const savedKey = localStorage.getItem('dreamwhisper_api_key');
+                if (savedKey) document.getElementById('settingsApiKey').value = savedKey;
+                return;
+            }
+
             const modal = document.getElementById('infoModal');
             const title = document.getElementById('modalTitle');
             const body = document.getElementById('modalBody');
@@ -963,9 +1173,10 @@
             if (event.target === document.getElementById('infoModal')) {
                 document.getElementById('infoModal').style.display = 'none';
             }
+            if (event.target === document.getElementById('settingsModal')) {
+                document.getElementById('settingsModal').style.display = 'none';
+            }
         }
     </script>
 </body>
-
 </html>
-
