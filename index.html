@@ -229,6 +229,15 @@
     <!-- Toast Notification -->
     <div id="toast"><i class="fa-solid fa-check-circle mr-2"></i><span id="toastMsg">Notification</span></div>
 
+    <!-- Debug Panel (Hidden by default, triggered by error) -->
+    <div id="debugPanel" class="hidden fixed bottom-4 right-4 max-w-sm bg-black/80 backdrop-blur text-red-300 p-4 rounded-xl text-xs z-[200] border border-red-500/30">
+        <div class="flex justify-between items-center mb-2">
+            <h4 class="font-bold uppercase tracking-wider">Debug Info</h4>
+            <button onclick="document.getElementById('debugPanel').classList.add('hidden')" class="hover:text-white">&times;</button>
+        </div>
+        <p id="debugMsg" class="font-mono break-all"></p>
+    </div>
+
     <!-- Navigation -->
     <nav class="fixed w-full z-50 transition-all duration-300 bg-[#1A1625]/80 backdrop-blur-md border-b border-white/5" id="navbar">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
@@ -342,10 +351,14 @@
                             <span data-i18n="privacy_note">您的梦境将完全匿名处理</span>
                             <span id="apiStatusBadge" class="hidden ml-2 px-2 py-0.5 rounded bg-green-500/20 text-green-300 text-xs border border-green-500/30" data-i18n="api_ready">API 已就绪</span>
                         </div>
-                        <button onclick="callGeminiAPI()" id="analyzeBtn" class="btn-gradient w-full md:w-auto px-10 py-4 rounded-full font-bold text-white shadow-lg flex items-center justify-center gap-3">
-                            <i class="fa-solid fa-wand-magic-sparkles"></i>
-                            <span data-i18n="btn_analyze">开始解析</span>
-                        </button>
+                        <div class="flex gap-2">
+                             <!-- Demo Button for robustness -->
+                             <button onclick="runDemoMode()" class="md:hidden px-4 py-2 text-xs text-gray-400 border border-gray-600 rounded-full hover:bg-white/10">演示</button>
+                             <button onclick="callGeminiAPI()" id="analyzeBtn" class="btn-gradient w-full md:w-auto px-10 py-4 rounded-full font-bold text-white shadow-lg flex items-center justify-center gap-3">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                                <span data-i18n="btn_analyze">开始解析</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -357,7 +370,7 @@
                     
                     <div class="flex items-center justify-between mb-6">
                         <h3 class="text-2xl font-serif text-pink-200" data-i18n="result_title">梦境回响</h3>
-                        <span class="text-sm bg-purple-500/30 px-3 py-1 rounded-full border border-purple-500/50" data-i18n="result_badge">深度分析</span>
+                        <span id="resultBadge" class="text-sm bg-purple-500/30 px-3 py-1 rounded-full border border-purple-500/50" data-i18n="result_badge">深度分析</span>
                     </div>
 
                     <div class="space-y-6">
@@ -545,7 +558,7 @@
                 </div>
                 <!-- Secret Trigger Info (Hidden in View) -->
                 <div class="text-xs text-gray-600 select-none cursor-default" ondblclick="openModal('settings')">
-                    v1.0.3 (Dev Mode: DblClick)
+                    v1.0.4 (Dev Mode: DblClick)
                 </div>
             </div>
         </div>
@@ -583,6 +596,14 @@
                         <button onclick="toggleKeyVisibility()" class="absolute right-3 top-3 text-gray-400 hover:text-white">
                             <i class="fa-solid fa-eye" id="keyEyeIcon"></i>
                         </button>
+                    </div>
+                    <div class="mt-4 p-3 bg-white/5 rounded-lg border border-white/10 text-xs text-gray-400">
+                        <p><i class="fa-solid fa-triangle-exclamation text-yellow-500 mr-1"></i> <strong>关于连接问题：</strong></p>
+                        <ul class="list-disc pl-4 mt-1 space-y-1">
+                            <li>如果遇到网络错误（Failed to fetch），请检查 VPN 是否开启。</li>
+                            <li>本地预览模式不支持“服务器代理”。</li>
+                            <li>如果 API 持续失败，系统将自动切换到<strong class="text-pink-300">演示模式 (Demo Mode)</strong>以供体验。</li>
+                        </ul>
                     </div>
                 </div>
                 
@@ -655,7 +676,7 @@
                 sym_snake_title: "蛇 (Snake)",
                 sym_snake_psych: "代表潜意识的智慧、治愈能力，或被压抑的性欲与原始冲动。蜕皮象征着重生与转化。",
                 sym_snake_trad: "梦见蛇当道者大吉；蛇咬人，主得大财；蛇入怀中生贵子。",
-                modal_about_body: `<p class="mb-4">DreamWhisper 是一个专注于女性心理健康的 AI 解梦平台。</p><p class="mb-4">我们的使命是通过解析梦境，帮助用户建立与潜意识的连接，缓解焦虑，寻找生活的方向。</p><p>版本: 1.0.3 Beta</p>`,
+                modal_about_body: `<p class="mb-4">DreamWhisper 是一个专注于女性心理健康的 AI 解梦平台。</p><p class="mb-4">我们的使命是通过解析梦境，帮助用户建立与潜意识的连接，缓解焦虑，寻找生活的方向。</p><p>版本: 1.0.4 Beta</p>`,
                 modal_terms_body: `<p class="mb-4">1. <strong>接受条款</strong><br>访问和使用 DreamWhisper，即表示您接受并同意受本协议条款和条件的约束。</p><p class="mb-4">2. <strong>服务说明</strong><br>本服务仅供娱乐和自我探索之用，不构成专业的心理咨询或医疗建议。</p>`,
                 modal_privacy_body: `<p class="mb-4">我们非常重视您的隐私。</p><ul class="list-disc pl-5 space-y-2"><li>您的梦境输入内容在传输过程中经过 SSL 加密。</li><li>我们不会将您的个人身份信息出售给第三方。</li></ul>`,
                 modal_contact_body: `<div class="text-center py-6"><p class="mb-4 text-gray-300">如果有任何建议、反馈或合作意向，<br>欢迎随时发送邮件给我们：</p><a href="mailto:n20186005@gmail.com" class="text-2xl font-serif text-pink-300 hover:text-pink-200 transition-colors border-b border-pink-300/30 pb-1">n20186005@gmail.com</a><p class="mt-6 text-xs text-gray-500">We typically respond within 24 hours.</p></div>`,
@@ -923,13 +944,60 @@
             input.focus();
         }
 
-        // --- GEMINI API INTEGRATION (UPDATED LOGIC) ---
+        // --- DEBUG UTILS ---
+        function debugLog(message) {
+            console.error(message);
+            const panel = document.getElementById('debugPanel');
+            const msg = document.getElementById('debugMsg');
+            panel.classList.remove('hidden');
+            msg.innerText = message;
+            // Auto hide after 10s
+            setTimeout(() => panel.classList.add('hidden'), 10000);
+        }
+
+        // --- DEMO MODE DATA ---
+        function getMockData() {
+            return {
+                core_metaphor: "这个梦境像是一个“成长的十字路口”。迷宫代表你目前面对的复杂选择，而找不到出口并非绝路，而是暗示你需要停下来审视内心真正的方向。",
+                emotions: "检测到复杂的情绪光谱：焦虑 (45%) 来自对未知的恐惧，期待 (30%) 源于对变革的渴望，以及少许的释怀 (25%)。",
+                guidance: "最近也许面临重要决策。不要急于寻找“正确答案”，试着相信直觉。给自己一段安静的独处时光，答案会自然浮现。",
+                lucky_item: "指引方向的罗盘或深蓝色的饰品 (Lapis Lazuli)"
+            };
+        }
+        
+        function runDemoMode() {
+            showToast("正在切换至演示模式...");
+            const btn = document.getElementById('analyzeBtn');
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> 正在生成演示...`;
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                const data = getMockData();
+                document.getElementById('resultBadge').innerText = "演示模式 (Demo)";
+                document.getElementById('resultBadge').classList.replace('bg-purple-500/30', 'bg-pink-500/30');
+                renderResult(data);
+                
+                btn.innerHTML = `<i class="fa-solid fa-wand-magic-sparkles"></i> <span data-i18n="btn_analyze">开始解析</span>`;
+                btn.disabled = false;
+            }, 1500);
+        }
+
+        function renderResult(data) {
+            document.getElementById('resultCore').innerText = data.core_metaphor || "解析完成";
+            document.getElementById('resultEmotion').innerText = data.emotions || "无详细数据";
+            document.getElementById('resultGuide').innerText = data.guidance || "请参考核心隐喻";
+            document.getElementById('resultLucky').innerText = data.lucky_item || "幸运星";
+            
+            const resultSection = document.getElementById('resultSection');
+            resultSection.classList.remove('hidden');
+            resultSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // --- GEMINI API INTEGRATION (ROBUST) ---
         async function callGeminiAPI() {
             const input = document.getElementById('dreamInput').value;
             const btn = document.getElementById('analyzeBtn');
             const resultSection = document.getElementById('resultSection');
-            
-            // 核心修改：移除默认Key，优先使用用户Key，否则走后端
             const localKey = localStorage.getItem('dreamwhisper_api_key');
 
             if (!input.trim()) {
@@ -945,14 +1013,14 @@
             try {
                 let data;
 
-                // STRATEGY 1: CLIENT-SIDE DIRECT (只有当用户设置了Key)
+                // STRATEGY 1: CLIENT-SIDE DIRECT
                 if (localKey && localKey.trim() !== '') {
-                    console.log("Using Client-Side API Call (Custom Key)");
+                    console.log("Using Client-Side API Call");
                     data = await callGeminiClientSide(input, currentLang, localKey);
                 } 
-                // STRATEGY 2: SERVER-SIDE PROXY (默认走 Cloudflare 后端)
+                // STRATEGY 2: SERVER-SIDE PROXY
                 else {
-                    console.log("Using Server-Side API Call (Proxy)");
+                    console.log("Using Server-Side API Call");
                     const response = await fetch('/api/interpret', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -960,88 +1028,84 @@
                             dream: input,
                             lang: currentLang
                         })
+                    }).catch(e => {
+                        // Catch Network/URL errors
+                        if (e.message.includes('Failed to parse URL')) {
+                            throw new Error("PREVIEW_ENV_LIMIT");
+                        }
+                        throw e;
                     });
 
-                    // 增强错误处理
-                    const responseText = await response.text();
-                    
                     if (!response.ok) {
+                        const responseText = await response.text();
                         try {
                             const errJson = JSON.parse(responseText);
                             throw new Error(errJson.error || `Server Error: ${response.status}`);
                         } catch (e) {
-                            throw new Error(`Server Error: ${response.status} - ${responseText.substring(0, 50)}...`);
+                            throw new Error(`Server Error: ${response.status}`);
                         }
                     }
-
-                    // 尝试从返回文本中提取 JSON
-                    data = extractJson(responseText);
+                    data = extractJson(await response.text());
                 }
 
+                document.getElementById('resultBadge').innerText = "深度分析";
                 renderResult(data);
 
             } catch (error) {
-                console.error("API Error:", error);
-                
-                let errorMsg = "解析失败";
-                if (error.message.includes('404')) {
-                    errorMsg = "后端服务未找到 (请检查 '/api' 路径)";
+                let displayMsg = "解析遇到问题";
+                let debugInfo = error.message;
+
+                // Analyze Error Type
+                if (error.message === 'PREVIEW_ENV_LIMIT') {
+                    displayMsg = "预览模式无法连接后台，已自动切换到演示模式。";
+                    // Fallback to demo
+                    setTimeout(() => {
+                        const demoData = getMockData();
+                        document.getElementById('resultBadge').innerText = "自动演示 (Demo)";
+                        renderResult(demoData);
+                    }, 1000);
+                } else if (error.message.includes('Failed to fetch')) {
+                    displayMsg = "网络连接失败 (请检查 VPN)";
+                    debugLog("Network Error: Failed to fetch. Check your connection to Google API.");
+                } else if (error.message.includes('404')) {
+                     displayMsg = "后端接口 404";
                 } else if (error.message.includes('Key')) {
-                    errorMsg = "API Key 验证失败，请检查设置。";
-                } else if (error.message.includes('429')) {
-                     errorMsg = "请求过多，请稍后重试";
-                } else if (error.message.includes('Configuration Error')) {
-                    errorMsg = "服务器端未配置 Key，请联系管理员。";
+                    displayMsg = "API Key 无效";
                 } else {
-                    errorMsg = "网络连接异常，请重试。" + (localKey ? "" : " (后端模式)");
+                    displayMsg = "发生错误: " + error.message;
+                    debugLog(error.message);
                 }
                 
-                showToast(errorMsg);
+                showToast(displayMsg);
+                
+                // If it's a hard failure, allow manual demo trigger
+                if (error.message !== 'PREVIEW_ENV_LIMIT') {
+                     // Optionally suggest demo mode
+                }
                 
             } finally {
                 btn.innerHTML = `<i class="fa-solid fa-wand-magic-sparkles"></i> <span data-i18n="btn_analyze">开始解析</span>`;
                 btn.disabled = false;
                 btn.classList.remove('opacity-80', 'cursor-not-allowed');
             }
-
-            function renderResult(data) {
-                document.getElementById('resultCore').innerText = data.core_metaphor || "解析完成";
-                document.getElementById('resultEmotion').innerText = data.emotions || "无详细数据";
-                document.getElementById('resultGuide').innerText = data.guidance || "请参考核心隐喻";
-                document.getElementById('resultLucky').innerText = data.lucky_item || "幸运星";
-                
-                resultSection.classList.remove('hidden');
-                resultSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
         }
 
         // --- Client Side Logic (Mirroring Backend) ---
         async function callGeminiClientSide(dream, lang, apiKey) {
-            const languageNames = {
-                'zh': 'Chinese (Simplified)',
-                'en': 'English',
-                'es': 'Spanish',
-                'fr': 'French'
-            };
-            const targetLang = languageNames[lang] || 'Chinese (Simplified)';
+            const languageNames = { 'zh': 'Chinese', 'en': 'English', 'es': 'Spanish', 'fr': 'French' };
+            const targetLang = languageNames[lang] || 'Chinese';
             
             const promptText = `
-              You are a professional Jungian dream interpreter and therapist.
-              The user has shared the following dream:
-              "${dream}"
-              
-              Please analyze this dream and return a raw JSON object (no markdown, no code blocks) with the following structure.
-              Ensure the content is written in the following language: ${targetLang}.
-              
-              Keep the tone gentle, mysterious, but professional.
-        
-              JSON Structure:
+              You are a professional Jungian dream interpreter.
+              Analyze this dream: "${dream}"
+              Return raw JSON:
               {
-                  "core_metaphor": "One sentence summary of the core metaphor.",
-                  "emotions": "Analysis of emotions (e.g., Anxiety 30%, Hope 70%).",
-                  "guidance": "Warm, actionable life guidance based on the dream.",
-                  "lucky_item": "A suggested lucky color or item (e.g., 'Moonstone' or 'Pale Blue')."
+                  "core_metaphor": "One sentence summary.",
+                  "emotions": "Emotional analysis.",
+                  "guidance": "Actionable life guidance.",
+                  "lucky_item": "A suggested lucky color or item."
               }
+              Language: ${targetLang}.
             `;
 
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
@@ -1050,8 +1114,7 @@
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    contents: [{ parts: [{ text: promptText }] }],
-                    generationConfig: { responseMimeType: "application/json" }
+                    contents: [{ parts: [{ text: promptText }] }]
                 })
             });
 
@@ -1061,12 +1124,7 @@
             }
 
             const data = await response.json();
-            if (!data.candidates || data.candidates.length === 0) {
-                throw new Error("No response from AI");
-            }
-
-            const rawText = data.candidates[0].content.parts[0].text;
-            return extractJson(rawText);
+            return extractJson(data.candidates[0].content.parts[0].text);
         }
 
         // Helper: Robust JSON Extractor
@@ -1075,13 +1133,7 @@
                 return JSON.parse(text);
             } catch (e) {
                 const jsonMatch = text.match(/\{[\s\S]*\}/);
-                if (jsonMatch) {
-                    try {
-                        return JSON.parse(jsonMatch[0]);
-                    } catch (e2) {
-                        console.error("JSON Extraction Failed", e2);
-                    }
-                }
+                if (jsonMatch) return JSON.parse(jsonMatch[0]);
                 return {
                     core_metaphor: "解析数据格式错误",
                     emotions: "无法解析详细情绪",
@@ -1317,6 +1369,7 @@
                 } 
                 // STRATEGY 2: SERVER PROXY
                 else {
+                    // --- FIX START ---
                     const response = await fetch('/api/interpret', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -1325,7 +1378,14 @@
                             symbol: keyword,
                             lang: currentLang
                         })
+                    }).catch(e => {
+                         if (e.message.includes('Failed to parse URL')) {
+                             throw new Error("PREVIEW_ENV_LIMIT");
+                         }
+                         throw e;
                     });
+                    // --- FIX END ---
+                    
                     if (!response.ok) throw new Error("Server API Error");
                     const responseText = await response.text();
                     result = extractJson(responseText);
@@ -1353,8 +1413,29 @@
                 console.error(e);
                 container.innerHTML = '';
                 noResult.classList.remove('hidden');
+                
                 let errMsg = "AI 暂时无法解析此意象，请稍后再试。";
-                if(e.message.includes('Server')) errMsg += " (后端连接失败)";
+                
+                // Demo fallback for Symbol Search
+                if (e.message === 'PREVIEW_ENV_LIMIT') {
+                    // Simulate a result for demo purposes
+                    container.innerHTML = `
+                        <div class="glass-card p-6 rounded-2xl border-t-4 border-yellow-500/50 animate-fade-in">
+                            <div class="flex justify-between items-start mb-4">
+                                <h3 class="text-2xl font-serif font-bold text-white">${keyword} <span class="text-xs bg-yellow-500/30 px-2 py-1 rounded ml-2 align-middle">演示模式</span></h3>
+                                <i class="fa-solid fa-triangle-exclamation text-2xl text-yellow-400"></i>
+                            </div>
+                            <div class="text-sm text-gray-300">
+                                <p>预览模式无法连接后台。以下为演示数据：</p>
+                                <hr class="border-white/10 my-2">
+                                <p><strong>心理学视角：</strong>象征着潜在的力量与未知的恐惧。</p>
+                                <p><strong>传统解梦：</strong>通常预示着变化或机遇。</p>
+                            </div>
+                        </div>
+                    `;
+                    return;
+                }
+                
                 noResult.querySelector('p').innerText = errMsg;
             }
         }
