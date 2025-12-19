@@ -155,7 +155,7 @@
             document.getElementById('currentLang').innerText = lang === 'zh' ? '中文' : 'English';
 
             // 檢查 pageData 是否已被替換為對象（在 Python 生成後）
-            // 如果還是字符串（在模板預覽模式下），則不執行內容替換
+            // 如果還是字符串（在模板預覽模式下），則不執行內容替換 
             if (typeof pageData === 'object' && pageData !== null) {
                 const content = pageData[lang];
                 if (content) {
@@ -169,4 +169,5 @@
         }
     </script>
 </body>
+
 </html>
