@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DreamWhispeAi - 听见梦的低语</title>
     
+    <!-- 浏览器图标 -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌙</text></svg>">
     <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌙</text></svg>">
 
@@ -34,10 +35,12 @@
         .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.08); transition: all 0.3s ease; }
         .glass-card:hover { background: rgba(255, 255, 255, 0.08); transform: translateY(-5px); border-color: rgba(244, 114, 182, 0.3); }
         .glass-input { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); outline: none; transition: 0.3s; }
+        .glass-input:focus { border-color: rgba(244, 114, 182, 0.5); box-shadow: 0 0 15px rgba(244, 114, 182, 0.2); }
         .btn-gradient { background: linear-gradient(90deg, #ec4899 0%, #8b5cf6 100%); transition: all 0.3s ease; }
+        .btn-gradient:hover { transform: translateY(-2px); box-shadow: 0 10px 25px -5px rgba(236, 72, 153, 0.4); }
         .page-section { display: none; animation: slideUp 0.5s ease-out; }
         .page-section.active { display: block; }
-        #toast { visibility: hidden; min-width: 220px; background: rgba(255, 255, 255, 0.95); color: #4c1d95; text-align: center; border-radius: 50px; padding: 12px 24px; position: fixed; z-index: 2000; left: 50%; bottom: 30px; transform: translateX(-50%); opacity: 0; transition: 0.3s; font-weight: bold; }
+        #toast { visibility: hidden; min-width: 220px; background: rgba(255, 255, 255, 0.95); color: #4c1d95; text-align: center; border-radius: 50px; padding: 12px 24px; position: fixed; z-index: 3000; left: 50%; bottom: 30px; transform: translateX(-50%); opacity: 0; transition: 0.3s; font-weight: bold; }
         #toast.show { visibility: visible; opacity: 1; bottom: 50px; }
         .modal { display: none; position: fixed; z-index: 1000; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); align-items: center; justify-content: center; padding: 20px; }
         .modal-content { background: #1A1625; border: 1px solid rgba(255,255,255,0.1); width: 100%; max-width: 650px; border-radius: 28px; padding: 40px; position: relative; animation: slideUp 0.3s ease-out; }
@@ -52,11 +55,11 @@
         @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
     </style>
 </head>
-<body class="relative">
+<body class="relative text-center">
 
     <div id="toast">Message</div>
 
-    <!-- 导航 -->
+    <!-- 导航栏 -->
     <nav class="fixed w-full z-50 bg-[#1A1625]/80 backdrop-blur-md border-b border-white/5">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <a href="javascript:void(0)" onclick="navigateTo('home')" class="flex items-center gap-2 group">
@@ -100,7 +103,7 @@
     <!-- 移动端侧边栏 -->
     <div id="mobileMenu" class="fixed inset-y-0 right-0 w-80 bg-[#1A1625] z-[100] md:hidden border-l border-white/10 flex flex-col p-10 shadow-3xl">
         <button onclick="toggleMobileMenu(false)" class="self-end text-3xl text-gray-400 mb-12"><i class="fa-solid fa-xmark"></i></button>
-        <div class="flex flex-col gap-8 text-xl font-medium">
+        <div class="flex flex-col gap-8 text-xl font-medium text-left">
             <a href="javascript:void(0)" onclick="navigateTo('home'); toggleMobileMenu(false);" class="flex items-center gap-4 text-white"><i class="fa-solid fa-house text-pink-400"></i><span data-i18n="nav_home">首页</span></a>
             <a href="javascript:void(0)" onclick="navigateTo('plaza'); toggleMobileMenu(false);" class="flex items-center gap-4 text-white"><i class="fa-solid fa-users-rays text-pink-400"></i><span data-i18n="nav_square">解梦广场</span></a>
             <a href="javascript:void(0)" onclick="navigateTo('dictionary'); toggleMobileMenu(false);" class="flex items-center gap-4 text-white"><i class="fa-solid fa-book-journal-whills text-pink-400"></i><span data-i18n="nav_dict">象征字典</span></a>
@@ -116,10 +119,10 @@
     </div>
     <div id="menuOverlay" onclick="toggleMobileMenu(false)" class="fixed inset-0 bg-black/70 backdrop-blur-md z-[90] hidden"></div>
 
-    <main class="container mx-auto px-4 pt-32 pb-24">
+    <main class="container mx-auto px-4 pt-32 pb-24 flex flex-col items-center">
         
-        <!-- 首页 -->
-        <div id="page-home" class="page-section active flex flex-col items-center">
+        <!-- 首页模块 -->
+        <div id="page-home" class="page-section active flex flex-col items-center w-full">
             <div class="text-center max-w-4xl mx-auto mb-16 animate-fade-in px-4">
                 <div class="inline-block px-5 py-1.5 rounded-full glass-panel mb-8 text-pink-200 text-xs font-bold tracking-[0.2em] border-pink-500/20" data-i18n="hero_badge">AI 驱动的心理疗愈</div>
                 <h1 class="text-5xl md:text-7xl font-serif font-bold mb-8 leading-[1.1] tracking-tight">
@@ -140,7 +143,7 @@
                     </button>
                 </div>
 
-                <div class="relative group">
+                <div class="relative group text-left">
                     <textarea id="dreamInput" class="w-full h-56 md:h-64 glass-input rounded-2xl p-8 text-xl text-white placeholder-gray-400 resize-none mb-8 leading-relaxed" data-i18n-placeholder="placeholder_text" placeholder="昨晚，我梦见..."></textarea>
                     
                     <div id="voiceIndicator" class="hidden absolute inset-0 glass-input rounded-2xl flex-col items-center justify-center bg-black/40 backdrop-blur-md z-10 flex">
@@ -160,9 +163,9 @@
                 <div class="flex flex-col md:flex-row justify-between items-center gap-8">
                     <div class="flex items-center gap-4">
                         <p class="text-sm text-gray-400 flex items-center gap-2"><i class="fa-regular fa-eye-slash"></i> <span data-i18n="privacy_note">您的梦境将完全匿名处理</span></p>
-                        <div id="apiStatusBadge" class="flex items-center gap-2.5 px-3 py-1.5 bg-black/30 rounded-full border border-white/10 group cursor-help">
+                        <div id="apiStatusBadge" class="flex items-center gap-2.5 px-3 py-1.5 bg-black/30 rounded-full border border-white/10 group cursor-help" title="API Status">
                             <div id="apiStatusDot" class="w-2.5 h-2.5 rounded-full status-pulse bg-blue-500 shadow-[0_0_12px_rgba(59,130,246,0.6)]"></div>
-                            <span id="apiStatusText" class="text-[10px] text-gray-300 uppercase font-black tracking-widest" data-i18n="status_default">Default</span>
+                            <span id="apiStatusText" class="hidden">Default</span>
                         </div>
                     </div>
                     <button onclick="callGeminiAPI()" id="analyzeBtn" class="btn-gradient w-full md:w-auto px-16 py-5 rounded-full font-black text-lg text-white shadow-2xl flex items-center justify-center gap-4 active:scale-95 transition-all">
@@ -171,11 +174,11 @@
                 </div>
             </div>
 
-            <!-- 解析结果 -->
+            <!-- 结果 -->
             <div id="resultSection" class="hidden w-full max-w-4xl mt-16 animate-slide-up px-2">
-                <div class="glass-panel rounded-[2rem] p-10 md:p-14 border-t-4 border-pink-400 relative overflow-hidden">
+                <div class="glass-panel rounded-[2rem] p-10 md:p-14 border-t-4 border-pink-400 relative overflow-hidden text-left">
                     <h3 class="text-3xl font-serif text-pink-100 mb-10 border-b border-white/5 pb-6" data-i18n="result_title">梦境回响</h3>
-                    <div class="space-y-10 text-left">
+                    <div class="space-y-10">
                         <div class="bg-black/20 rounded-[1.5rem] p-8">
                             <h4 class="text-purple-200 font-bold mb-4 flex items-center gap-3 text-lg"><i class="fa-regular fa-lightbulb"></i> <span data-i18n="label_core">核心隐喻</span></h4>
                             <p id="resCore" class="text-gray-200 leading-relaxed text-lg font-light"></p>
@@ -202,20 +205,20 @@
             </div>
         </div>
 
-        <!-- 解梦广场 -->
-        <div id="page-plaza" class="page-section px-4">
+        <!-- 解梦广场模块 -->
+        <div id="page-plaza" class="page-section px-4 w-full">
             <div class="text-center max-w-2xl mx-auto mb-16">
                 <h2 class="text-4xl font-serif font-bold mb-4 text-white" data-i18n="plaza_title">解梦广场</h2>
                 <p class="text-gray-400" data-i18n="plaza_desc">在这里，梦境不再是个人的孤岛。共鸣，是治愈的开始。</p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="glass-card p-8 rounded-3xl h-full flex flex-col">
-                    <div class="flex gap-2 mb-6">
+                <div class="glass-card p-8 rounded-3xl h-full flex flex-col cursor-pointer hover:scale-[1.02] active:scale-[0.98] transition-all text-left" onclick="fillDreamFromCard(this)">
+                    <div class="flex gap-2 mb-6 text-left">
                         <span class="text-[10px] font-bold px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/20" data-i18n="card_1_tag_1">#追逐</span>
                         <span class="text-[10px] font-bold px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/20" data-i18n="card_1_tag_2">#焦虑</span>
                     </div>
-                    <h3 class="text-xl font-bold text-pink-50 mb-4" data-i18n="card_1_title">总是梦见在旧学校里找不到教室</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-8 flex-grow" data-i18n="card_1_desc">走廊变得无限长，所有的门都打不开，感觉有一种无法逃脱的压迫感。</p>
+                    <h3 class="text-xl font-bold text-pink-50 mb-4 text-left" data-i18n="card_1_title">总是梦见在旧学校里找不到教室</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-8 flex-grow text-left" data-i18n="card_1_desc">走廊变得无限长，所有的门都打不开，感觉有一种无法逃脱的压迫感。</p>
                     <div class="mt-auto pt-6 border-t border-white/5 flex justify-between items-center text-xs text-gray-500">
                         <span><i class="fa-solid fa-robot mr-1 text-pink-400"></i> <span data-i18n="label_ai_analyzed">AI 已解析</span></span>
                         <div class="flex gap-4"><i class="fa-regular fa-heart"></i> <i class="fa-regular fa-comment"></i></div>
@@ -224,14 +227,14 @@
             </div>
         </div>
 
-        <!-- 字典 -->
-        <div id="page-dictionary" class="page-section px-4">
+        <!-- 字典模块 -->
+        <div id="page-dictionary" class="page-section px-4 w-full">
             <div class="text-center max-w-3xl mx-auto mb-16">
                 <h2 class="text-4xl font-serif font-bold mb-8 text-white" data-i18n="dict_title">象征字典</h2>
                 <p class="text-gray-400 mb-8" data-i18n="dict_desc">万物皆有隐喻。</p>
                 <div class="relative max-w-xl mx-auto mb-12">
-                    <input type="text" id="dictSearch" oninput="searchDict()" class="w-full glass-input h-16 rounded-full px-16 text-xl text-center shadow-2xl" data-i18n-placeholder="dict_search_placeholder" placeholder="搜索意象...">
-                    <i class="fa-solid fa-magnifying-glass absolute left-6 top-1/2 -translate-y-1/2 text-pink-300 text-xl"></i>
+                    <input type="text" id="dictSearch" oninput="searchDict()" onkeydown="if(event.key==='Enter') triggerSearch()" class="w-full glass-input h-16 rounded-full px-16 text-xl text-center shadow-2xl" data-i18n-placeholder="dict_search_placeholder" placeholder="搜索意象...">
+                    <i class="fa-solid fa-magnifying-glass absolute left-6 top-1/2 -translate-y-1/2 text-pink-300 text-xl cursor-pointer hover:scale-110 transition-transform" onclick="triggerSearch()"></i>
                 </div>
                 <div class="flex flex-wrap justify-center gap-8 mb-16">
                     <div class="cursor-pointer group text-center" onclick="setSearch(translations[currentLang].cat_animals)">
@@ -249,12 +252,12 @@
                 </div>
             </div>
             <div id="dictGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="glass-card dict-card p-8 rounded-3xl border-t-4 border-green-500/40" data-keywords="蛇 snake animal 动物 爬行">
+                <div class="glass-card dict-card p-8 rounded-3xl border-t-4 border-green-500/40 text-left" data-keywords="蛇 snake animal 动物 爬行">
                     <div class="flex justify-between items-start mb-6">
                         <h3 class="text-2xl font-serif font-bold text-white" data-i18n="sym_snake_title">蛇 (Snake)</h3>
                         <i class="fa-solid fa-staff-snake text-3xl text-green-400/30"></i>
                     </div>
-                    <p class="text-[10px] text-gray-500 mb-3 font-black uppercase" data-i18n="label_psych">心理学视角</p>
+                    <p class="text-[10px] text-gray-500 mb-3 font-black uppercase tracking-widest" data-i18n="label_psych">心理学视角</p>
                     <p class="text-gray-300 text-sm leading-relaxed" data-i18n="sym_snake_psych">代表潜意识的智慧、治愈能力，或被压抑的原始冲动。</p>
                 </div>
             </div>
@@ -265,7 +268,7 @@
 
     <footer class="border-t border-white/5 bg-black/40 py-20 mt-20 text-left">
         <div class="container mx-auto px-10">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-12">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-12 text-left">
                 <div class="max-w-sm">
                     <div class="flex items-center gap-2 mb-6"><i class="fa-solid fa-moon text-pink-400 text-xl"></i><span class="text-xl font-serif font-bold text-white">DreamWhispeAi</span></div>
                     <div class="flex gap-6">
@@ -277,36 +280,39 @@
                 <div class="flex flex-col items-center md:items-end gap-4">
                     <p class="text-gray-600 text-[10px] tracking-widest uppercase">&copy; 2024 <span data-i18n="footer_copyright">dreamwhisperai</span></p>
                     <div class="text-[10px] text-gray-800 select-none cursor-default font-mono transition-colors hover:text-gray-600" ondblclick="openModal('settings')">
-                        BUILD ID: <span data-i18n="footer_build">DW-20241219-GOLD (Click to Debug)</span>
+                        BUILD ID: <span data-i18n="footer_build">DW-20241219-PLATINUM (Click to Debug)</span>
                     </div>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- 模态框 -->
+    <!-- 通用模态框 -->
     <div id="modal" class="modal" onclick="closeModal(event)">
         <div class="modal-content">
-            <button onclick="closeModal(null)" class="absolute top-8 right-8 text-gray-500 text-3xl hover:text-white">&times;</button>
-            <h2 id="modalTitle" class="text-3xl font-serif text-pink-200 mb-8 flex items-center gap-3">Title</h2>
-            <div id="modalBody" class="text-gray-300 leading-relaxed text-base max-h-[60vh] overflow-y-auto pr-4"></div>
+            <button onclick="closeModal(null)" class="absolute top-8 right-8 text-gray-500 text-3xl hover:text-white transition-colors">&times;</button>
+            <h2 id="modalTitle" class="text-3xl font-serif text-pink-200 mb-8 flex items-center gap-3 text-left">Title</h2>
+            <div id="modalBody" class="text-gray-300 leading-relaxed text-base max-h-[60vh] overflow-y-auto pr-4 text-left"></div>
         </div>
     </div>
 
+    <!-- API 设置 -->
     <div id="settingsModal" class="modal" onclick="closeModal(event)">
         <div class="modal-content bg-[#1A1625]">
             <h2 class="text-2xl font-serif text-pink-200 mb-6 flex items-center gap-3"><i class="fa-solid fa-sliders"></i> API Configuration</h2>
             <div class="space-y-6">
-                <input type="password" id="apiKeyInput" class="w-full glass-input rounded-xl p-4 text-white" placeholder="AIzaSy... (Google Gemini Key)">
-                <div class="flex gap-4">
-                    <button onclick="saveApiKey()" class="flex-grow py-4 btn-gradient rounded-xl font-black">保存配置</button>
+                <input type="password" id="apiKeyInput" class="w-full glass-input rounded-xl p-4 text-white font-mono text-sm text-left" placeholder="AIzaSy... (Google Gemini Key)">
+                <div class="flex gap-4 text-center">
+                    <button onclick="saveApiKey()" class="flex-grow py-4 btn-gradient rounded-xl font-black shadow-xl">保存配置</button>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        const DEFAULT_API_KEY = "AIzaSyCQbW5qLkdDvoWMdOb_poNe8Y-wBidE5rw";
+        // API Key 在 Canvas 预览环境中应设为空字符串，环境会自动提供。
+        const DEFAULT_API_KEY = "";
+        
         const translations = {
             'zh': {
                 nav_home: "首页", nav_square: "解梦广场", nav_dict: "象征字典", nav_about: "关于我们",
@@ -318,22 +324,25 @@
                 status_ready: "就绪", status_default: "默认", status_local: "本地模式", status_proxy: "代理模式",
                 plaza_title: "解梦广场", plaza_desc: "在这里，梦境不再是个人的孤岛。共鸣，是治愈的开始。",
                 card_1_tag_1: "#追逐", card_1_tag_2: "#焦虑", label_ai_analyzed: "AI 已解析",
-                card_1_title: "总是梦见在旧学校里找不到教室", card_1_desc: "梦里我很着急，上课铃响了，但我怎么也找不到高三的教室。",
                 dict_title: "象征字典", dict_desc: "万物皆有隐喻。在这里查阅梦中意象的心理学与传统文化解读。",
                 dict_search_placeholder: "搜索意象（如：蛇、考试、下雨...）",
                 cat_animals: "动物", cat_nature: "自然", cat_behavior: "行为",
                 sym_snake_title: "蛇 (Snake)", label_psych: "心理学视角", sym_snake_psych: "代表潜意识的智慧、治愈能力，或被压抑的原始冲动。",
                 footer_terms: "服务条款", footer_privacy: "隐私政策", footer_contact: "联系我们", footer_copyright: "dreamwhisperai", footer_build: "DW-20241219-GOLD (点击调试)",
-                modal_about_title: "关于 dreamwhisperai", modal_about_body: "dreamwhisperai 是一款专注于梦境心理学分析的 AI 平台。我们相信梦境是潜意识与意识之间的桥梁。",
-                modal_terms_title: "服务条款", modal_terms_body: "<strong>1. 接受条款</strong><br>访问和使用 https://dreamwhisperai.com，即表示您接受并同意受本协议条款和条件的约束。<br><br><strong>2. 服务说明</strong><br>本服务仅供娱乐和自我探索之用，不构成专业的心理咨询或医疗建议。",
-                modal_privacy_title: "隐私政策", modal_privacy_body: "我们非常重视您的隐私。<br><br>1. 您的梦境输入内容在传输过程中经过 SSL 加密。<br>2. 我们不会将您的个人身份信息出售给第三方。",
-                modal_contact_title: "联系我们", modal_contact_body: "如果有任何建议、反馈或合作意向，欢迎随时发送邮件给我们：<br><br><span class='text-pink-300 font-bold'>n20186005@gmail.com</span><br><br>We typically respond within 24 hours.",
+                modal_about_title: "关于 dreamwhisperai",
+                modal_about_body: "dreamwhisperai 是一款专注于梦境心理学分析的 AI 平台。我们相信梦境是潜意识与意识之间的桥梁。",
+                modal_terms_title: "服务条款",
+                modal_terms_body: "<strong>1. 接受条款</strong><br>访问和使用 https://dreamwhisperai.com，即表示您接受并同意受本协议条款和条件的约束。<br><br><strong>2. 服务说明</strong><br>本服务仅供娱乐和自我探索之用，不构成专业的心理咨询或医疗建议。",
+                modal_privacy_title: "隐私政策",
+                modal_privacy_body: "我们非常重视您的隐私。<br><br>1. 您的梦境输入内容在传输过程中经过 SSL 加密。<br>2. 我们不会将您的个人身份信息出售给第三方。",
+                modal_contact_title: "联系我们",
+                modal_contact_body: "如果有任何建议、反馈或合作意向，欢迎随时发送邮件给我们：<br><br><span class='text-pink-300 font-bold'>n20186005@gmail.com</span><br><br>We typically respond within 24 hours.",
                 toast_analyzing: "正在唤醒 AI 导师...", toast_done: "解析已呈上", no_result_msg: "正在唤醒 AI 为您解析..."
             },
             'zh-TW': {
                 nav_home: "首頁", nav_square: "解夢廣場", nav_dict: "象徵字典", nav_about: "關於我們",
                 hero_badge: "AI 驅動的心理療愈", hero_title_1: "探索你潛意識的", hero_title_2: "秘密花園",
-                hero_desc: "每一個夢都是靈魂寄來的信箋。在這裡，我們用溫柔的科技，為您解讀夢境背後的情緒與隱喻。",
+                hero_desc: "每一個夢都是靈魂寄來的信箋。在這裡，我們用溫柔的科技，為您解讀夢境背後的情緒與隱喻，找回內心的平靜。",
                 tab_write: "記錄夢境", tab_voice: "語音述說", voice_listening: "正在聆聽...", voice_stop: "停止錄音",
                 placeholder_text: "昨晚，我夢見...", privacy_note: "您的夢境將完全匿名處理", btn_analyze: "開始解析",
                 result_title: "夢境回響", label_core: "核心隱喻", label_emotion: "情緒映射", label_guide: "生活指引", label_lucky: "建議幸運物",
@@ -344,15 +353,16 @@
                 dict_search_placeholder: "搜索意象...",
                 cat_animals: "動物", cat_nature: "自然", cat_behavior: "行為",
                 footer_terms: "服務條款", footer_privacy: "隱私政策", footer_contact: "聯繫我們", footer_copyright: "dreamwhisperai", footer_build: "DW-20241219-GOLD (點擊調試)",
-                modal_terms_title: "服務條款", modal_terms_body: "<strong>1. 接受條款</strong><br>訪問和使用 https://dreamwhisperai.com。",
-                modal_privacy_title: "隱私政策", modal_privacy_body: "我們非常重視您的隱私。<br><br>1. 您的夢境輸入內容在傳輸過程中經過 SSL 加密。",
-                modal_contact_title: "聯繫我們", modal_contact_body: "聯繫電郵：<span class='text-pink-300 font-bold'>n20186005@gmail.com</span>",
+                modal_about_title: "關於 dreamwhisperai", modal_about_body: "dreamwhisperai 是一款專注於夢境心理學分析的 AI 平台。我們相信夢境是潛意識與意識之間的橋梁。",
+                modal_terms_title: "服務條款", modal_terms_body: "<strong>1. 接受條款</strong><br>訪問和使用 https://dreamwhisperai.com，即表示您接受並同意受本協議條款和條件的約束。<br><br><strong>2. 服務說明</strong><br>本服務僅供娛樂和自我探索之用，不構成專業的心理諮詢或醫療建議。",
+                modal_privacy_title: "隱私政策", modal_privacy_body: "我們非常重視您的隱私。<br><br>1. 您的夢境輸入內容在傳輸過程中經過 SSL 加密。<br>2. 我們不會將您的個人身份信息出售給第三方。",
+                modal_contact_title: "聯繫我們", modal_contact_body: "合作郵件：<span class='text-pink-300 font-bold'>n20186005@gmail.com</span>",
                 toast_analyzing: "正在喚醒 AI 導師...", toast_done: "解析已呈上"
             },
             'en': {
                 nav_home: "Home", nav_square: "Plaza", nav_dict: "Dict", nav_about: "About Us",
                 hero_badge: "AI-Powered Healing", hero_title_1: "Explore Your", hero_title_2: "Secret Garden",
-                hero_desc: "Every dream is a letter from your soul. We interpret emotions and metaphors behind your dreams.",
+                hero_desc: "Every dream is a letter from your soul.",
                 tab_write: "Write", tab_voice: "Speak", voice_listening: "Listening...", voice_stop: "Stop",
                 placeholder_text: "Last night...", privacy_note: "Processed anonymously", btn_analyze: "Analyze",
                 result_title: "Dream Echo", label_core: "Metaphor", label_emotion: "Emotions", label_guide: "Guidance", label_lucky: "Lucky Item",
@@ -363,7 +373,8 @@
                 dict_search_placeholder: "Search symbols...",
                 cat_animals: "Animals", cat_nature: "Nature", cat_behavior: "Behavior",
                 footer_terms: "Terms", footer_privacy: "Privacy", footer_contact: "Contact", footer_copyright: "dreamwhisperai", footer_build: "DW-20241219-GOLD (Click to Debug)",
-                modal_terms_title: "Terms of Service", modal_terms_body: "<strong>1. Acceptance</strong><br>By using dreamwhisperai.com, you agree to these terms.<br><br><strong>2. Description</strong><br>For entertainment only.",
+                modal_about_title: "About dreamwhisperai", modal_about_body: "dreamwhisperai is an AI platform for dream analysis. We believe dreams are bridges.",
+                modal_terms_title: "Terms of Service", modal_terms_body: "<strong>1. Acceptance</strong><br>By using dreamwhisperai.com... <strong>2. Description</strong><br>For entertainment only.",
                 modal_privacy_title: "Privacy Policy", modal_privacy_body: "We value your privacy.<br><br>1. Inputs are SSL encrypted.",
                 modal_contact_title: "Contact Us", modal_contact_body: "Email: <span class='text-pink-300 font-bold'>n20186005@gmail.com</span>",
                 toast_analyzing: "Awakening AI...", toast_done: "Done"
@@ -376,33 +387,56 @@
                 placeholder_text: "Прошлой ночью...", btn_analyze: "Анализ",
                 status_ready: "Готово", status_default: "Стандарт", status_local: "Локал", status_proxy: "Прокси",
                 plaza_title: "Площадь", plaza_desc: "Сны больше не одинокие острова.",
-                dict_title: "Словарь", dict_desc: "Все есть метафора.",
-                cat_animals: "Животные", cat_nature: "Природа", cat_behavior: "Поведение",
-                footer_terms: "Условия", footer_privacy: "Приватность", footer_contact: "Контакты", footer_copyright: "dreamwhisperai"
+                dict_title: "Словарь", cat_animals: "Животные", cat_nature: "Природа", cat_behavior: "Поведение",
+                footer_terms: "Условия", footer_privacy: "Приватность", footer_contact: "Контакты", footer_copyright: "dreamwhisperai",
+                modal_about_title: "О dreamwhisperai", modal_about_body: "dreamwhisperai — это ИИ-платформа для анализа снов. Мы верим, что сны — это мост.",
+                modal_terms_title: "Условия", modal_terms_body: "<strong>1. Согласие</strong><br>Используя сайт, вы соглашаетесь с условиями.",
+                modal_privacy_title: "Конфиденциальность", modal_privacy_body: "Мы ценим вашу приватность. Данные зашифрованы по SSL.",
+                modal_contact_title: "Контакты", modal_contact_body: "Email: <span class='text-pink-300 font-bold'>n20186005@gmail.com</span>"
             },
             'es': {
                 nav_home: "Inicio", nav_square: "Plaza", nav_dict: "Diccionario", nav_about: "Nosotros",
                 hero_badge: "Sanación con IA", hero_title_1: "Explora Tu", hero_title_2: "Jardín Secreto",
                 hero_desc: "Cada sueño es una carta de tu alma.",
                 tab_write: "Escribir", tab_voice: "Hablar", voice_listening: "Escuchando...", voice_stop: "Parar",
-                btn_analyze: "Analizar", status_ready: "Listo", status_default: "Por defecto", status_local: "Local", status_proxy: "Proxy",
+                placeholder_text: "Anoche soñé...", btn_analyze: "Analizar",
+                result_title: "Eco del Sueño", label_core: "Metáfora", label_emotion: "Emociones", label_guide: "Guía", label_lucky: "Amuleto",
+                status_ready: "Listo", status_default: "Por defecto", status_local: "Local", status_proxy: "Proxy",
                 plaza_title: "Plaza", plaza_desc: "Aquí, los sueños ya no son islas.",
                 dict_title: "Diccionario", cat_animals: "Animales", cat_nature: "Naturaleza", cat_behavior: "Comportamiento",
-                footer_terms: "Términos", footer_privacy: "Privacidad", footer_contact: "Contacto"
+                footer_terms: "Términos", footer_privacy: "Privacidad", footer_contact: "Contacto",
+                modal_about_title: "Sobre dreamwhisperai", modal_about_body: "dreamwhisperai es una plataforma de AI para analizar sueños.",
+                modal_terms_title: "Términos", modal_terms_body: "<strong>1. Aceptación</strong><br>Al usar este sitio, aceptas los términos.",
+                modal_privacy_title: "Privacidad", modal_privacy_body: "Valoramos tu privacidad. SSL encriptado.",
+                modal_contact_title: "Contacto", modal_contact_body: "Email: <span class='text-pink-300 font-bold'>n20186005@gmail.com</span>"
             },
             'hi': {
                 nav_home: "होम", nav_square: "प्लाजा", nav_dict: "शब्दकोश", nav_about: "हमारे बारे में",
                 hero_badge: "AI संचालित हीलिंग", hero_title_1: "अपने अवचेतन को", hero_title_2: "खोजें",
                 hero_desc: "हर सपना आपकी आत्मा का एक पत्र है।",
-                tab_write: "लिखें", tab_voice: "बोलें", voice_listening: "सुन रहे हैं...",
-                btn_analyze: "विश्लेषण करें", plaza_title: "सपना प्लाजा", dict_title: "प्रतीक शब्दकोश"
+                tab_write: "लिखें", tab_voice: "बोलें", voice_listening: "सुन रहे हैं...", voice_stop: "रुकें",
+                btn_analyze: "विश्लेषण करें", status_ready: "तैयार", status_default: "डिफ़ॉल्ट", status_local: "स्थानीय", status_proxy: "प्रॉक्सी",
+                plaza_title: "सपना प्लाजा", plaza_desc: "Resonance is the beginning of healing.",
+                dict_title: "शब्दकोश", cat_animals: "जानवर", cat_nature: "प्रकृति", cat_behavior: "व्यवहार",
+                footer_terms: "शर्तें", footer_privacy: "गोपनीयता", footer_contact: "संपर्क",
+                modal_about_title: "dreamwhisperai के बारे में", modal_about_body: "dreamwhisperai सपनों के विश्लेषण के लिए एक AI मंच है।",
+                modal_terms_title: "शर्तें", modal_terms_body: "<strong>1. स्वीकृति</strong><br>इस साइट का उपयोग शर्तों की स्वीकृति है।",
+                modal_privacy_title: "गोपनीयता", modal_privacy_body: "SSL एन्क्रिप्शन।",
+                modal_contact_title: "संपर्क", modal_contact_body: "ईमेल: <span class='text-pink-300 font-bold'>n20186005@gmail.com</span>"
             },
             'pl': {
                 nav_home: "Główna", nav_square: "Plac", nav_dict: "Słownik", nav_about: "O nas",
                 hero_badge: "Uzdrowienie przez AI", hero_title_1: "Odkryj Swój", hero_title_2: "Sekretny Ogród",
                 hero_desc: "Każdy sen to list od Twojej duszy.",
-                tab_write: "Pisanie", tab_voice: "Mówienie", voice_listening: "Słuchanie...",
-                btn_analyze: "Analizuj", plaza_title: "Plac Snów", dict_title: "Słownik Symboli"
+                tab_write: "Pisanie", tab_voice: "Mówienie", voice_listening: "Słuchanie...", voice_stop: "Stop",
+                btn_analyze: "Analizuj", status_ready: "Gotowe", status_default: "Domyślny", status_local: "Lokalny", status_proxy: "Proxy",
+                plaza_title: "Plac Snów", plaza_desc: "Sny nie są już samotnymi wyspami.",
+                dict_title: "Słownik", cat_animals: "Zwierzęta", cat_nature: "Natura", cat_behavior: "Zachowanie",
+                footer_terms: "Warunki", footer_privacy: "Prywatność", footer_contact: "Kontakt",
+                modal_about_title: "O dreamwhisperai", modal_about_body: "dreamwhisperai to platforma AI do analizy snów.",
+                modal_terms_title: "Warunki", modal_terms_body: "<strong>1. Akceptacja</strong><br>Korzystanie z witryny oznacza akceptację.",
+                modal_privacy_title: "Prywatność", modal_privacy_body: "Szyfrowanie SSL.",
+                modal_contact_title: "Kontakt", modal_contact_body: "Email: <span class='text-pink-300 font-bold'>n20186005@gmail.com</span>"
             }
         };
 
@@ -420,7 +454,8 @@
             document.documentElement.lang = currentLang;
             const labels = { 'zh': '简体中文', 'zh-TW': '繁體中文', 'en': 'English', 'es': 'Español', 'ru': 'Русский', 'hi': 'हिन्दी', 'pl': 'Polski' };
             const labelEl = document.getElementById('currentLangLabel');
-            if(labelEl) labelEl.innerText = labels[currentLang];
+            if(labelEl) labelEl.innerText = labels[currentLang] || 'Language';
+            
             if (updateURL) {
                 try {
                     const url = new URL(window.location.href);
@@ -428,6 +463,7 @@
                     window.history.pushState({}, '', url.toString());
                 } catch (e) {}
             }
+
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
                 if (translations[currentLang][key]) el.innerHTML = translations[currentLang][key];
@@ -486,52 +522,73 @@
 
         function updateApiStatus() {
             const dot = document.getElementById('apiStatusDot');
-            const text = document.getElementById('apiStatusText');
+            const badge = document.getElementById('apiStatusBadge');
             const localKey = localStorage.getItem('dreamwhisper_api_key');
             const trans = translations[currentLang];
             if (localKey) {
                 dot.className = "w-2.5 h-2.5 rounded-full status-pulse bg-green-500 shadow-[0_0_12px_rgba(34,197,94,0.7)]";
-                text.innerText = trans.status_local;
+                badge.title = "Status: " + (trans.status_local || "Local Mode");
             } else {
                 dot.className = "w-2.5 h-2.5 rounded-full status-pulse bg-blue-500 shadow-[0_0_12px_rgba(59,130,246,0.7)]";
-                text.innerText = trans.status_default;
+                badge.title = "Status: " + (trans.status_default || "Default Mode");
             }
         }
 
-        // --- 核心逻辑：解梦 API 请求 ---
-        async function callGeminiAPI() {
+        async function callGeminiAPI(customPrompt = null) {
             const input = document.getElementById('dreamInput').value.trim();
             const btn = document.getElementById('analyzeBtn');
             const localKey = localStorage.getItem('dreamwhisper_api_key');
             const activeKey = localKey || DEFAULT_API_KEY;
-            if (!input) { showToast("请输入梦境内容"); return; }
+            const rawDreamInput = customPrompt || input;
+            if (!rawDreamInput) { showToast("请输入内容"); return; }
             btn.disabled = true;
             btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Analyzing...`;
             showToast(translations[currentLang].toast_analyzing);
             try {
-                const data = await callGeminiClientSide(input, currentLang, activeKey);
+                const data = await callGeminiClientSide(rawDreamInput, currentLang, activeKey, !!customPrompt);
+                if (customPrompt) return data;
                 renderResult(data);
             } catch (error) {
                 console.error(error);
-                showToast("连接失败，请检查网络或 Key");
+                showToast("连接失败，请检查网络");
             } finally {
                 btn.disabled = false;
                 btn.innerHTML = `<i class="fa-solid fa-wand-magic-sparkles"></i> <span data-i18n="btn_analyze">${translations[currentLang].btn_analyze}</span>`;
             }
         }
 
-        async function callGeminiClientSide(dream, lang, apiKey) {
-            const prompt = `Analyze dream: "${dream}" return raw JSON: {"core_metaphor": "", "emotions": "", "guidance": "", "lucky_item": ""}. Language: ${lang}.`;
+        async function callGeminiClientSide(content, lang, apiKey, isRawPrompt = false) {
             const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-            const response = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] }) });
-            if (!response.ok) throw new Error("API Error");
-            const data = await response.json();
-            return extractJson(data.candidates[0].content.parts[0].text);
+            const finalPrompt = isRawPrompt ? content : `Analyze dream: "${content}" return raw JSON: {"core_metaphor": "", "emotions": "", "guidance": "", "lucky_item": ""}. Language: ${lang}.`;
+            const payload = { contents: [{ parts: [{ text: finalPrompt }] }] };
+            let delay = 1000;
+            for (let i = 0; i < 5; i++) {
+                try {
+                    const response = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                    if (response.ok) {
+                        const data = await response.json();
+                        const resultText = data.candidates?.[0]?.content?.parts?.[0]?.text || "{}";
+                        return extractJson(resultText);
+                    }
+                    if (response.status === 429 || (response.status >= 500 && response.status < 600)) {
+                        await new Promise(r => setTimeout(r, delay));
+                        delay *= 2;
+                        continue;
+                    }
+                    throw new Error(`API Error: ${response.status}`);
+                } catch (e) {
+                    if (i === 4) throw e;
+                    await new Promise(r => setTimeout(r, delay));
+                    delay *= 2;
+                }
+            }
+            throw new Error("All API retries failed.");
         }
 
         function extractJson(text) { try { return JSON.parse(text); } catch (e) { const match = text.match(/\{[\s\S]*\}/); return match ? JSON.parse(match[0]) : {}; } }
 
         function renderResult(data) {
+            if (!data || typeof data !== 'object') return;
             document.getElementById('resCore').innerText = data.core_metaphor || "";
             document.getElementById('resEmotion').innerText = data.emotions || "";
             document.getElementById('resGuide').innerText = data.guidance || "";
@@ -545,8 +602,10 @@
         function openModal(type) {
             if (type === 'settings') { document.getElementById('settingsModal').style.display = 'flex'; return; }
             const m = document.getElementById('modal');
-            document.getElementById('modalTitle').innerText = translations[currentLang][`modal_${type}_title`] || "Info";
-            document.getElementById('modalBody').innerHTML = translations[currentLang][`modal_${type}_body`] || "Coming soon...";
+            const titleEl = document.getElementById('modalTitle');
+            const bodyEl = document.getElementById('modalBody');
+            titleEl.innerText = translations[currentLang][`modal_${type}_title`] || translations[currentLang][`nav_${type}`] || "Info";
+            bodyEl.innerHTML = translations[currentLang][`modal_${type}_body`] || "Detail content is missing...";
             m.style.display = 'flex';
         }
 
@@ -556,28 +615,47 @@
 
         function toggleMobileMenu(open) { document.getElementById('mobileMenu').classList.toggle('open', open); document.getElementById('menuOverlay').classList.toggle('hidden', !open); }
 
-        function searchDict() { const q = document.getElementById('dictSearch').value.toLowerCase(); document.querySelectorAll('.dict-card').forEach(c => { c.style.display = c.innerText.toLowerCase().includes(q) ? 'block' : 'none'; }); }
+        function fillDreamFromCard(el) {
+            const dreamText = el.querySelector('p').innerText;
+            document.getElementById('dreamInput').value = dreamText;
+            navigateTo('home');
+            showToast("Dream Copied!");
+        }
+
+        function searchDict() {
+            const q = document.getElementById('dictSearch').value.toLowerCase().trim();
+            document.querySelectorAll('.dict-card').forEach(c => {
+                const keywords = c.getAttribute('data-keywords') || "";
+                const matches = c.innerText.toLowerCase().includes(q) || keywords.toLowerCase().includes(q);
+                c.style.display = matches ? 'block' : 'none';
+            });
+        }
 
         function setSearch(k) { document.getElementById('dictSearch').value = k; searchDict(); }
 
+        async function triggerSearch() {
+            const q = document.getElementById('dictSearch').value.trim();
+            if(!q) return;
+            const cards = Array.from(document.querySelectorAll('.dict-card'));
+            const hasLocalResult = cards.some(c => c.style.display !== 'none' && c.style.display !== '');
+            if(!hasLocalResult) await searchSymbolAI(q);
+        }
+
         async function searchSymbolAI(keyword) {
             const container = document.getElementById('aiResultContainer');
-            const localKey = localStorage.getItem('dreamwhisper_api_key');
-            const activeKey = localKey || DEFAULT_API_KEY;
-            container.classList.remove('hidden');
+            const noResult = document.getElementById('noSearchResult');
+            noResult.classList.remove('hidden');
+            container.classList.add('hidden');
             container.innerHTML = `<div class="glass-card p-6 rounded-3xl skeleton h-32 opacity-20"></div>`;
             try {
                 const prompt = `Define dream symbol "${keyword}" as JSON: {"psych": "", "trad": ""}. Language: ${currentLang}.`;
-                const data = await callGeminiClientSide(prompt, currentLang, activeKey);
-                container.innerHTML = `<div class="glass-card p-8 rounded-3xl border-t-4 border-pink-500/40 animate-fade-in"><h3 class="text-2xl font-serif font-bold text-white mb-4">${keyword}</h3><p class="text-[10px] text-gray-500 uppercase mb-2">Psychology</p><p class="text-gray-300 text-sm mb-4">${data.psych || ""}</p><p class="text-[10px] text-gray-500 uppercase mb-2">Folklore</p><p class="text-gray-300 text-sm">${data.trad || ""}</p></div>`;
+                const data = await callGeminiAPI(prompt); 
+                if (data) {
+                    noResult.classList.add('hidden');
+                    container.classList.remove('hidden');
+                    container.innerHTML = `<div class="glass-card p-8 rounded-3xl border-t-4 border-pink-500/40 animate-fade-in text-left"><h3 class="text-2xl font-serif font-bold text-white mb-4">${keyword}</h3><p class="text-[10px] text-gray-500 uppercase mb-2">Psychology</p><p class="text-gray-300 text-sm mb-4">${data.psych || ""}</p><p class="text-[10px] text-gray-500 uppercase mb-2">Folklore</p><p class="text-gray-300 text-sm">${data.trad || ""}</p></div>`;
+                }
             } catch (e) { container.classList.add('hidden'); }
-        }
-
-        function triggerSearch() {
-            const q = document.getElementById('dictSearch').value.trim();
-            if(!q) return;
-            const found = Array.from(document.querySelectorAll('.dict-card')).some(c => c.innerText.toLowerCase().includes(q.toLowerCase()));
-            if(!found) searchSymbolAI(q);
         }
     </script>
 </body>
