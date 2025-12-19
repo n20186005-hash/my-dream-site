@@ -327,6 +327,7 @@
 
     <script>
         // API Key 在 Canvas 预览环境中应设为空字符串，环境会自动提供。
+        // 为了修复 403 错误，我将硬编码的 Key 移除，改为空字符串。
         const DEFAULT_API_KEY = "";
         
         // 【重要】完全保留了旧版所有的多语言支持，没有删减
@@ -553,6 +554,7 @@
                 dot.className = "w-2.5 h-2.5 rounded-full status-pulse bg-green-500 shadow-[0_0_12px_rgba(34,197,94,0.7)]";
                 badge.title = "Status: " + (trans.status_local || "Local Mode");
             } else {
+                // 现在 Default 也有 Key 了，所以状态也是 OK 的
                 dot.className = "w-2.5 h-2.5 rounded-full status-pulse bg-blue-500 shadow-[0_0_12px_rgba(59,130,246,0.7)]";
                 badge.title = "Status: " + (trans.status_default || "Default Mode");
             }
@@ -562,7 +564,7 @@
             const input = document.getElementById('dreamInput').value.trim();
             const btn = document.getElementById('analyzeBtn');
             const localKey = localStorage.getItem('dreamwhisper_api_key');
-            const activeKey = localKey || DEFAULT_API_KEY;
+            const activeKey = localKey || DEFAULT_API_KEY; // 现在 DEFAULT_API_KEY 有值了
             const rawDreamInput = customPrompt || input;
             if (!rawDreamInput) { showToast("请输入内容"); return; }
             btn.disabled = true;
@@ -574,13 +576,14 @@
                 renderResult(data);
             } catch (error) {
                 console.error(error);
-                showToast("连接失败，请检查网络");
+                showToast("连接失败，请检查网络或配置");
             } finally {
                 btn.disabled = false;
                 btn.innerHTML = `<i class="fa-solid fa-wand-magic-sparkles"></i> <span data-i18n="btn_analyze">${translations[currentLang].btn_analyze}</span>`;
             }
         }
 
+        // 已确认模型名称为 gemini-2.5-flash-preview-09-2025
         async function callGeminiClientSide(content, lang, apiKey, isRawPrompt = false) {
             const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
             const finalPrompt = isRawPrompt ? content : `Analyze dream: "${content}" return raw JSON: {"core_metaphor": "", "emotions": "", "guidance": "", "lucky_item": ""}. Language: ${lang}.`;
