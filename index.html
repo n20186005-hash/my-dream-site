@@ -340,7 +340,7 @@
                         <div class="flex items-center gap-2 text-sm text-gray-400">
                             <i class="fa-regular fa-eye-slash"></i>
                             <span data-i18n="privacy_note">您的梦境将完全匿名处理</span>
-                            <span id="apiStatusBadge" class="hidden ml-2 px-2 py-0.5 rounded bg-green-500/20 text-green-300 text-xs border border-green-500/30">API 已就绪</span>
+                            <span id="apiStatusBadge" class="hidden ml-2 px-2 py-0.5 rounded bg-green-500/20 text-green-300 text-xs border border-green-500/30" data-i18n="api_ready">API 已就绪</span>
                         </div>
                         <button onclick="callGeminiAPI()" id="analyzeBtn" class="btn-gradient w-full md:w-auto px-10 py-4 rounded-full font-bold text-white shadow-lg flex items-center justify-center gap-3">
                             <i class="fa-solid fa-wand-magic-sparkles"></i>
@@ -618,6 +618,7 @@
     <script>
         // --- FALLBACK API KEY ---
         // 这是默认备用 Key，当用户未设置自己的 Key 且后端服务不可用时使用
+        // 建议：不要将生产环境 Key 硬编码在前端
         const DEFAULT_API_KEY = 'AIzaSyCQbW5qLkdDvoWMdOb_poNe8Y-wBidE5rw';
 
         // --- Translations ---
@@ -664,7 +665,8 @@
                 modal_privacy_body: `<p class="mb-4">我们非常重视您的隐私。</p><ul class="list-disc pl-5 space-y-2"><li>您的梦境输入内容在传输过程中经过 SSL 加密。</li><li>我们不会将您的个人身份信息出售给第三方。</li></ul>`,
                 modal_contact_body: `<div class="text-center py-6"><p class="mb-4 text-gray-300">如果有任何建议、反馈或合作意向，<br>欢迎随时发送邮件给我们：</p><a href="mailto:n20186005@gmail.com" class="text-2xl font-serif text-pink-300 hover:text-pink-200 transition-colors border-b border-pink-300/30 pb-1">n20186005@gmail.com</a><p class="mt-6 text-xs text-gray-500">We typically respond within 24 hours.</p></div>`,
                 share_title: "分享你的梦境解析",
-                btn_copy_link: "一键复制内容"
+                btn_copy_link: "一键复制内容",
+                api_ready: "API 已就绪"
             },
             en: {
                 nav_square: "Dream Plaza", nav_dict: "Symbol Dict", nav_about: "About Us",
@@ -708,7 +710,8 @@
                 modal_privacy_body: `<p class="mb-4">We value your privacy.</p><ul class="list-disc pl-5 space-y-2"><li>Your input is SSL encrypted during transmission.</li></ul>`,
                 modal_contact_body: `<div class="text-center py-6"><p class="mb-4 text-gray-300">For any questions, suggestions, or inquiries,<br>please feel free to email us at:</p><a href="mailto:n20186005@gmail.com" class="text-2xl font-serif text-pink-300 hover:text-pink-200 transition-colors border-b border-pink-300/30 pb-1">n20186005@gmail.com</a><p class="mt-6 text-xs text-gray-500">We typically respond within 24 hours.</p></div>`,
                 share_title: "Share Your Dream Analysis",
-                btn_copy_link: "Copy Content"
+                btn_copy_link: "Copy Content",
+                api_ready: "API Ready"
             },
             es: {
                 nav_square: "Plaza de Sueños", nav_dict: "Diccionario", nav_about: "Sobre Nosotros",
@@ -744,7 +747,8 @@
                 modal_privacy_body: `<p>Valoramos su privacidad.</p>`,
                 modal_contact_body: `<div class="text-center py-6"><p class="mb-4 text-gray-300">Para preguntas o sugerencias:</p><a href="mailto:n20186005@gmail.com" class="text-2xl font-serif text-pink-300 hover:text-pink-200 transition-colors border-b border-pink-300/30 pb-1">n20186005@gmail.com</a></div>`,
                 share_title: "Comparte tu análisis",
-                btn_copy_link: "Copier contenido"
+                btn_copy_link: "Copier contenido",
+                api_ready: "API Listo"
             },
             fr: {
                 nav_square: "Place des Rêves", nav_dict: "Dictionnaire", nav_about: "À Propos",
@@ -780,7 +784,8 @@
                 modal_privacy_body: `<p>Nous tenons à votre vie privée.</p>`,
                 modal_contact_body: `<div class="text-center py-6"><p class="mb-4 text-gray-300">Pour toute question ou suggestion:</p><a href="mailto:n20186005@gmail.com" class="text-2xl font-serif text-pink-300 hover:text-pink-200 transition-colors border-b border-pink-300/30 pb-1">n20186005@gmail.com</a></div>`,
                 share_title: "Partager votre analyse",
-                btn_copy_link: "Copier le contenu"
+                btn_copy_link: "Copier le contenu",
+                api_ready: "API Prêt"
             }
         };
 
@@ -982,17 +987,17 @@
                 
                 let errorMsg = "连接潜意识失败";
                 if (error.message.includes('404')) {
-                    errorMsg = "找不到后端服务。";
+                    errorMsg = "找不到 API 服务 (404)";
                 } else if (error.message.includes('Key')) {
                     errorMsg = "API Key 无效，请检查设置。";
+                } else if (error.message.includes('429')) {
+                     errorMsg = "请求过多，请稍后重试";
                 } else {
                     errorMsg += ": " + error.message;
                 }
                 
                 showToast(errorMsg);
                 
-                // Fallback for demo purposes if strictly needed, but better to show error
-                // const mockData = { ... }; renderResult(mockData);
             } finally {
                 btn.innerHTML = `<i class="fa-solid fa-wand-magic-sparkles"></i> <span data-i18n="btn_analyze">开始解析</span>`;
                 btn.disabled = false;
@@ -1040,7 +1045,8 @@
               }
             `;
 
-            const apiUrl = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+            // 修复：更新 API URL 到 v1beta 以获得更好的支持
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
             
             const response = await fetch(apiUrl, {
                 method: 'POST',
@@ -1310,7 +1316,8 @@
                     Response language: ${langName}.
                 `;
 
-                const apiUrl = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+                // 修复：更新 API URL 到 v1beta 以获得更好的支持
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
                 
                 const response = await fetch(apiUrl, {
                     method: 'POST',
