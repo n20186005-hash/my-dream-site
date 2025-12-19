@@ -558,13 +558,13 @@
             if (localKey && localKey.trim() !== '') {
                 dot.className = "w-2.5 h-2.5 rounded-full status-pulse bg-green-500 shadow-[0_0_12px_rgba(34,197,94,0.7)]";
                 badge.title = trans.status_local || "Local Mode";
-                text.innerText = "LOCAL";
+                text.innerText = "LOCAL (2.5)";
                 text.className = "text-[10px] uppercase font-bold tracking-wider text-green-400/80 ml-1";
             } else {
                 // 如果没有本地 Key，则使用 Server Proxy 模式 (Env Var)
                 dot.className = "w-2.5 h-2.5 rounded-full status-pulse bg-blue-500 shadow-[0_0_12px_rgba(59,130,246,0.7)]";
                 badge.title = trans.status_proxy || "Server Proxy";
-                text.innerText = "PROXY";
+                text.innerText = "PROXY (2.5)";
                 text.className = "text-[10px] uppercase font-bold tracking-wider text-blue-400/80 ml-1";
             }
             document.getElementById('apiStatusText').classList.remove('hidden');
@@ -679,10 +679,11 @@
             }
         }
 
-        // 客户端直接调用逻辑 (保留作为 Local Mode)
-        // 修复：增加指数退避重试
+        // 客户端直接调用逻辑 (Local Mode)
+        // 修复：升级至 gemini-2.5-flash 并关闭 thinking
         async function callGeminiClientSide(promptText, apiKey, maxRetries = 3) {
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent`;
+            // 更新模型端点
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent`;
             let delay = 1000;
 
             for (let i = 0; i <= maxRetries; i++) {
@@ -694,7 +695,11 @@
                             'X-goog-api-key': apiKey
                         },
                         body: JSON.stringify({
-                            contents: [{ parts: [{ text: promptText }] }]
+                            contents: [{ parts: [{ text: promptText }] }],
+                            generationConfig: {
+                                // 显式关闭思考功能以提高速度
+                                thinkingConfig: { includeThoughts: false }
+                            }
                         })
                     });
 
