@@ -2,23 +2,48 @@
  * Cloudflare Pages Function
  * 处理 /api/interpret 的 POST 请求
  * 功能：作为网关，处理“解梦”和“象征查询”两种请求
+ * 更新：增加 CORS 支持，允许跨域调用
  */
+
+// 定义通用的 CORS 头部
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*', // 允许所有来源，生产环境可改为具体域名
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type',
+};
+
+// 处理 OPTIONS 预检请求
+export async function onRequestOptions(context) {
+  return new Response(null, {
+    status: 204,
+    headers: corsHeaders
+  });
+}
+
 export async function onRequestPost(context) {
   try {
     const { request, env } = context;
     
-    // 验证请求方法和内容类型
+    // 验证请求方法 (虽然 onRequestPost 已经保证了是 POST，但保留校验无害)
     if (request.method !== 'POST') {
       return new Response(JSON.stringify({ error: "Method not allowed" }), {
         status: 405,
-        headers: { 'Content-Type': 'application/json', 'Allow': 'POST' }
+        headers: { 
+            'Content-Type': 'application/json', 
+            'Allow': 'POST',
+            ...corsHeaders 
+        }
       });
     }
 
-    if (!request.headers.get('Content-Type')?.includes('application/json')) {
+    const contentType = request.headers.get('Content-Type');
+    if (!contentType || !contentType.includes('application/json')) {
       return new Response(JSON.stringify({ error: "Unsupported Media Type. Use application/json" }), {
         status: 415,
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 
+            'Content-Type': 'application/json',
+            ...corsHeaders
+        }
       });
     }
 
@@ -29,7 +54,10 @@ export async function onRequestPost(context) {
     } catch (parseError) {
       return new Response(JSON.stringify({ error: "Invalid JSON format" }), {
         status: 400,
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 
+            'Content-Type': 'application/json',
+            ...corsHeaders
+        }
       });
     }
 
@@ -40,11 +68,15 @@ export async function onRequestPost(context) {
     const normalizedLang = validLangs.includes(lang) ? lang : 'zh';
 
     // 获取 API Key
-    const apiKey = env.GEMINI_API_KEY || "AIzaSyCQbW5qLkdDvoWMdOb_poNe8Y-wBidE5rw";
+    // 必须在 Cloudflare Pages 后台设置 GEMINI_API_KEY 环境变量
+    const apiKey = env.GEMINI_API_KEY;
     if (!apiKey) {
-      return new Response(JSON.stringify({ error: "Server Configuration Error: Missing API Key" }), {
+      return new Response(JSON.stringify({ error: "Server Configuration Error: Missing API Key in Backend Environment" }), {
         status: 500,
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 
+            'Content-Type': 'application/json',
+            ...corsHeaders
+        }
       });
     }
 
@@ -59,7 +91,10 @@ export async function onRequestPost(context) {
       if (!symbol || typeof symbol !== 'string' || symbol.trim() === '') {
         return new Response(JSON.stringify({ error: "Missing or invalid symbol keyword" }), {
           status: 400,
-          headers: { 'Content-Type': 'application/json' }
+          headers: { 
+              'Content-Type': 'application/json',
+              ...corsHeaders
+          }
         });
       }
 
@@ -78,7 +113,10 @@ export async function onRequestPost(context) {
       if (!dream || typeof dream !== 'string' || dream.trim() === '') {
         return new Response(JSON.stringify({ error: "Missing or invalid dream content" }), {
           status: 400,
-          headers: { 'Content-Type': 'application/json' }
+          headers: { 
+              'Content-Type': 'application/json',
+              ...corsHeaders
+          }
         });
       }
 
@@ -98,7 +136,8 @@ export async function onRequestPost(context) {
     }
 
     // 调用 Google Gemini API
-    const apiUrl = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+    // 使用 v1beta 版本以获得更好的 gemini-1.5-flash 支持
+    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
     try {
       const geminiResponse = await fetch(apiUrl, {
@@ -108,7 +147,7 @@ export async function onRequestPost(context) {
           contents: [{ parts: [{ text: promptText }] }],
           generationConfig: { responseMimeType: "application/json" }
         }),
-        timeout: 15000 // 15秒超时
+        timeout: 20000 // 延长到20秒超时，防止大模型响应慢
       });
 
       if (!geminiResponse.ok) {
@@ -119,7 +158,10 @@ export async function onRequestPost(context) {
           details: geminiResponse.status < 500 ? errText : undefined
         }), {
           status: geminiResponse.status < 500 ? 400 : 502,
-          headers: { 'Content-Type': 'application/json' }
+          headers: { 
+              'Content-Type': 'application/json',
+              ...corsHeaders
+          }
         });
       }
 
@@ -142,7 +184,10 @@ export async function onRequestPost(context) {
       }
 
       return new Response(cleanedText, {
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 
+            'Content-Type': 'application/json',
+            ...corsHeaders
+        }
       });
     } catch (fetchError) {
       console.error("API Request Error:", fetchError);
@@ -150,7 +195,10 @@ export async function onRequestPost(context) {
         error: fetchError.message || "Failed to communicate with upstream API" 
       }), {
         status: 500,
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 
+            'Content-Type': 'application/json',
+            ...corsHeaders
+        }
       });
     }
 
@@ -158,7 +206,10 @@ export async function onRequestPost(context) {
     console.error("Worker Error:", err);
     return new Response(JSON.stringify({ error: err.message }), {
       status: 500,
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 
+          'Content-Type': 'application/json',
+          ...corsHeaders
+      }
     });
   }
 }
