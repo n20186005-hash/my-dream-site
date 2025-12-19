@@ -655,11 +655,15 @@
 
         // 客户端直接调用逻辑 (保留作为 Local Mode)
         async function callGeminiClientSide(promptText, apiKey) {
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            // 修正为 Header 鉴权 + 稳定模型 gemini-1.5-flash
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent`;
             
             const response = await fetch(apiUrl, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'X-goog-api-key': apiKey
+                },
                 body: JSON.stringify({
                     contents: [{ parts: [{ text: promptText }] }]
                 })
