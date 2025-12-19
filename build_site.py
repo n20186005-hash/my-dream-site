@@ -5,14 +5,24 @@ import shutil
 import random
 import re
 
-# --- 配置 ---
+# ================= 配置区 =================
+
+# 🚀 增量生成开关
+# True  = 日常更新模式。跳过已存在的文件，只生成新的，且自动带上广告。
+# False = 全站刷新模式。强制覆盖所有文件（如果你想给所有旧页面也加上广告，请改为 False 跑一次）。
+SKIP_EXISTING = True 
+
 DATA_FILE = 'symbols_updated.json'     # 数据源
 TEMPLATE_FILE = 'symbol_template.html' # 模板文件
 OUTPUT_DIR = 'public'
 DREAMS_DIR = os.path.join(OUTPUT_DIR, 'dreams')
-DOMAIN = "https://dreamwhisperai.com" # !!! 请替换为你的真实域名 !!!
+DOMAIN = "https://dreamwhisperai.com" 
 
-# --- SEO 洗稿文案库 ---
+# 💰 Google AdSense 广告代码
+AD_CODE = """<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9279583389810634"
+     crossorigin="anonymous"></script>"""
+
+# ================= SEO 文案库 =================
 SEO_TITLES_ZH = [
     "梦见{name}是什么意思？2025年心理学与周公解梦全解析",
     "昨晚梦见{name}？揭秘潜意识给你的3个暗示",
@@ -27,167 +37,119 @@ INTRO_TEMPLATES_ZH = [
     "梦境是潜意识的语言。梦见<strong>{name}</strong>究竟意味着什么？",
     "你是否昨晚梦见了<strong>{name}</strong>？这可能不是一个巧合。",
     "在中国传统文化中，<strong>{name}</strong>往往承载着特殊的象征意义。",
-    "当你醒来记得自己梦见了<strong>{name}</strong>，你的潜意识正在试图告诉你什么？",
-    "<strong>{name}</strong>出现在梦中，通常与你近期的情绪状态息息相关。"
+    "心理学家荣格认为，梦中的<strong>{name}</strong>折射出了你内心的某种渴望。",
+    "当你醒来记得自己梦见了<strong>{name}</strong>，说明你的潜意识正在试图告诉你一些重要信息。"
 ]
 
-# --- 辅助函数：清理 HTML 标签用于 Meta 标签 ---
-def clean_html_tags(text):
-    if not text: return ""
-    clean = re.compile('<.*?>')
-    return re.sub(clean, '', text).replace('"', "'").replace('\n', ' ')
+def load_template():
+    if not os.path.exists(TEMPLATE_FILE):
+        print(f"❌ 错误：找不到模板文件 {TEMPLATE_FILE}")
+        return None
+    with open(TEMPLATE_FILE, 'r', encoding='utf-8') as f:
+        return f.read()
 
-# --- 确保目录存在 ---
-if not os.path.exists(DREAMS_DIR):
-    os.makedirs(DREAMS_DIR)
+def ensure_dir(directory):
+    if not os.path.exists(directory):
+        os.makedirs(directory)
 
-def load_data():
-    if not os.path.exists(DATA_FILE):
-        print(f"错误：找不到 {DATA_FILE}，请先运行爬虫 scraper.py")
-        return []
-    with open(DATA_FILE, 'r', encoding='utf-8') as f:
-        return json.load(f)
+def generate_page(item, template, existing_files):
+    filename = item.get('filename')
+    if not filename:
+        return False
+        
+    filepath = os.path.join(DREAMS_DIR, filename)
 
-def build_detail_pages(data):
-    print(f"正在加载模板: {TEMPLATE_FILE}...")
-    try:
-        with open(TEMPLATE_FILE, 'r', encoding='utf-8') as f:
-            template_content = f.read()
-    except FileNotFoundError:
-        print(f"错误：找不到模板文件 {TEMPLATE_FILE}")
-        return
+    # ⚡ 检查文件是否存在 (增量逻辑)
+    if SKIP_EXISTING and filename in existing_files:
+        return "skipped"
 
-    count = 0
-    for item in data:
-        html = template_content
-        zh_data = item.get('zh', {})
-        name = zh_data.get('name', '')
-        
-        # --- 1. 内容生成 ---
-        seo_title_template = random.choice(SEO_TITLES_ZH)
-        seo_title = seo_title_template.format(name=name)
-        
-        intro_template = random.choice(INTRO_TEMPLATES_ZH)
-        seo_intro = intro_template.format(name=name)
-        
-        original_summary = zh_data.get('summary', '')
-        # 页面显示用的摘要（保留HTML标签）
-        final_summary_html = f"{seo_intro}<br/><br/>{original_summary}"
-        
-        # Meta 标签用的纯文本摘要
-        meta_description = clean_html_tags(f"{seo_intro} {original_summary}")[:160] + "..."
-
-        # --- 2. 构造 SEO 头部标签 (SEO Injection) ---
-        filename = item.get('filename', f"symbol-{count}.html")
-        full_url = f"{DOMAIN}/dreams/{filename}"
-        
-        seo_tags = f"""
-    <!-- Auto-Injected SEO Tags -->
-    <meta name="description" content="{meta_description}">
-    <meta name="keywords" content="梦见{name}, {name}解梦, {name}象征意义, 周公解梦{name}, 心理学解梦">
-    <link rel="canonical" href="{full_url}">
-    <meta property="og:title" content="{seo_title}">
-    <meta property="og:description" content="{meta_description}">
-    <meta property="og:url" content="{full_url}">
-    <meta property="og:type" content="article">
+    # --- 数据准备 ---
+    zh_data = item.get('zh', {})
+    en_data = item.get('en', {})
+    name_zh = zh_data.get('name', '')
     
-    <!-- JSON-LD Structured Data -->
-    <script type="application/ld+json">
-    {{
-      "@context": "https://schema.org",
-      "@type": "Article",
-      "headline": "{seo_title}",
-      "description": "{meta_description}",
-      "mainEntityOfPage": {{
-        "@type": "WebPage",
-        "@id": "{full_url}"
-      }},
-      "author": {{
-        "@type": "Organization",
-        "name": "DreamWhisper"
-      }}
-    }}
-    </script>
-        """
+    # 随机选择 SEO 文案
+    seo_title = random.choice(SEO_TITLES_ZH).format(name=name_zh)
+    seo_intro = random.choice(INTRO_TEMPLATES_ZH).format(name=name_zh)
 
-        # --- 3. 执行替换 ---
-        
-        # 3.1 注入 SEO 标签到 </head> 之前
-        if '</head>' in html:
-            html = html.replace('</head>', f"{seo_tags}\n</head>")
-        
-        # 3.2 替换 Title
-        if '<title>' in html:
-            target_str = "象征字典 - {{ZH_NAME}} ({{EN_NAME}})"
-            if target_str in html:
-                html = html.replace(target_str, seo_title)
-            else:
-                html = html.replace('<title>', f'<title>{seo_title} | ')
-        
-        # 3.3 替换正文内容
-        html = html.replace('{{ZH_NAME}}', name)
-        html = html.replace('{{ZH_SUBNAME}}', zh_data.get('subname', ''))
-        html = html.replace('{{ZH_SUMMARY}}', final_summary_html) # 注意这里用带HTML的
-        html = html.replace('{{ZH_PSYCH_1}}', zh_data.get('psych_1', ''))
-        html = html.replace('{{ZH_PSYCH_2}}', zh_data.get('psych_2', ''))
-        html = html.replace('{{ZH_TRAD_GOOD}}', zh_data.get('trad_good', ''))
-        html = html.replace('{{ZH_TRAD_BAD}}', zh_data.get('trad_bad', ''))
-        
-        # 3.4 数据注入
-        json_str = json.dumps(item, ensure_ascii=False)
-        html = html.replace('"REPLACE_ME_WITH_JSON"', json_str)
-        html = html.replace("'REPLACE_ME_WITH_JSON'", json_str)
+    # 构建页面数据
+    page_data = {
+        "zh": zh_data,
+        "en": en_data,
+        "seo_title": seo_title,
+        "seo_intro": seo_intro
+    }
+    json_data = json.dumps(page_data, ensure_ascii=False)
 
-        # --- 4. 写入文件 ---
-        path = os.path.join(DREAMS_DIR, filename)
-        with open(path, 'w', encoding='utf-8') as f:
-            f.write(html)
-        count += 1
+    content = template
+    # 1. 基础替换
+    content = content.replace('{{ZH_NAME}}', name_zh)
+    content = content.replace('{{EN_NAME}}', en_data.get('name', ''))
+    
+    # 2. 注入数据到 JS
+    script_inject = f"<script>var pageData = {json_data};</script>"
+    content = content.replace('</body>', f'{script_inject}\n</body>')
+    
+    # 3. SEO Title 替换
+    content = content.replace('<title>象征字典', f'<title>{seo_title}')
 
-    print(f"成功生成 {count} 个详情页面 (SEO全量增强版) 到 {DREAMS_DIR}")
+    # 🔥 4. 自动植入广告代码
+    if "ca-pub-9279583389810634" not in content:
+        content = content.replace('</head>', f'{AD_CODE}\n</head>')
+
+    with open(filepath, 'w', encoding='utf-8') as f:
+        f.write(content)
+    
+    return "generated"
 
 def generate_index_page(data):
-    sorted_data = sorted(data, key=lambda x: len(x['zh']['name']))
-    links_html = ""
-    for item in sorted_data:
-        name = item['zh']['name']
-        filename = item['filename']
-        links_html += f'<li><a href="dreams/{filename}">{name}</a></li>'
+    """ 生成索引页 index.html (已恢复完整逻辑) """
+    print("📄 正在生成索引页 (index.html)...")
+    
+    # 构建列表项 HTML
+    list_items = ""
+    for item in data:
+        filename = item.get('filename')
+        name_zh = item.get('zh', {}).get('name', '未知')
+        if filename:
+            list_items += f'<li><a href="dreams/{filename}" class="block p-3 bg-white/5 hover:bg-white/10 rounded-lg transition">{name_zh}</a></li>\n'
 
+    # 完整的 Index HTML 模板
     html = f"""<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>解梦百科全书 - 索引</title>
-    <meta name="description" content="DreamWhisper 解梦百科全书，收录超过 {len(data)} 个常见梦境意象的心理学解析与传统周公解梦对照。">
+    <title>梦境象征索引 - DreamWhisper</title>
+    {AD_CODE}
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body {{ font-family: -apple-system, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background: #f5f7fa; }}
-        h1 {{ text-align: center; color: #2c3e50; }}
-        .search-box {{ text-align: center; margin-bottom: 30px; }}
-        input {{ padding: 10px 20px; width: 80%; max-width: 400px; border-radius: 20px; border: 1px solid #ddd; font-size: 16px; }}
-        ul {{ list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }}
-        li a {{ display: block; padding: 10px 20px; background: white; text-decoration: none; color: #333; border-radius: 8px; transition: 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }}
-        li a:hover {{ background: #3498db; color: white; transform: translateY(-2px); }}
+        body {{ background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%); color: white; min-height: 100vh; }}
     </style>
 </head>
-<body>
-    <h1>😴 解梦百科索引 ({len(data)})</h1>
-    <div class="search-box">
-        <input type="text" id="search" placeholder="搜索关键词..." onkeyup="filter()">
+<body class="p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold mb-8 text-center">梦境词典索引 ({len(data)}条)</h1>
+        
+        <input type="text" id="searchInput" onkeyup="filterList()" placeholder="搜索梦境..." class="w-full p-4 rounded-xl bg-white/10 border border-white/20 mb-8 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500">
+        
+        <ul id="symbolList" class="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {list_items}
+        </ul>
     </div>
-    <ul id="list">
-        {links_html}
-    </ul>
+
     <script>
-        function filter() {{
-            var input = document.getElementById('search');
-            var filter = input.value.toUpperCase();
-            var ul = document.getElementById("list");
-            var li = ul.getElementsByTagName('li');
-            for (var i = 0; i < li.length; i++) {{
-                var a = li[i].getElementsByTagName("a")[0];
-                if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {{
+        function filterList() {{
+            var input, filter, ul, li, a, i, txtValue;
+            input = document.getElementById('searchInput');
+            filter = input.value.toUpperCase();
+            ul = document.getElementById("symbolList");
+            li = ul.getElementsByTagName('li');
+
+            for (i = 0; i < li.length; i++) {{
+                a = li[i].getElementsByTagName("a")[0];
+                txtValue = a.textContent || a.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {{
                     li[i].style.display = "";
                 }} else {{
                     li[i].style.display = "none";
@@ -198,37 +160,87 @@ def generate_index_page(data):
 </body>
 </html>"""
     
-    with open(os.path.join(OUTPUT_DIR, 'index.html'), 'w', encoding='utf-8') as f:
+    index_path = os.path.join(OUTPUT_DIR, 'index.html')
+    with open(index_path, 'w', encoding='utf-8') as f:
         f.write(html)
-    print(f"索引页已生成: {os.path.join(OUTPUT_DIR, 'index.html')}")
+    print(f"✅ 索引页已生成: {index_path}")
 
 def generate_sitemap(data):
+    """ 自动生成 Sitemap """
+    sitemap_path = os.path.join(OUTPUT_DIR, 'sitemap.xml')
+    print(f"🗺️  正在刷新 Sitemap: {sitemap_path}")
+    
     sitemap_content = '<?xml version="1.0" encoding="UTF-8"?>\n'
     sitemap_content += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+    
     today = datetime.date.today().isoformat()
-    sitemap_content += f"  <url><loc>{DOMAIN}/index.html</loc><lastmod>{today}</lastmod></url>\n"
+    
+    # 固定页面
+    sitemap_content += f"  <url><loc>{DOMAIN}/index.html</loc><lastmod>{today}</lastmod><priority>1.0</priority></url>\n"
+    sitemap_content += f"  <url><loc>{DOMAIN}/dream-plaza.html</loc><lastmod>{today}</lastmod><priority>0.9</priority></url>\n"
+    
+    # 动态生成的页面
     for item in data:
-        sitemap_content += f"  <url><loc>{DOMAIN}/dreams/{item['filename']}</loc><priority>0.8</priority></url>\n"
+        filename = item.get('filename')
+        if filename:
+            sitemap_content += f"  <url><loc>{DOMAIN}/dreams/{filename}</loc><lastmod>{today}</lastmod><priority>0.8</priority></url>\n"
+            
     sitemap_content += '</urlset>'
-    with open(os.path.join(OUTPUT_DIR, 'sitemap.xml'), 'w', encoding='utf-8') as f:
+    
+    with open(sitemap_path, 'w', encoding='utf-8') as f:
         f.write(sitemap_content)
-    print(f"Sitemap 已生成")
 
 def main():
-    print("=== 开始构建网站 (Final SEO Version) ===")
-    data = load_data()
-    if not data: return
+    print("=== 全自动网站构建系统启动 ===")
+    
+    if SKIP_EXISTING:
+        print("🚀 模式：增量构建 (只生成新页面，自动带广告)")
+    else:
+        print("🔥 模式：全量覆盖 (重写所有页面，确保所有页面都有广告)")
 
-    # 清理旧目录
-    en_dir = os.path.join(OUTPUT_DIR, 'en')
-    if os.path.exists(en_dir):
-        shutil.rmtree(en_dir)
+    ensure_dir(OUTPUT_DIR)
+    ensure_dir(DREAMS_DIR)
 
-    build_detail_pages(data)
+    if not os.path.exists(DATA_FILE):
+        print(f"❌ 找不到数据文件 {DATA_FILE}")
+        return
+        
+    with open(DATA_FILE, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+    print(f"📚 加载了 {len(data)} 条数据")
+
+    template = load_template()
+    if not template:
+        return
+
+    # 获取已存在文件
+    existing_files = set()
+    if os.path.exists(DREAMS_DIR):
+        existing_files = set(os.listdir(DREAMS_DIR))
+
+    # 生成页面
+    count_new = 0
+    count_skip = 0
+    
+    for item in data:
+        status = generate_page(item, template, existing_files)
+        if status == "generated":
+            count_new += 1
+            if count_new % 100 == 0:
+                print(f"   已生成 {count_new} 个新页面...")
+        elif status == "skipped":
+            count_skip += 1
+            
+    print(f"\n✅ 页面构建完成")
+    print(f"   - 新增(带广告): {count_new}")
+    print(f"   - 跳过(旧文件): {count_skip}")
+
+    # 生成索引页 (这一步非常重要，包含了搜索功能)
     generate_index_page(data)
+
+    # 生成地图 (每次都跑，确保地图是最新的)
     generate_sitemap(data)
-    print("\n=== 构建完成！现在可以开始测试了。 ===")
-    print("记得检查 HTML 源代码中的 <meta> 标签和 JSON-LD 数据。")
+    print("🎉 所有任务全部完成！")
 
 if __name__ == "__main__":
     main()
