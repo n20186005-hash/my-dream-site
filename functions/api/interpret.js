@@ -2,7 +2,7 @@
  * Cloudflare Pages Function
  * 处理 /api/interpret 的 POST 请求
  * 功能：作为网关，处理“解梦”和“象征查询”两种请求
- * 更新：增加 CORS 支持，允许跨域调用
+ * 更新：增加 CORS 支持，允许跨域调用；增加 API Key 优先从 body 获取的逻辑
  */
 
 // 定义通用的 CORS 头部
@@ -24,7 +24,7 @@ export async function onRequestPost(context) {
   try {
     const { request, env } = context;
     
-    // 验证请求方法 (虽然 onRequestPost 已经保证了是 POST，但保留校验无害)
+    // 验证请求方法
     if (request.method !== 'POST') {
       return new Response(JSON.stringify({ error: "Method not allowed" }), {
         status: 405,
@@ -64,14 +64,18 @@ export async function onRequestPost(context) {
     // 确定请求类型和语言
     const type = body.type || 'dream';
     const lang = body.lang || 'zh';
-    const validLangs = ['zh', 'en', 'es', 'fr'];
+    const validLangs = ['zh', 'en', 'es', 'fr', 'ru', 'hi', 'pl', 'zh-TW']; // 扩充支持的语言列表
     const normalizedLang = validLangs.includes(lang) ? lang : 'zh';
 
-    // 获取 API Key
-    // 必须在 Cloudflare Pages 后台设置 GEMINI_API_KEY 环境变量
-    const apiKey = env.GEMINI_API_KEY;
+    // ---------------------------------------------------------
+    // 核心修改：API Key 获取逻辑
+    // 1. 优先尝试从请求体 (body.apiKey) 获取（用户自定义 Key）
+    // 2. 如果没有，则回退到环境变量 (env.GEMINI_API_KEY)
+    // ---------------------------------------------------------
+    const apiKey = body.apiKey || env.GEMINI_API_KEY;
+
     if (!apiKey) {
-      return new Response(JSON.stringify({ error: "Server Configuration Error: Missing API Key in Backend Environment" }), {
+      return new Response(JSON.stringify({ error: "Server Configuration Error: No API Key provided (neither in body nor env)" }), {
         status: 500,
         headers: { 
             'Content-Type': 'application/json',
@@ -81,8 +85,13 @@ export async function onRequestPost(context) {
     }
 
     // 构建提示词
-    const languageNames = { 'zh': 'Chinese', 'en': 'English', 'es': 'Spanish', 'fr': 'French' };
-    const targetLang = languageNames[normalizedLang];
+    // 简单映射，前端传来的 lang 代码映射为英文单词
+    const languageNames = { 
+        'zh': 'Chinese', 'zh-TW': 'Traditional Chinese', 
+        'en': 'English', 'es': 'Spanish', 'fr': 'French', 
+        'ru': 'Russian', 'hi': 'Hindi', 'pl': 'Polish' 
+    };
+    const targetLang = languageNames[normalizedLang] || 'Chinese';
     let promptText = "";
 
     if (type === 'symbol') {
@@ -136,7 +145,6 @@ export async function onRequestPost(context) {
     }
 
     // 调用 Google Gemini API
-    // 使用 v1beta 版本以获得更好的 gemini-1.5-flash 支持
     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
 
     try {
@@ -147,17 +155,22 @@ export async function onRequestPost(context) {
           contents: [{ parts: [{ text: promptText }] }],
           generationConfig: { responseMimeType: "application/json" }
         }),
-        timeout: 20000 // 延长到20秒超时，防止大模型响应慢
+        timeout: 25000 // 稍微延长超时时间
       });
 
       if (!geminiResponse.ok) {
         const errText = await geminiResponse.text().catch(() => 'No error details');
         console.error(`Gemini API Error (${geminiResponse.status}):`, errText);
+        
+        // 如果是 403，通常意味着 Key 无效
+        const status = geminiResponse.status === 403 ? 403 : 502;
+        const errorMsg = geminiResponse.status === 403 ? "Invalid API Key" : "Upstream API Error";
+
         return new Response(JSON.stringify({ 
-          error: `Upstream API Error: ${geminiResponse.status}`,
+          error: errorMsg,
           details: geminiResponse.status < 500 ? errText : undefined
         }), {
-          status: geminiResponse.status < 500 ? 400 : 502,
+          status: status,
           headers: { 
               'Content-Type': 'application/json',
               ...corsHeaders
