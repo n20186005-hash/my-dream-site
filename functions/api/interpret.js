@@ -3,7 +3,7 @@
  * 处理 /api/interpret 的 POST 请求
  * 功能：作为网关，处理“解梦”和“象征查询”两种请求
  * 更新：增加 CORS 支持；增加 API Key Body 优先逻辑；优化为 Header 鉴权
- * 修复：解决 404 错误，使用稳定的 gemini-1.5-flash 模型
+ * 修复：解决 404 错误，升级为 gemini-2.0-flash 模型 (根据用户提供的官方示例)
  */
 
 // 定义通用的 CORS 头部
@@ -71,6 +71,7 @@ export async function onRequestPost(context) {
     // ---------------------------------------------------------
     // API Key 获取逻辑
     // ---------------------------------------------------------
+    // 优先从 env 获取，确保使用了 Cloudflare 托管的密钥
     const apiKey = body.apiKey || env.GEMINI_API_KEY;
 
     if (!apiKey) {
@@ -135,10 +136,10 @@ export async function onRequestPost(context) {
 
     // ---------------------------------------------------------
     // 调用 Google Gemini API
-    // 修复：使用 stable 版本 gemini-1.5-flash，解决 404 错误
-    // 优化：使用 Header 传递 Key
+    // 修复：更新为 gemini-2.0-flash，解决 404 错误
+    // 优化：使用 Header 传递 Key (X-goog-api-key)
     // ---------------------------------------------------------
-    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent`;
+    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent`;
 
     try {
       const geminiResponse = await fetch(apiUrl, {
