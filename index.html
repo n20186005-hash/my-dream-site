@@ -326,8 +326,7 @@
     </div>
 
     <script>
-        // API Key 在 Canvas 预览环境中应设为空字符串，环境会自动提供。
-        // 为了修复 403 错误，我将硬编码的 Key 移除，改为空字符串。
+        // API Key 已填入
         const DEFAULT_API_KEY = "AIzaSyCQbW5qLkdDvoWMdOb_poNe8Y-wBidE5rw";
         
         // 【重要】完全保留了旧版所有的多语言支持，没有删减
@@ -564,52 +563,78 @@
             const input = document.getElementById('dreamInput').value.trim();
             const btn = document.getElementById('analyzeBtn');
             const localKey = localStorage.getItem('dreamwhisper_api_key');
-            const activeKey = localKey || DEFAULT_API_KEY; // 现在 DEFAULT_API_KEY 有值了
+            const activeKey = localKey || DEFAULT_API_KEY; 
             const rawDreamInput = customPrompt || input;
+            
             if (!rawDreamInput) { showToast("请输入内容"); return; }
+            
             btn.disabled = true;
             btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Analyzing...`;
             showToast(translations[currentLang].toast_analyzing);
+            
             try {
+                // 完全恢复老版本的调用逻辑
                 const data = await callGeminiClientSide(rawDreamInput, currentLang, activeKey, !!customPrompt);
+                
                 if (customPrompt) return data;
                 renderResult(data);
             } catch (error) {
                 console.error(error);
-                showToast("连接失败，请检查网络或配置");
+                // 恢复老版本的详细错误提示，不再只是“网络连接错误”
+                let displayMsg = "解析遇到问题";
+                if (error.message.includes('Failed to fetch')) {
+                    displayMsg = "网络连接失败 (请检查网络或VPN)";
+                } else if (error.message.includes('400')) {
+                    displayMsg = "请求无效 (400) - 请检查内容";
+                } else if (error.message.includes('403')) {
+                    displayMsg = "权限拒绝 (403) - Key可能无效";
+                } else {
+                    displayMsg = "发生错误: " + error.message;
+                }
+                showToast(displayMsg);
             } finally {
                 btn.disabled = false;
                 btn.innerHTML = `<i class="fa-solid fa-wand-magic-sparkles"></i> <span data-i18n="btn_analyze">${translations[currentLang].btn_analyze}</span>`;
             }
         }
 
-        // 已确认模型名称为 gemini-2.5-flash-preview-09-2025
-        async function callGeminiClientSide(content, lang, apiKey, isRawPrompt = false) {
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-            const finalPrompt = isRawPrompt ? content : `Analyze dream: "${content}" return raw JSON: {"core_metaphor": "", "emotions": "", "guidance": "", "lucky_item": ""}. Language: ${lang}.`;
-            const payload = { contents: [{ parts: [{ text: finalPrompt }] }] };
-            let delay = 1000;
-            for (let i = 0; i < 5; i++) {
-                try {
-                    const response = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-                    if (response.ok) {
-                        const data = await response.json();
-                        const resultText = data.candidates?.[0]?.content?.parts?.[0]?.text || "{}";
-                        return extractJson(resultText);
-                    }
-                    if (response.status === 429 || (response.status >= 500 && response.status < 600)) {
-                        await new Promise(r => setTimeout(r, delay));
-                        delay *= 2;
-                        continue;
-                    }
-                    throw new Error(`API Error: ${response.status}`);
-                } catch (e) {
-                    if (i === 4) throw e;
-                    await new Promise(r => setTimeout(r, delay));
-                    delay *= 2;
-                }
+        // 完全恢复老版本的 Client Side 调用逻辑（包括 Prompt 结构和 fetch 方式）
+        async function callGeminiClientSide(dream, lang, apiKey) {
+            const languageNames = { 'zh': 'Chinese', 'en': 'English', 'es': 'Spanish', 'fr': 'French', 'ru': 'Russian', 'hi': 'Hindi', 'pl': 'Polish', 'zh-TW': 'Traditional Chinese' };
+            const targetLang = languageNames[lang] || 'Chinese';
+            
+            const promptText = `
+              You are a professional Jungian dream interpreter.
+              Analyze this dream: "${dream}"
+              Return raw JSON:
+              {
+                  "core_metaphor": "One sentence summary.",
+                  "emotions": "Emotional analysis.",
+                  "guidance": "Actionable life guidance.",
+                  "lucky_item": "A suggested lucky color or item."
+              }
+              Language: ${targetLang}.
+            `;
+
+            // 使用 stable 模型以保证稳定性 (这里保留了你指定的 2.5 flash preview)
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    contents: [{ parts: [{ text: promptText }] }]
+                })
+            });
+
+            if (!response.ok) {
+                const err = await response.json();
+                // 抛出具体的 Google API 错误信息
+                throw new Error(err.error?.message || `API Error: ${response.status}`);
             }
-            throw new Error("All API retries failed.");
+
+            const data = await response.json();
+            return extractJson(data.candidates[0].content.parts[0].text);
         }
 
         function extractJson(text) { try { return JSON.parse(text); } catch (e) { const match = text.match(/\{[\s\S]*\}/); return match ? JSON.parse(match[0]) : {}; } }
@@ -675,6 +700,7 @@
             container.classList.add('hidden');
             container.innerHTML = `<div class="glass-card p-6 rounded-3xl skeleton h-32 opacity-20"></div>`;
             try {
+                // 这里也恢复了老版本的 prompt 逻辑
                 const prompt = `Define dream symbol "${keyword}" as JSON: {"psych": "", "trad": ""}. Language: ${currentLang}.`;
                 const data = await callGeminiAPI(prompt); 
                 if (data) {
