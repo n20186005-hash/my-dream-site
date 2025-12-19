@@ -3,7 +3,9 @@
  * 处理 /api/interpret 的 POST 请求
  * 功能：作为网关，处理“解梦”和“象征查询”两种请求
  * 更新：增加 CORS 支持；增加 API Key Body 优先逻辑；优化为 Header 鉴权
- * 修复：解决 404 错误，升级为 gemini-2.0-flash 模型 (根据用户提供的官方示例)
+ * 修复：
+ * 1. 解决 429 错误：增加指数退避 (Exponential Backoff) 重试机制
+ * 2. 保持模型为 gemini-2.0-flash
  */
 
 // 定义通用的 CORS 头部
@@ -12,6 +14,52 @@ const corsHeaders = {
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type',
 };
+
+// 辅助函数：休眠
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+// 辅助函数：带指数退避的 Fetch 重试逻辑
+async function fetchWithRetry(url, options, maxRetries = 3) {
+  let delay = 1000; // 初始等待 1 秒
+
+  for (let i = 0; i <= maxRetries; i++) {
+    try {
+      const response = await fetch(url, options);
+
+      // 如果请求成功 (2xx)，直接返回
+      if (response.ok) {
+        return response;
+      }
+
+      // 处理特定的错误状态码
+      // 429: Too Many Requests (频率限制) -> 需要重试
+      // 503: Service Unavailable (服务暂时不可用) -> 需要重试
+      if (response.status === 429 || response.status === 503) {
+        if (i === maxRetries) {
+          console.warn(`Max retries reached for ${response.status}. Giving up.`);
+          return response; // 最后一次尝试如果还是失败，返回错误响应给前端处理
+        }
+
+        console.warn(`Hit ${response.status}. Retrying in ${delay}ms... (Attempt ${i + 1}/${maxRetries})`);
+        await sleep(delay);
+        delay *= 2; // 指数退避：1s -> 2s -> 4s
+        continue;
+      }
+
+      // 其他错误 (如 400 Bad Request, 401 Unauthorized, 403 Forbidden, 500 Internal Server Error)
+      // 这些通常是配置错误或不可恢复的错误，不应重试，直接返回
+      return response;
+
+    } catch (error) {
+      // 处理网络层面的错误 (如 DNS 失败, 连接超时)
+      if (i === maxRetries) throw error;
+      
+      console.warn(`Network error: ${error.message}. Retrying in ${delay}ms...`);
+      await sleep(delay);
+      delay *= 2;
+    }
+  }
+}
 
 // 处理 OPTIONS 预检请求
 export async function onRequestOptions(context) {
@@ -136,13 +184,13 @@ export async function onRequestPost(context) {
 
     // ---------------------------------------------------------
     // 调用 Google Gemini API
-    // 修复：更新为 gemini-2.0-flash，解决 404 错误
-    // 优化：使用 Header 传递 Key (X-goog-api-key)
+    // 修复：使用 gemini-2.0-flash 并加入重试逻辑
     // ---------------------------------------------------------
     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent`;
 
     try {
-      const geminiResponse = await fetch(apiUrl, {
+      // 使用 fetchWithRetry 替代 fetch
+      const geminiResponse = await fetchWithRetry(apiUrl, {
         method: 'POST',
         headers: { 
             'Content-Type': 'application/json',
@@ -151,8 +199,7 @@ export async function onRequestPost(context) {
         body: JSON.stringify({
           contents: [{ parts: [{ text: promptText }] }],
           generationConfig: { responseMimeType: "application/json" }
-        }),
-        timeout: 25000 
+        })
       });
 
       if (!geminiResponse.ok) {
@@ -160,7 +207,12 @@ export async function onRequestPost(context) {
         console.error(`Gemini API Error (${geminiResponse.status}):`, errText);
         
         const status = (geminiResponse.status >= 400 && geminiResponse.status < 500) ? geminiResponse.status : 502;
-        const errorMsg = `Upstream API Error: ${geminiResponse.status}`;
+        
+        // 优化错误信息，帮助前端判断是否需要清除本地Key
+        let errorMsg = `Upstream API Error: ${geminiResponse.status}`;
+        if (geminiResponse.status === 400 && errText.includes('API_KEY')) {
+            errorMsg = "API Key Invalid or Expired";
+        }
 
         return new Response(JSON.stringify({ 
           error: errorMsg,
