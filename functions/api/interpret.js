@@ -137,7 +137,7 @@ export async function onRequestPost(context) {
 
     // 调用 Google Gemini API
     // 使用 v1beta 版本以获得更好的 gemini-1.5-flash 支持
-    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
 
     try {
       const geminiResponse = await fetch(apiUrl, {
