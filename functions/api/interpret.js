@@ -2,7 +2,7 @@
  * Cloudflare Pages Function
  * 处理 /api/interpret 的 POST 请求
  * 功能：作为网关，处理“解梦”和“象征查询”两种请求
- * 更新：增加 CORS 支持，允许跨域调用；增加 API Key 优先从 body 获取的逻辑
+ * 更新：增加 CORS 支持；增加 API Key Body 优先逻辑；优化为 Header 鉴权
  */
 
 // 定义通用的 CORS 头部
@@ -64,18 +64,16 @@ export async function onRequestPost(context) {
     // 确定请求类型和语言
     const type = body.type || 'dream';
     const lang = body.lang || 'zh';
-    const validLangs = ['zh', 'en', 'es', 'fr', 'ru', 'hi', 'pl', 'zh-TW']; // 扩充支持的语言列表
+    const validLangs = ['zh', 'en', 'es', 'fr', 'ru', 'hi', 'pl', 'zh-TW']; 
     const normalizedLang = validLangs.includes(lang) ? lang : 'zh';
 
     // ---------------------------------------------------------
-    // 核心修改：API Key 获取逻辑
-    // 1. 优先尝试从请求体 (body.apiKey) 获取（用户自定义 Key）
-    // 2. 如果没有，则回退到环境变量 (env.GEMINI_API_KEY)
+    // API Key 获取逻辑
     // ---------------------------------------------------------
     const apiKey = body.apiKey || env.GEMINI_API_KEY;
 
     if (!apiKey) {
-      return new Response(JSON.stringify({ error: "Server Configuration Error: No API Key provided (neither in body nor env)" }), {
+      return new Response(JSON.stringify({ error: "Server Configuration Error: No API Key provided" }), {
         status: 500,
         headers: { 
             'Content-Type': 'application/json',
@@ -85,7 +83,6 @@ export async function onRequestPost(context) {
     }
 
     // 构建提示词
-    // 简单映射，前端传来的 lang 代码映射为英文单词
     const languageNames = { 
         'zh': 'Chinese', 'zh-TW': 'Traditional Chinese', 
         'en': 'English', 'es': 'Spanish', 'fr': 'French', 
@@ -95,15 +92,11 @@ export async function onRequestPost(context) {
     let promptText = "";
 
     if (type === 'symbol') {
-      // 象征字典查询
       const { symbol } = body;
       if (!symbol || typeof symbol !== 'string' || symbol.trim() === '') {
         return new Response(JSON.stringify({ error: "Missing or invalid symbol keyword" }), {
           status: 400,
-          headers: { 
-              'Content-Type': 'application/json',
-              ...corsHeaders
-          }
+          headers: { 'Content-Type': 'application/json', ...corsHeaders }
         });
       }
 
@@ -117,22 +110,17 @@ export async function onRequestPost(context) {
         Response language: ${targetLang}.
       `.trim();
     } else {
-      // 梦境解析 (默认)
       const { dream } = body;
       if (!dream || typeof dream !== 'string' || dream.trim() === '') {
         return new Response(JSON.stringify({ error: "Missing or invalid dream content" }), {
           status: 400,
-          headers: { 
-              'Content-Type': 'application/json',
-              ...corsHeaders
-          }
+          headers: { 'Content-Type': 'application/json', ...corsHeaders }
         });
       }
 
       promptText = `
         You are a professional Jungian dream interpreter.
         Analyze this dream: "${dream.trim()}"
-        
         Return a raw JSON object (no markdown) with keys:
         {
             "core_metaphor": "One sentence summary.",
@@ -144,31 +132,37 @@ export async function onRequestPost(context) {
       `.trim();
     }
 
+    // ---------------------------------------------------------
     // 调用 Google Gemini API
-    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+    // 优化 1: 使用更稳定的模型名称 gemini-1.5-flash (修复之前的 502/404 问题)
+    // 优化 2: 使用 Header 传递 API Key (参照官方指南)
+    // ---------------------------------------------------------
+    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent`;
 
     try {
       const geminiResponse = await fetch(apiUrl, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+            'Content-Type': 'application/json',
+            'X-goog-api-key': apiKey // 使用官方推荐的 Header 方式
+        },
         body: JSON.stringify({
           contents: [{ parts: [{ text: promptText }] }],
           generationConfig: { responseMimeType: "application/json" }
         }),
-        timeout: 25000 // 稍微延长超时时间
+        timeout: 25000 
       });
 
       if (!geminiResponse.ok) {
         const errText = await geminiResponse.text().catch(() => 'No error details');
         console.error(`Gemini API Error (${geminiResponse.status}):`, errText);
         
-        // 如果是 403，通常意味着 Key 无效
-        const status = geminiResponse.status === 403 ? 403 : 502;
-        const errorMsg = geminiResponse.status === 403 ? "Invalid API Key" : "Upstream API Error";
+        const status = (geminiResponse.status >= 400 && geminiResponse.status < 500) ? geminiResponse.status : 502;
+        const errorMsg = `Upstream API Error: ${geminiResponse.status}`;
 
         return new Response(JSON.stringify({ 
           error: errorMsg,
-          details: geminiResponse.status < 500 ? errText : undefined
+          details: errText
         }), {
           status: status,
           headers: { 
@@ -185,10 +179,8 @@ export async function onRequestPost(context) {
         throw new Error("No valid response from Gemini API");
       }
 
-      // 清理可能的Markdown格式
       const cleanedText = rawText.replace(/```json/g, '').replace(/```/g, '').trim();
 
-      // 验证返回的JSON格式
       try {
         JSON.parse(cleanedText);
       } catch (jsonError) {
