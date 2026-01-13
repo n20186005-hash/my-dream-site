@@ -1,0 +1,78 @@
+###简体中文
+你好呀，很高兴在这里与你相遇 ✨
+
+我们是一群热爱解梦、痴迷塔罗牌的独立开发者，因对潜意识探索的共同热爱走到一起。
+
+在日复一日的生活里，梦境是潜意识送给我们最温柔的礼物，塔罗则是与内心对话的奇妙媒介。我们相信，每一个梦境碎片、每一次牌面轮转，都藏着自我探索的线索——但这一切，都只为「娱乐与陪伴」而生。于是我们亲手搭建了 DreamWhispeAi 这个小天地：用AI技术解读梦境隐喻，用塔罗思维梳理情绪线索，分享我们摸索出的解梦思路、塔罗玩法，也想为同频的你提供一个轻松的交流角落。
+
+⚠️ 重要提醒：本站所有解梦、塔罗相关解读与玩法，仅限娱乐参考，不构成专业心理指导、人生建议或决策依据。
+
+如果你也痴迷于梦境的奥秘，喜欢塔罗牌的浪漫与思辨，
+
+欢迎加入我们的小小社群——一起唠唠梦里的奇思妙想，聊聊塔罗牌的趣味玩法，让这份热爱成为生活里的小星光 💫。
+
+### 繁體中文
+你好呀，很高興在這裡與你相遇 ✨
+我們是一群熱愛解夢、痴迷塔羅牌的獨立開發者，因對潛意識探索的共同熱愛而走到一起。
+
+在平平淡淡的日常裡，夢境是潛意識送給我們最溫柔的禮物，塔羅則是與內心對話的奇妙媒介。我們相信，每一個夢境碎片、每一次牌面轉動，都藏著自我探索的線索——但這一切，都只為「娛樂與陪伴」而生。於是我們親手搭建了 DreamWhispeAi 這個小天地：用 AI 技術解讀夢境隱喻，用塔羅思維梳理情緒線索，分享我們摸索出的解夢思路、塔羅玩法，也想為同頻的你提供一個輕鬆的交流角落。
+
+⚠️ 重要提醒：本站所有解夢、塔羅相關解讀與玩法，僅限娛樂參考，不構成專業心理指導、人生建議或決策依據。
+
+如果你也痴迷於夢境的奧秘，喜歡塔羅牌的浪漫與思辨，
+歡迎加入我們的小小社群——一起聊聊夢裡的奇思妙想，侃侃塔羅牌的趣味玩法，讓這份熱愛成為生活裡的小星光 💫。
+
+### English
+Hello there! It's such a delight to meet you here ✨
+We are a group of independent developers who are passionate about dream interpretation and obsessed with tarot cards. We came together because of our shared love for exploring the subconscious.
+
+In the humdrum of daily life, dreams are the gentlest gifts from our subconscious, and tarot is a wonderful medium for conversing with our inner selves. We believe that every fragment of a dream and every turn of a tarot card holds clues to self-discovery — but all of this is solely for **entertainment and companionship**. That’s why we built DreamWhispeAi with our own hands: an intimate little space where we use AI technology to decode the metaphors in dreams, sort out emotional cues through tarot-inspired thinking, share the dream interpretation approaches and tarot gameplay we’ve figured out, and hope to provide a relaxed corner for like-minded souls like you to connect.
+
+⚠️ Important Reminder: All dream interpretation, tarot readings and gameplay content on this site are for **entertainment purposes only**. They do not constitute professional psychological guidance, life advice, or a basis for making any decisions.
+
+If you’re also fascinated by the mysteries of dreams and drawn to the romance and introspection of tarot cards,
+we welcome you to join our little community — let’s chat about the whimsical ideas in our dreams and the fun ways to play with tarot together, and let this passion become a little shining light in our lives 💫.
+
+### Русский
+Здравствуйте! Очень рад встрече с вами здесь ✨
+Мы — группа независимых разработчиков, увлеченных толкованием снов и обожающих таро. Мы собрались вместе благодаря общей любви к исследованию подсознания.
+
+В будничной суете жизни сны — это самые нежные подарки от подсознания, а таро — чудесный средство для диалога с внутренним собой. Мы верим, что каждый фрагмент сна и каждый расклад карт хранят подсказки для самопознания — но всё это создано исключительно для **развлечения и компании**. Поэтому мы сами создали этот маленький уголок под названием DreamWhispeAi: здесь мы используем технологию ИИ для расшифровки метафор снов, анализируем эмоциональные подтексты с помощью таро-мышления, делимся своими подходами к толкованию снов и вариантами игры в таро, и хотим предоставить вам, нашему единомышленнику, расслабленное место для общения.
+
+⚠️ Важное напоминание: Все материалы на этом сайте, связанные с толкованием снов, таро-раскладами и игровыми вариантами, предназначены **только для развлечения**. Они не являются профессиональным психологическим консультированием, рекомендациями по жизни или основанием для принятия каких-либо решений.
+
+Если вы тоже очарованы тайнами снов и привлекаетесь романтикой и размышлениями, которые дарит таро,
+присоединяйтесь к нашей маленькой сообществу — давайте вместе обсудим причудливые идеи из снов и интересные способы игры в таро, и пусть эта страсть станет маленьким светом в нашей жизни 💫.
+
+### Español
+¡Hola! Es un placer conocerte aquí ✨
+Somos un grupo de desarrolladores independientes apasionados por la interpretación de sueños y obsesionados con el tarot. Nos unimos por nuestro amor compartido por la exploración del subconsciente.
+
+En la monotonía de la vida diaria, los sueños son los regalos más tiernos que nos envía el subconsciente, y el tarot es un medio maravilloso para conversar con nuestro yo interior. Creemos que cada fragmento de un sueño y cada giro de las cartas guardan pistas para el autodescubrimiento — pero todo esto es exclusivamente para **entretenimiento y compañía**. Por eso construimos DreamWhispeAi con nuestras propias manos: un pequeño rincón donde usamos tecnología de IA para descifrar las metáforas de los sueños, organizar las pistas emocionales con el pensamiento inspirado en el tarot, compartir nuestros métodos de interpretación de sueños y modos de juego del tarot, y esperamos ofrecerte, a ti nuestro alma gemela, un espacio relajado para comunicarte.
+
+⚠️ Recordatorio importante: Todas las interpretaciones de sueños, lecturas de tarot y contenidos de juego en este sitio son **solo para fines de entretenimiento**. No constituyen orientación psicológica profesional, consejos de vida ni base para tomar ninguna decisión.
+
+Si también estás fascinado por los misterios de los sueños y te atrae el romanticismo y el pensamiento reflexivo del tarot,
+te invitamos a unirte a nuestra pequeña comunidad — hablemos juntos de las ideas caprichosas de nuestros sueños y los divertidos modos de jugar al tarot, y dejemos que esta pasión sea una pequeña luz brillante en nuestras vidas 💫.
+
+### हिन्दी
+नमस्ते! यहां आपके साथ मिलकर बहुत खुशी हुई ✨
+हम स्वप्न विश्लेषण से प्रेम करने वाले और टैरो कार्ड से मुग्ध स्वतंत्र डेवलपर्स का एक समूह हैं। हम सबको मिलकर एक साथ आए हैं क्योंकि हम सबको अवचेतन की खोज करने का समान प्यार है।
+
+रोजमर्रा की जिंदगी की थकाऊ दौड़ में, स्वप्न अवचेतन द्वारा दिए गए सबसे कोमल उपहार हैं, और टैरो अपने आंतरिक स्वयं के साथ बातचीत करने का एक अद्भुत माध्यम है। हमारा मानना है कि स्वप्न का हर टुकड़ा और टैरो कार्ड का हर मोड़ आत्म-खोज के संकेत रखता है — लेकिन यह सब कुछ केवल **मनोरंजन और संगति** के लिए है। इसलिए हमने खुद हाथ से DreamWhispeAi नाम का यह छोटा सा जगह बनाया है: यहां हम AI तकनीक का उपयोग स्वप्नों के रूपकों को समझने के लिए करते हैं, टैरो के सोचने के तरीके से भावनात्मक संकेतों को व्यवस्थित करते हैं, हमारे खुद के स्वप्न विश्लेषण के तरीके और टैरो के खेल को साझा करते हैं, और आशा करते हैं कि हम आपके लिए एक आरामदायक संवाद का कोना प्रदान कर सकें, जो हमारे साथ इस मुद्दे पर एकमत हैं।
+
+⚠️ महत्वपूर्ण सूचना: इस साइट पर उपलब्ध सभी स्वप्न विश्लेषण, टैरो से संबंधित व्याख्याएं और खेल केवल **मनोरंजन के उद्देश्यों के लिए हैं**। ये कोई पेशेवर मानसिक मार्गदर्शन, जीवन के सलाह या किसी भी निर्णय लेने का आधार नहीं बनते हैं।
+
+अगर आप भी स्वप्नों के रहस्यों से मुग्ध हैं और टैरो कार्ड के रोमांस और चिंतन से प्रभावित होते हैं,
+तो हमारे छोटे से समुदाय में शामिल हों — आइए मिलकर अपने स्वप्नों की अजीबोगरीब विचारों और टैरो कार्ड के मजेदार खेल के बारे में बातें करें, और इस प्यार को अपनी जिंदगी का एक छोटा सा चमकदार सितारा बनाएं 💫।
+
+### Polski
+Cześć! Bardzo miło cię tu spotkać ✨
+Jesteśmy grupą niezależnych developerów, pasjonatów interpretacji snów i zakochanych w tarocie. Zeszliśmy się razem z powodu wspólnej miłości do eksplorowania podświadomości.
+
+W codziennej, monotonne rutynie sny są najdelikatniejszym darem od podświadomości, a tarot to wspaniały środek do rozmów z własnym wewnętrznym sobą. Uważamy, że każdy fragment snu i każde odwrócenie karty ukrywa wskazówki do samopoznania — ale wszystko to stworzone jest wyłącznie dla **rozrywki i towarzystwa**. Dlatego sami zbudowaliśmy to małe miejsce o nazwie DreamWhispeAi: tutaj używamy technologii AI do dekodowania metafor snów, uporządkowujemy emocjonalne wskazówki myśleniem inspirowanym tarotem, dzielimy się własnymi sposobami interpretacji snów i zabaw z tarotem, oraz mamy nadzieję, że zapewnimy tobie, naszemu myślącemu tak samo, relaksujący kąt do rozmów.
+
+⚠️ Ważna uwaga: Wszystkie interpretacje snów, czytania tarota i propozycje zabaw dostępne na tej stronie są przeznaczone **wyłącznie do celów rozrywkowych**. Nie stanowią one profesjonalnej porady psychologicznej, rady życiowej ani podstawy do podejmowania jakichkolwiek decyzji.
+
+Jeśli ty też jesteś fascynowany tajemnicami snów i przyciąga cię romantyzm oraz refleksja, jaką niesie tarot,
+dołącz do naszej małej społeczności — porozmawiajmy wspólnie o dziwnych pomysłach z snów i zabawnych sposobach na grę w tarota, a niech ta pasja stanie się małym błyszczącym światłem w naszym życiu 💫.

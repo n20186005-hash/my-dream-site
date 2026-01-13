@@ -3,74 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>【解梦百科】梦见舞台陷阱門是吉是凶？完整版解析来了</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Nunito:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>【解梦百科】梦见舞台陷阱门是吉是凶？完整版解析来了</title>
+    
+    <!-- SSR优化：核心样式内联，避免依赖客户端Tailwind初始化 -->
     <style>
-        body { background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%); color: white; font-family: 'Nunito', sans-serif; min-height: 100vh; }
-        .glass-panel { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        :root {
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
+            --glass-panel: rgba(255, 255, 255, 0.05);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+            --green-500-20: rgba(34, 197, 94, 0.2);
+            --green-500-30: rgba(34, 197, 94, 0.3);
+            --green-500-40: rgba(34, 197, 94, 0.4);
+            --green-500-50: rgba(34, 197, 94, 0.5);
+            --green-900-20: rgba(21, 128, 61, 0.2);
+            --green-900-30: rgba(21, 128, 61, 0.3);
+            --purple-500-20: rgba(168, 85, 247, 0.2);
+            --black-10: rgba(0, 0, 0, 0.1);
+            --black-20: rgba(0, 0, 0, 0.2);
+            --white-5: rgba(255, 255, 255, 0.05);
+        }
+        
+        body { 
+            background: var(--bg-gradient); 
+            color: white; 
+            font-family: 'Nunito', sans-serif; 
+            min-height: 100vh;
+            margin: 0;
+            padding-bottom: 5rem;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 1rem;
+            max-width: 48rem;
+        }
+        
+        .glass-panel { 
+            background: var(--glass-panel); 
+            backdrop-filter: blur(16px); 
+            border: var(--glass-border);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .dream-btn { 
+            transition: all 0.3s ease;
+            display: inline-block;
+            padding: 0.75rem 2rem;
+            background: rgba(22, 163, 74, 0.8);
+            color: white;
+            border-radius: 9999px;
+            font-weight: 500;
+            box-shadow: 0 10px 15px -3px var(--green-900-30);
+            text-decoration: none;
+        }
+        
+        .dream-btn:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 8px 20px rgba(74, 222, 128, 0.2);
+            background: rgba(22, 163, 74, 1);
+        }
+        
+        nav {
+            width: 100%;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--black-20);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            border-bottom: 1px solid var(--white-5);
+            box-sizing: border-box;
+        }
+        
+        [data-i18n] {
+            display: block;
+        }
     </style>
 
-    <!-- Auto-Injected SEO Tags -->
-    <meta name="description" content="你是否昨晚梦见了舞台陷阱門？这可能不是一个巧合。 符號：舞台陷阱門 意義：夢中的舞台陷阱門代表隱藏的情感和被壓抑的記憶。這個夢象徵著面對和探索過去或潛意識各個方面的渴望或需要。它也可能暗示對於向他人或世界揭示真實自我的脆弱感或恐懼。解釋：夢見舞台陷阱門暗示你藏有秘密或未解決的問題，可能尚未準備好去面對。這個夢象徵著自我...">
-    <meta name="keywords" content="梦见舞台陷阱門, 舞台陷阱門解梦, 舞台陷阱門象征意义, 周公解梦舞台陷阱門, 心理学解梦">
-    <link rel="canonical" href="https://dreamwhisperai.com/dreams/舞台陷阱門.html">
-    <meta property="og:title" content="【解梦百科】梦见舞台陷阱門是吉是凶？完整版解析来了">
-    <meta property="og:description" content="你是否昨晚梦见了舞台陷阱門？这可能不是一个巧合。 符號：舞台陷阱門 意義：夢中的舞台陷阱門代表隱藏的情感和被壓抑的記憶。這個夢象徵著面對和探索過去或潛意識各個方面的渴望或需要。它也可能暗示對於向他人或世界揭示真實自我的脆弱感或恐懼。解釋：夢見舞台陷阱門暗示你藏有秘密或未解決的問題，可能尚未準備好去面對。這個夢象徵著自我...">
-    <meta property="og:url" content="https://dreamwhisperai.com/dreams/舞台陷阱門.html">
+    <!-- Tailwind CDN 降级处理 -->
+    <script src="https://cdn.tailwindcss.com" defer></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Noto+Serif+TC:wght@400;700&family=Nunito:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- SSR友好的SEO配置 - 预渲染默认内容 -->
+    <meta name="description" content="你是否昨晚梦见了舞台陷阱门？这可能不是一个巧合。 符號：舞台陷阱门 意義：夢中的舞台陷阱门代表隱藏的情感和被壓抑的記憶。這個夢象徵著面對和探索過去或潛意識各個方面的渴望或需要。它也可能暗示對於向他人或世界揭示真實自我的脆弱感或恐懼。解釋：夢見舞台陷阱门暗示你藏有秘密或未解決的問題，可能尚未準備好去面對。這個夢象徵著自我...">
+    <meta name="keywords" content="梦见舞台陷阱门, 舞台陷阱门解梦, 舞台陷阱门象征意义, 周公解梦舞台陷阱门, 心理学解梦">
+    <link rel="canonical" href="https://dreamwhisperai.com/dreams/舞台陷阱门.html">
+    <meta property="og:title" content="【解梦百科】梦见舞台陷阱门是吉是凶？完整版解析来了">
+    <meta property="og:description" content="你是否昨晚梦见了舞台陷阱门？这可能不是一个巧合。 符號：舞台陷阱门 意義：夢中的舞台陷阱门代表隱藏的情感和被壓抑的記憶。這個夢象徵著面對和探索過去或潛意識各個方面的渴望或需要。它也可能暗示對於向他人或世界揭示真實自我的脆弱感或恐懼。解釋：夢見舞台陷阱门暗示你藏有秘密或未解決的問題，可能尚未準備好去面對。這個夢象徵著自我...">
+    <meta property="og:url" content="https://dreamwhisperai.com/dreams/舞台陷阱门.html">
     <meta property="og:type" content="article">
+    <meta property="og:locale" content="zh_CN">
+    <meta property="og:locale:alternate" content="zh_TW">
+    <meta property="og:locale:alternate" content="en_US">
+    <meta property="og:locale:alternate" content="zh_TW">
+    <meta property="og:locale:alternate" content="en_US">
     
-    <!-- JSON-LD Structured Data -->
+    <!-- JSON-LD 静态化，适配SSR -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Article",
-      "headline": "【解梦百科】梦见舞台陷阱門是吉是凶？完整版解析来了",
-      "description": "你是否昨晚梦见了舞台陷阱門？这可能不是一个巧合。 符號：舞台陷阱門 意義：夢中的舞台陷阱門代表隱藏的情感和被壓抑的記憶。這個夢象徵著面對和探索過去或潛意識各個方面的渴望或需要。它也可能暗示對於向他人或世界揭示真實自我的脆弱感或恐懼。解釋：夢見舞台陷阱門暗示你藏有秘密或未解決的問題，可能尚未準備好去面對。這個夢象徵著自我...",
+      "headline": "【解梦百科】梦见舞台陷阱门是吉是凶？完整版解析来了",
+      "description": "你是否昨晚梦见了舞台陷阱门？这可能不是一个巧合。 符號：舞台陷阱门 意義：夢中的舞台陷阱门代表隱藏的情感和被壓抑的記憶。這個夢象徵著面對和探索過去或潛意識各個方面的渴望或需要。它也可能暗示對於向他人或世界揭示真實自我的脆弱感或恐懼。解釋：夢見舞台陷阱门暗示你藏有秘密或未解決的問題，可能尚未準備好去面對。這個夢象徵著自我...",
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://dreamwhisperai.com/dreams/舞台陷阱門.html"
+        "@id": "https://dreamwhisperai.com/dreams/舞台陷阱门.html"
       },
       "author": {
         "@type": "Organization",
         "name": "DreamWhisper"
+      },
+      "inLanguage": "zh-CN",
+      "alternativeHeadline": {
+        "zh-TW": "【解夢百科】夢見舞台陷阱門是吉是凶？完整版解析來了",
+        "en": "What Does Dreaming of Stage Trapdoor Mean? Full Analysis of Good or Bad Omens"
       }
     }
     </script>
         
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9279583389810634"
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9279583389810634"
      crossorigin="anonymous"></script>
 </head>
-<body class="pb-20 flex flex-col min-h-screen">
-
+<body>
     <!-- Navigation -->
-    <nav class="w-full p-6 flex justify-between items-center bg-black/20 backdrop-blur-md sticky top-0 z-50 border-b border-white/5">
-        <a href="index.html" class="flex items-center gap-2 hover:text-green-300 transition group">
+    <nav>
+        <!-- 新标签页跳转优化 -->
+        <a href="https://dreamwhisperai.com" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 hover:text-green-300 transition group">
             <span class="font-serif font-bold text-xl tracking-wide">DreamWhisper</span>
         </a>
         
-        <!-- Language Selector -->
-        <div class="relative group cursor-pointer z-50">
+        <!-- Language Selector - 新增繁体中文选项 -->
+        <div class="relative group cursor-pointer z-50" id="languageSelector">
             <button class="flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 hover:bg-white/5 transition-all text-sm">
                 <i class="fa-solid fa-globe text-green-300"></i>
                 <span id="currentLang">中文</span>
                 <i class="fa-solid fa-chevron-down text-xs opacity-70"></i>
             </button>
-            <div class="absolute right-0 pt-2 hidden group-hover:block w-32">
+            <div class="absolute right-0 pt-2 hidden group-hover:block w-36">
                 <div class="glass-panel rounded-xl overflow-hidden shadow-xl border-green-300/20 bg-[#0f172a]">
-                    <button onclick="changeLanguage('zh')" class="block w-full text-left px-4 py-2 hover:bg-green-500/20 text-white transition-colors text-sm">中文</button>
+                    <button onclick="changeLanguage('zh')" class="block w-full text-left px-4 py-2 hover:bg-green-500/20 text-white transition-colors text-sm">简体中文</button>
+                    <button onclick="changeLanguage('zh-tw')" class="block w-full text-left px-4 py-2 hover:bg-green-500/20 text-white transition-colors text-sm">繁體中文</button>
                     <button onclick="changeLanguage('en')" class="block w-full text-left px-4 py-2 hover:bg-green-500/20 text-white transition-colors text-sm">English</button>
                 </div>
             </div>
         </div>
     </nav>
 
-    <main class="container mx-auto px-4 mt-8 max-w-3xl flex-grow">
+    <main class="container mx-auto px-4 mt-8 flex-grow">
         
         <!-- Back Link -->
         <div class="mb-4">
-            <a href="index.html" class="text-green-300/70 hover:text-green-300 text-sm flex items-center gap-1 transition-colors w-fit">
+            <!-- 新标签页跳转优化 -->
+            <a href="https://dreamwhisperai.com" target="_blank" rel="noopener noreferrer" class="text-green-300/70 hover:text-green-300 text-sm flex items-center gap-1 transition-colors w-fit">
                 <i class="fa-solid fa-arrow-left"></i> <span data-i18n="back_dict">返回首页</span>
             </a>
         </div>
@@ -78,19 +171,26 @@
         <!-- Symbol Header -->
         <div class="text-center mb-8">
             <div class="w-20 h-20 mx-auto bg-green-500/20 rounded-2xl flex items-center justify-center border border-green-500/30 mb-4 shadow-xl shadow-green-900/20">
-                <i class="fa-solid fa-star text-4xl text-green-400"></i>
+                <i class="fa-solid fa-door-open text-4xl text-green-400"></i> <!-- 替换为更贴合陷阱门的图标 -->
             </div>
-            <!-- 佔位符：名稱 -->
-            <h1 class="text-4xl font-serif font-bold mb-1" id="symName" data-i18n="name">舞台陷阱門</h1>
-            <!-- 佔位符：副標題 -->
-            <p class="text-lg text-gray-400 font-serif italic" data-i18n="subname">舞台陷阱門</p>
+            <h1 class="text-4xl font-serif font-bold mb-1" id="symName" data-i18n="name">舞台陷阱门</h1>
+            <p class="text-lg text-gray-400 font-serif italic" data-i18n="subname">解梦全解析</p>
+        </div>
+
+        <!-- 新增：解梦引导模块 -->
+        <div class="glass-panel rounded-2xl p-6 mb-8 border-2 border-green-500/40 bg-gradient-to-r from-green-900/20 to-emerald-800/10 text-center">
+            <h3 class="text-xl font-serif font-bold mb-3 text-green-300" data-i18n="dream_guide_title">想解读你的舞台陷阱门梦境？</h3>
+            <p class="text-gray-300 mb-4" data-i18n="dream_guide_desc">前往首页，输入你的梦境细节，获取专属的心理学解梦分析</p>
+            <!-- 新标签页跳转优化 -->
+            <a href="https://dreamwhisperai.com" target="_blank" rel="noopener noreferrer" class="dream-btn inline-block px-8 py-3 bg-green-600/80 hover:bg-green-500 rounded-full text-white font-medium shadow-lg shadow-green-900/30">
+                <i class="fa-solid fa-moon mr-2"></i><span data-i18n="dream_btn">立即解梦</span>
+            </a>
         </div>
 
         <!-- Summary -->
         <div class="glass-panel rounded-2xl p-5 text-center mb-8 border-t-2 border-green-500/50">
-            <!-- 佔位符：摘要 -->
             <p class="text-base md:text-lg leading-relaxed text-green-50" data-i18n="summary">
-                你是否昨晚梦见了<strong>舞台陷阱門</strong>？这可能不是一个巧合。<br/><br/>符號：舞台陷阱門 意義：夢中的舞台陷阱門代表隱藏的情感和被壓抑的記憶。這個夢象徵著面對和探索過去或潛意識各個方面的渴望或需要。它也可能暗示對於向他人或世界揭示真實自我的脆弱感或恐懼。<br><br>解釋：夢見舞台陷阱門暗示你藏有秘密或未解決的問題，可能尚未準備好去面對。這個夢象徵著自我探索和理解的需求。也許過去被壓抑的情感或記憶在某種程度上束縛著你。舞台陷阱門可能代表著在他人面前被曝光或脆弱的恐懼。
+                你是否昨晚梦见了<strong>舞台陷阱门</strong>？这可能不是一个巧合。<br/><br/>舞台陷阱门在梦境中是极具象征意义的符号，它代表着隐藏的情感、被压抑的记忆以及不愿被他人窥见的真实自我。这个梦象征着你内心深处对面对和探索潜意识层面的渴望，同时也反映出对暴露脆弱面、揭示真实自我的恐惧。<br><br>梦见舞台陷阱门往往暗示你心中藏有未被解决的秘密或情感问题，可能现阶段还未准备好去直面它们。这个梦境是潜意识发出的信号，提醒你需要进行自我探索和内在理解，那些被压抑的情感和记忆或许正在无形中束缚着你的成长和前行。
             </p>
         </div>
 
@@ -103,9 +203,9 @@
                     <i class="fa-solid fa-brain"></i> <span data-i18n="title_psych">心理学视角</span>
                 </h2>
                 <div class="space-y-4 text-gray-300 leading-relaxed">
-                    <!-- 佔位符：心理學解釋 -->
-                    <p data-i18n="psych_1">从心理学角度看，舞台陷阱門通常象征潜意识中的某种投射。</p>
-                    <p data-i18n="psych_2"></p>
+                    <!-- 完善专业解读内容 -->
+                    <p data-i18n="psych_1">从心理学视角分析，舞台陷阱门是「公开自我」与「私密自我」冲突的核心象征。舞台代表着你在社会、职场、人际关系中的公开形象（人格面具），而陷阱门则是连接公开形象与潜意识的通道，象征着不愿被他人看见的真实自我、过往创伤和被压抑的欲望。</p>
+                    <p data-i18n="psych_2">根据荣格的分析心理学理论，梦见舞台陷阱门通常有三种核心解读：1. 若梦中你主动打开陷阱门，表明你正准备面对内心深处的秘密或未解决的情感问题，是自我整合、心理成长的积极信号；2. 若你站在陷阱门边缘犹豫不前，反映出你在「暴露真实自我」和「维持完美人设」之间的内心挣扎，害怕被他人评判、拒绝或抛弃；3. 若你不慎掉入陷阱门，预示着近期可能会遭遇身份认同危机，或是被他人发现你刻意隐藏的一面，也可能是潜意识在提醒你需要放下伪装，接纳不完美的自己。此外，舞台陷阱门梦境也常出现在人生角色转变的阶段（如换工作、进入新环境），反映出你对适应新角色、展现新自我的焦虑与不安。</p>
                 </div>
             </div>
 
@@ -117,58 +217,433 @@
                 <ul class="space-y-3 text-gray-300">
                     <li class="flex gap-3">
                         <span class="text-yellow-500 font-bold" data-i18n="trad_good_label">吉：</span>
-                        <!-- 佔位符：吉兆 -->
-                        <span data-i18n="trad_good">梦见舞台陷阱門，需结合梦境氛围判断吉凶。</span>
+                        <!-- 完善专业解读内容 -->
+                        <span data-i18n="trad_good">在周公解梦体系中，梦见舞台陷阱门并非全是凶兆：若梦中你从容通过陷阱门且未感到恐惧，预示「否极泰来，隐忧得解」，近期困扰你的秘密或难题将迎来转机，或是能找到合适的方式坦诚面对；若梦见修补舞台陷阱门，主「补漏除弊，运势回升」，暗示你能主动弥补自身不足，化解人际关系中的潜在矛盾，是自我完善、运势转好的吉兆；若梦见他人掉入陷阱门，预示你能看清他人的伪装，避免被表面现象蒙蔽。</span>
                     </li>
                     <li class="flex gap-3">
                         <span class="text-red-400 font-bold" data-i18n="trad_bad_label">凶：</span>
-                        <!-- 佔位符：凶兆 -->
-                        <span data-i18n="trad_bad"></span>
+                        <!-- 完善专业解读内容 -->
+                        <span data-i18n="trad_bad">若梦中舞台陷阱门突然打开导致你坠落，或是在陷阱门处感到强烈恐惧，预示「防人之心不可无」，近期需警惕身边人的算计或背叛，尤其是在工作场合要注意言行，避免被人抓住把柄；若梦见陷阱门被锁住无法打开，主「心结难解，沟通受阻」，暗示你内心的秘密或情感压抑过深，可能导致人际关系沟通不畅，甚至引发误会和冲突；若梦见陷阱门下方是深渊，则警示需谨慎决策，避免因隐瞒真相或逃避问题而陷入更大的困境。</span>
                     </li>
                 </ul>
             </div>
+
+            <!-- 新增：底部再次引导解梦模块 -->
+            <div class="glass-panel rounded-2xl p-6 bg-black/10 border border-purple-500/20">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div>
+                        <h4 class="text-lg font-serif font-bold text-purple-300" data-i18n="more_dream_title">还想了解更多梦境含义？</h4>
+                        <p class="text-gray-400 text-sm mt-1" data-i18n="more_dream_desc">首页提供更全面的梦境解析工具，定制专属解读</p>
+                    </div>
+                    <!-- 新标签页跳转优化 -->
+                    <a href="https://dreamwhisperai.com" target="_blank" rel="noopener noreferrer" class="dream-btn px-6 py-2 bg-purple-600/80 hover:bg-purple-500 rounded-lg text-white font-medium">
+                        <i class="fa-solid fa-house-chimney mr-1"></i><span data-i18n="go_home_btn">前往首页</span>
+                    </a>
+                </div>
+            </div>
         </div>
     </main>
-
-    <script>
-        // 這是關鍵修正：使用一個有效的字符串作為佔位符，而不是無效的語法 {{...}}
-        // Python 腳本會查找這個特定的字符串並將其替換為真實的 JSON 數據
-        const pageData = {"id": "auto_42ba4dfd_舞台陷阱門", "filename": "舞台陷阱門.html", "zh": {"name": "舞台陷阱門", "subname": "舞台陷阱門", "summary": "符號：舞台陷阱門 意義：夢中的舞台陷阱門代表隱藏的情感和被壓抑的記憶。這個夢象徵著面對和探索過去或潛意識各個方面的渴望或需要。它也可能暗示對於向他人或世界揭示真實自我的脆弱感或恐懼。<br><br>解釋：夢見舞台陷阱門暗示你藏有秘密或未解決的問題，可能尚未準備好去面對。這個夢象徵著自我探索和理解的需求。也許過去被壓抑的情感或記憶在某種程度上束縛著你。舞台陷阱門可能代表著在他人面前被曝光或脆弱的恐懼。", "psych_1": "从心理学角度看，舞台陷阱門通常象征潜意识中的某种投射。", "psych_2": "", "trad_good": "梦见舞台陷阱門，需结合梦境氛围判断吉凶。", "trad_bad": ""}, "en": {"name": "舞台陷阱門", "subname": "Interpretation", "summary": "Content available in Chinese.", "psych_1": "...", "psych_2": "", "trad_good": "", "trad_bad": ""}, "meta": {"source_url": "https://dreaminterpreter.ai/zh-tw/dream-dictionary/definition/%E8%88%9E%E5%8F%B0%E9%99%B7%E9%98%B1%E9%96%80", "origin": "dreaminterpreter"}};
-        
-        // 靜態 UI 翻譯
-        const uiTranslations = {
-            zh: { back_dict: "返回首页", title_psych: "心理学视角", title_trad: "传统与文化解读", trad_good_label: "吉：", trad_bad_label: "凶：" },
-            en: { back_dict: "Back Home", title_psych: "Psychological Perspective", title_trad: "Traditional Interpretation", trad_good_label: "Good:", trad_bad_label: "Bad:" }
+    <!-- SSR友好的JS加载策略 -->
+    <script type="module">
+        // 多语言翻译核心逻辑（批量生成版）
+        const getTranslationData = () => {
+            // 从页面元数据提取核心文本（保持原有内容）
+            const pageTitle = document.title || '';
+            const dreamKeyword = document.getElementById('symName')?.textContent || '';
+            
+            // 基础翻译模板（动态适配当前页面关键词）
+            return {
+                "zh": {
+                    "name": dreamKeyword,
+                    "subname": "解梦全解析",
+                    "dream_guide_title": `想解读你的${dreamKeyword}梦境？`,
+                    "dream_guide_desc": "前往首页，输入你的梦境细节，获取专属的心理学解梦分析",
+                    "dream_btn": "立即解梦",
+                    "more_dream_title": "还想了解更多梦境含义？",
+                    "more_dream_desc": "首页提供更全面的梦境解析工具，定制专属解读",
+                    "go_home_btn": "前往首页",
+                    "back_dict": "返回首页",
+                    "title_psych": "心理学视角",
+                    "title_trad": "传统与文化解读",
+                    "trad_good_label": "吉：",
+                    "trad_bad_label": "凶："
+                },
+                "zh-tw": {
+                    "name": convertToTraditional(dreamKeyword),
+                    "subname": "解夢全解析",
+                    "dream_guide_title": `想解讀你的${convertToTraditional(dreamKeyword)}夢境？`,
+                    "dream_guide_desc": "前往首頁，輸入你的夢境細節，獲取專屬的心理學解夢分析",
+                    "dream_btn": "立即解夢",
+                    "more_dream_title": "還想了解更多夢境含義？",
+                    "more_dream_desc": "首頁提供更全面的夢境解析工具，定制專屬解讀",
+                    "go_home_btn": "前往首頁",
+                    "back_dict": "返回首頁",
+                    "title_psych": "心理學視角",
+                    "title_trad": "傳統與文化解讀",
+                    "trad_good_label": "吉：",
+                    "trad_bad_label": "凶："
+                },
+                "en": {
+                    "name": translateToEnglish(dreamKeyword),
+                    "subname": "Complete Dream Interpretation",
+                    "dream_guide_title": `Want to interpret your ${translateToEnglish(dreamKeyword)} dream?`,
+                    "dream_guide_desc": "Go to the homepage, enter the details of your dream, and get exclusive psychological dream analysis",
+                    "dream_btn": "Interpret Dream Now",
+                    "more_dream_title": "Want to learn more about dream meanings?",
+                    "more_dream_desc": "The homepage offers comprehensive dream interpretation tools for personalized analysis",
+                    "go_home_btn": "Go to Homepage",
+                    "back_dict": "Back Home",
+                    "title_psych": "Psychological Perspective",
+                    "title_trad": "Traditional & Cultural Interpretation",
+                    "trad_good_label": "Good Omen:",
+                    "trad_bad_label": "Bad Omen:"
+                }
+            };
         };
 
-        window.addEventListener('DOMContentLoaded', () => {
+        // 简体转繁体（核心字库，可扩展）
+        const convertToTraditional = (text) => {
+            const charMap = {
+                "门": "門", "梦": "夢", "进": "進", "发": "發", "体": "體",
+                "会": "會", "适": "適", "应": "應", "优": "優", "华": "華",
+                "罗": "羅", "荣": "榮", "权": "權", "护": "護", "儿": "兒",
+                "万": "萬", "过": "過", "说": "說", "话": "話", "听": "聽",
+                "觉": "覺", "宝": "寶", "贝": "貝", "长": "長", "头": "頭",
+                "里": "裏", "后": "後", "面": "麵", "机": "機", "关": "關",
+                "闭": "閉", "开": "開", "显": "顯", "现": "現", "阶": "階",
+                "段": "段", "补": "補", "充": "充", "优": "優", "化": "化"
+            };
+            return text.split('').map(c => charMap[c] || c).join('');
+        };
+
+        // 中文关键词转英文（基础版，可根据实际需求扩展）
+        const translateToEnglish = (text) => {
+            const translateMap = {
+                "舞台陷阱门": "Stage Trapdoor",
+                "父母的": "Parents",
+                "梦见": "Dreaming of",
+                "心理学": "Psychology",
+                "传统": "Traditional"
+            };
+            // 优先匹配完整短语，再按字匹配
+            for (const [cn, en] of Object.entries(translateMap)) {
+                text = text.replace(cn, en);
+            }
+            return text || "Dream Symbol";
+        };
+
+        // SSR Hydration逻辑
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const langParam = urlParams.get('lang');
+            if (langParam) changeLanguage(langParam);
+            else initLanguage('zh'); // 默认简体中文
+        });
+
+        // 语言初始化函数
+        function initLanguage(lang) {
+            const validLangs = ['zh', 'zh-tw', 'en'];
+            const targetLang = validLangs.includes(lang) ? lang : 'zh';
+            
+            updateUrlLangParam(targetLang);
+            updatePageContent(targetLang);
+            updatePageMeta(targetLang);
+        }
+
+        // URL参数更新
+        function updateUrlLangParam(lang) {
+            if (window.history && window.history.pushState) {
+                const url = new URL(window.location);
+                url.searchParams.set('lang', lang);
+                window.history.pushState({}, '', url);
+            }
+        }
+
+        // 页面内容更新
+        function updatePageContent(lang) {
+            const translationData = getTranslationData();
+            const translations = translationData[lang];
+            
+            // 更新语言显示文本
+            const langTextMap = { 
+                'zh': '简体中文', 
+                'zh-tw': '繁體中文', 
+                'en': 'English' 
+            };
+            document.getElementById('currentLang').textContent = langTextMap[lang] || '简体中文';
+            
+            // 应用翻译内容
+            if (translations) {
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (translations[key]) {
+                        el.innerHTML = translations[key];
+                    }
+                });
+            }
+            
+            // 更新页面语言属性和字体
+            const langHtmlMap = { 'zh': 'zh-CN', 'zh-tw': 'zh-TW', 'en': 'en-US' };
+            document.documentElement.lang = langHtmlMap[lang] || 'zh-CN';
+            
+            // 字体切换
+            if (lang === 'zh-tw') {
+                document.body.style.fontFamily = "'Noto Serif TC', 'Nunito', sans-serif";
+            } else if (lang === 'zh') {
+                document.body.style.fontFamily = "'Noto Serif SC', 'Nunito', sans-serif";
+            } else {
+                document.body.style.fontFamily = "'Nunito', sans-serif";
+            }
+        }
+
+        // 页面元信息更新
+        function updatePageMeta(lang) {
+            const title = document.title || '';
+            const titleMap = {
+                'zh': title,
+                'zh-tw': convertToTraditional(title),
+                'en': `What Does Dreaming of ${translateToEnglish(document.getElementById('symName')?.textContent || '')} Mean? Full Analysis`
+            };
+            
+            document.title = titleMap[lang] || titleMap.zh;
+            
+            // 更新OG标签
+            const ogTitle = document.querySelector('meta[property="og:title"]');
+            if (ogTitle) ogTitle.setAttribute('content', document.title);
+            
+            const ogLocale = document.querySelector('meta[property="og:locale"]');
+            if (ogLocale) {
+                const localeMap = { 'zh': 'zh_CN', 'zh-tw': 'zh_TW', 'en': 'en_US' };
+                ogLocale.setAttribute('content', localeMap[lang] || 'zh_CN');
+            }
+        }
+
+        // 全局语言切换函数
+        window.changeLanguage = function(lang) {
+            initLanguage(lang);
+        };
+
+        // 交互增强
+        function enhanceInteractivity() {
+            // 语言选择器交互
+            document.getElementById('languageSelector')?.addEventListener('click', (e) => {
+                const dropdown = e.currentTarget.querySelector('.absolute');
+                if (dropdown) dropdown.classList.toggle('hidden');
+            });
+            
+            // 点击外部关闭下拉菜单
+            document.addEventListener('click', (e) => {
+                const selector = document.getElementById('languageSelector');
+                if (selector && !selector.contains(e.target)) {
+                    const dropdown = selector.querySelector('.absolute');
+                    if (dropdown) dropdown.classList.add('hidden');
+                }
+            });
+        }
+        
+        // 初始化交互
+        enhanceInteractivity();
+    </script>
+    
+    <!-- 无JS降级处理 -->
+    <noscript>
+        <style>
+            #languageSelector .absolute { display: none !important; }
+            .dream-btn { pointer-events: auto; cursor: pointer; }
+        </style>
+        <meta name="robots" content="index, follow">
+    </noscript>
+
+
+    <!-- SSR友好的JS加载策略 -->
+    <script type="module">
+        // 完整的三语翻译数据（新增繁体中文）
+        const translationData = {
+            "zh": {
+                "name": "舞台陷阱门",
+                "subname": "解梦全解析",
+                "summary": "你是否昨晚梦见了<strong>舞台陷阱门</strong>？这可能不是一个巧合。<br/><br/>舞台陷阱门在梦境中是极具象征意义的符号，它代表着隐藏的情感、被压抑的记忆以及不愿被他人窥见的真实自我。这个梦象征着你内心深处对面对和探索潜意识层面的渴望，同时也反映出对暴露脆弱面、揭示真实自我的恐惧。<br><br>梦见舞台陷阱门往往暗示你心中藏有未被解决的秘密或情感问题，可能现阶段还未准备好去直面它们。这个梦境是潜意识发出的信号，提醒你需要进行自我探索和内在理解，那些被压抑的情感和记忆或许正在无形中束缚着你的成长和前行。",
+                "psych_1": "从心理学视角分析，舞台陷阱门是「公开自我」与「私密自我」冲突的核心象征。舞台代表着你在社会、职场、人际关系中的公开形象（人格面具），而陷阱门则是连接公开形象与潜意识的通道，象征着不愿被他人看见的真实自我、过往创伤和被压抑的欲望。",
+                "psych_2": "根据荣格的分析心理学理论，梦见舞台陷阱门通常有三种核心解读：1. 若梦中你主动打开陷阱门，表明你正准备面对内心深处的秘密或未解决的情感问题，是自我整合、心理成长的积极信号；2. 若你站在陷阱门边缘犹豫不前，反映出你在「暴露真实自我」和「维持完美人设」之间的内心挣扎，害怕被他人评判、拒绝或抛弃；3. 若你不慎掉入陷阱门，预示着近期可能会遭遇身份认同危机，或是被他人发现你刻意隐藏的一面，也可能是潜意识在提醒你需要放下伪装，接纳不完美的自己。此外，舞台陷阱门梦境也常出现在人生角色转变的阶段（如换工作、进入新环境），反映出你对适应新角色、展现新自我的焦虑与不安。",
+                "trad_good": "在周公解梦体系中，梦见舞台陷阱门并非全是凶兆：若梦中你从容通过陷阱门且未感到恐惧，预示「否极泰来，隐忧得解」，近期困扰你的秘密或难题将迎来转机，或是能找到合适的方式坦诚面对；若梦见修补舞台陷阱门，主「补漏除弊，运势回升」，暗示你能主动弥补自身不足，化解人际关系中的潜在矛盾，是自我完善、运势转好的吉兆；若梦见他人掉入陷阱门，预示你能看清他人的伪装，避免被表面现象蒙蔽。",
+                "trad_bad": "若梦中舞台陷阱门突然打开导致你坠落，或是在陷阱门处感到强烈恐惧，预示「防人之心不可无」，近期需警惕身边人的算计或背叛，尤其是在工作场合要注意言行，避免被人抓住把柄；若梦见陷阱门被锁住无法打开，主「心结难解，沟通受阻」，暗示你内心的秘密或情感压抑过深，可能导致人际关系沟通不畅，甚至引发误会和冲突；若梦见陷阱门下方是深渊，则警示需谨慎决策，避免因隐瞒真相或逃避问题而陷入更大的困境。",
+                "dream_guide_title": "想解读你的舞台陷阱门梦境？",
+                "dream_guide_desc": "前往首页，输入你的梦境细节，获取专属的心理学解梦分析",
+                "dream_btn": "立即解梦",
+                "more_dream_title": "还想了解更多梦境含义？",
+                "more_dream_desc": "首页提供更全面的梦境解析工具，定制专属解读",
+                "go_home_btn": "前往首页",
+                "back_dict": "返回首页",
+                "title_psych": "心理学视角",
+                "title_trad": "传统与文化解读",
+                "trad_good_label": "吉：",
+                "trad_bad_label": "凶："
+            },
+            "zh-tw": {
+                "name": "舞台陷阱門",
+                "subname": "解夢全解析",
+                "summary": "你是否昨晚夢見了<strong>舞台陷阱門</strong>？這可能不是一個巧合。<br/><br/>舞台陷阱門在夢境中是極具象徵意義的符號，它代表著隱藏的情感、被壓抑的記憶以及不願被他人窺見的真實自我。這個夢象徵著你內心深處對面對和探索潛意識層面的渴望，同時也反映出對暴露脆弱面、揭示真實自我的恐懼。<br><br>夢見舞台陷阱門往往暗示你心中藏有未被解決的祕密或情感問題，可能現階段還未準備好去直面它們。這個夢境是潛意識發出的信號，提醒你需要進行自我探索和內在理解，那些被壓抑的情感和記憶或許正在無形中束縛著你的成長和前行。",
+                "psych_1": "從心理學視角分析，舞台陷阱門是「公開自我」與「私密自我」衝突的核心象徵。舞台代表著你在社會、職場、人際關係中的公開形象（人格面具），而陷阱門則是連接公開形象與潛意識的通道，象徵著不願被他人看見的真實自我、過往創傷和被壓抑的慾望。",
+                "psych_2": "根據榮格的分析心理學理論，夢見舞台陷阱門通常有三種核心解讀：1. 若夢中你主動打開陷阱門，表明你正準備面對內心深處的祕密或未解決的情感問題，是自我整合、心理成長的積極信號；2. 若你站在陷阱門邊緣猶豫不前，反映出你在「暴露真實自我」和「維持完美人設」之間的內心掙扎，害怕被他人評判、拒絕或拋棄；3. 若你不慎掉入陷阱門，預示著近期可能會遭遇身份認同危機，或是被他人發現你刻意隱藏的一面，也可能是潛意識在提醒你需要放下偽裝，接納不完美的自己。此外，舞台陷阱門夢境也常出現在人生角色轉變的階段（如換工作、進入新環境），反映出你對適應新角色、展現新自我的焦慮與不安。",
+                "trad_good": "在周公解夢體系中，夢見舞台陷阱門並非全是凶兆：若夢中你從容通過陷阱門且未感到恐懼，預示「否極泰來，隱憂得解」，近期困擾你的祕密或難題將迎來轉機，或是能找到合適的方式坦誠面對；若夢見修補舞台陷阱門，主「補漏除弊，運勢回升」，暗示你能主動彌補自身不足，化解人際關係中的潛在矛盾，是自我完善、運勢轉好的吉兆；若夢見他人掉入陷阱門，預示你能看清他人的偽裝，避免被表面現象蒙蔽。",
+                "trad_bad": "若夢中舞台陷阱門突然打開導致你墜落，或是在陷阱門處感到強烈恐懼，預示「防人之心不可無」，近期需警惕身邊人的算計或背叛，尤其是在工作場合要注意言行，避免被人抓住把柄；若夢見陷阱門被鎖住無法打開，主「心結難解，溝通受阻」，暗示你內心的祕密或情感壓抑過深，可能導致人際關係溝通不暢，甚至引發誤會和衝突；若夢見陷阱門下方是深淵，則警示需謹慎決策，避免因隱瞞真相或逃避問題而陷入更大的困境。",
+                "dream_guide_title": "想解讀你的舞台陷阱門夢境？",
+                "dream_guide_desc": "前往首頁，輸入你的夢境細節，獲取專屬的心理學解夢分析",
+                "dream_btn": "立即解夢",
+                "more_dream_title": "還想了解更多夢境含義？",
+                "more_dream_desc": "首頁提供更全面的夢境解析工具，定制專屬解讀",
+                "go_home_btn": "前往首頁",
+                "back_dict": "返回首頁",
+                "title_psych": "心理學視角",
+                "title_trad": "傳統與文化解讀",
+                "trad_good_label": "吉：",
+                "trad_bad_label": "凶："
+            },
+            "en": {
+                "name": "Stage Trapdoor",
+                "subname": "Complete Dream Interpretation",
+                "summary": "Did you dream of a <strong>stage trapdoor</strong> last night? This may not be a coincidence.<br/><br/>A stage trapdoor is a highly symbolic symbol in dreams, representing hidden emotions, repressed memories, and the true self that you are unwilling to show others. This dream symbolizes your deep inner desire to face and explore the subconscious, while also reflecting the fear of exposing your vulnerabilities and revealing your true self.<br><br>Dreaming of a stage trapdoor often indicates that you hold unresolved secrets or emotional issues in your heart, and you may not be ready to face them at this stage. This dream is a signal from the subconscious, reminding you that you need to engage in self-exploration and inner understanding—those repressed emotions and memories may be invisibly restricting your growth and progress.",
+                "psych_1": "From a psychological perspective, a stage trapdoor is the core symbol of the conflict between the \"public self\" and the \"private self\". The stage represents your public image (persona) in society, the workplace, and interpersonal relationships, while the trapdoor is a channel connecting the public image to the subconscious, symbolizing the true self, past traumas, and repressed desires that you do not want others to see.",
+                "psych_2": "According to Jung's analytical psychology theory, dreaming of a stage trapdoor typically has three core interpretations: 1. If you actively open the trapdoor in the dream, it indicates that you are ready to face deep-seated secrets or unresolved emotional issues—a positive signal of self-integration and psychological growth; 2. If you hesitate on the edge of the trapdoor, it reflects your inner struggle between \"exposing your true self\" and \"maintaining a perfect persona\", fearing judgment, rejection, or abandonment by others; 3. If you accidentally fall into the trapdoor, it predicts an identity crisis in the near future, or the possibility of others discovering the side of you that you deliberately hide—it may also be a subconscious reminder to let go of pretense and accept your imperfect self. Additionally, dreams of stage trapdoors often occur during life transitions (such as changing jobs or entering new environments), reflecting anxiety and unease about adapting to new roles and showing a new self.",
+                "trad_good": "In the traditional Chinese dream interpretation system (Zhou Gong Jie Meng), dreaming of a stage trapdoor is not entirely an ill omen: If you pass through the trapdoor calmly without fear in the dream, it predicts \"when misfortune reaches its limit, good fortune comes; hidden worries are resolved\"—the secrets or difficulties troubling you recently will take a turn for the better, or you will find an appropriate way to face them honestly; If you dream of repairing a stage trapdoor, it signifies \"mending flaws and eliminating disadvantages, fortune rises\"—implying that you can actively make up for your shortcomings, resolve potential conflicts in interpersonal relationships, and it is a good omen of self-improvement and improved fortune; If you dream of someone else falling into the trapdoor, it predicts that you can see through others' disguises and avoid being deceived by superficial appearances.",
+                "trad_bad": "If the stage trapdoor suddenly opens and causes you to fall in the dream, or if you feel intense fear at the trapdoor, it warns \"never let down your guard against others\"—you need to be vigilant against scheming or betrayal by people around you recently, especially to pay attention to your words and deeds in the workplace to avoid being caught off guard; If you dream of the trapdoor being locked and unable to open, it signifies \"heart knots hard to untie, communication blocked\"—implying that your inner secrets or emotional repression are too deep, which may lead to poor communication in interpersonal relationships and even trigger misunderstandings and conflicts; If you dream of an abyss beneath the trapdoor, it warns you to make decisions carefully to avoid falling into greater difficulties due to concealing the truth or evading problems.",
+                "dream_guide_title": "Want to interpret your stage trapdoor dream?",
+                "dream_guide_desc": "Go to the homepage, enter the details of your dream, and get exclusive psychological dream analysis",
+                "dream_btn": "Interpret Dream Now",
+                "more_dream_title": "Want to learn more about dream meanings?",
+                "more_dream_desc": "The homepage offers comprehensive dream interpretation tools for personalized analysis",
+                "go_home_btn": "Go to Homepage",
+                "back_dict": "Back Home",
+                "title_psych": "Psychological Perspective",
+                "title_trad": "Traditional & Cultural Interpretation",
+                "trad_good_label": "Good Omen:",
+                "trad_bad_label": "Bad Omen:"
+            }
+        };
+
+        // SSR Hydration逻辑
+        document.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
             const langParam = urlParams.get('lang');
             if (langParam) changeLanguage(langParam);
         });
 
-        function changeLanguage(lang) {
-            try {
+        // 语言初始化函数（纯函数，适配SSR）
+        function initLanguage(lang) {
+            const validLangs = ['zh', 'zh-tw', 'en'];
+            const targetLang = validLangs.includes(lang) ? lang : 'zh';
+            
+            updateUrlLangParam(targetLang);
+            updatePageContent(targetLang);
+            updatePageMeta(targetLang);
+        }
+
+        // URL参数更新（无刷新）
+        function updateUrlLangParam(lang) {
+            if (window.history && window.history.pushState) {
                 const url = new URL(window.location);
                 url.searchParams.set('lang', lang);
                 window.history.pushState({}, '', url);
-            } catch (e) {}
-
-            document.getElementById('currentLang').innerText = lang === 'zh' ? '中文' : 'English';
-
-            // 檢查 pageData 是否已被替換為對象（在 Python 生成後）
-            // 如果還是字符串（在模板預覽模式下），則不執行內容替換
-            if (typeof pageData === 'object' && pageData !== null) {
-                const content = pageData[lang];
-                if (content) {
-                    document.querySelectorAll('[data-i18n]').forEach(el => {
-                        const key = el.getAttribute('data-i18n');
-                        if (content[key]) el.innerHTML = content[key];
-                        else if (uiTranslations[lang][key]) el.innerText = uiTranslations[lang][key];
-                    });
-                }
             }
         }
+
+        // 页面内容更新（高效Hydration）
+        function updatePageContent(lang) {
+            // 更新语言显示文本
+            const langTextMap = { 
+                'zh': '简体中文', 
+                'zh-tw': '繁體中文', 
+                'en': 'English' 
+            };
+            document.getElementById('currentLang').textContent = langTextMap[lang] || '简体中文';
+            
+            // 应用对应语言的翻译内容
+            const translations = translationData[lang];
+            if (translations) {
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (translations[key]) {
+                        el.innerHTML = translations[key];
+                    }
+                });
+            }
+            
+            // 更新页面语言属性
+            const langHtmlMap = {
+                'zh': 'zh-CN',
+                'zh-tw': 'zh-TW',
+                'en': 'en-US'
+            };
+            document.documentElement.lang = langHtmlMap[lang] || 'zh-CN';
+            
+            // 繁体中文时切换字体
+            if (lang === 'zh-tw') {
+                document.body.style.fontFamily = "'Noto Serif TC', 'Nunito', sans-serif";
+            } else if (lang === 'zh') {
+                document.body.style.fontFamily = "'Noto Serif SC', 'Nunito', sans-serif";
+            } else {
+                document.body.style.fontFamily = "'Nunito', sans-serif";
+            }
+        }
+
+        // 页面元信息更新
+        function updatePageMeta(lang) {
+            const titleMap = {
+                'zh': '【解梦百科】梦见舞台陷阱门是吉是凶？完整版解析来了',
+                'zh-tw': '【解夢百科】夢見舞台陷阱門是吉是凶？完整版解析來了',
+                'en': 'What Does Dreaming of Stage Trapdoor Mean? Full Analysis of Good or Bad Omens'
+            };
+            
+            document.title = titleMap[lang] || titleMap.zh;
+            
+            // 更新OG标签
+            const ogTitle = document.querySelector('meta[property="og:title"]');
+            if (ogTitle) ogTitle.setAttribute('content', document.title);
+            
+            const ogLocale = document.querySelector('meta[property="og:locale"]');
+            if (ogLocale) {
+                const localeMap = {
+                    'zh': 'zh_CN',
+                    'zh-tw': 'zh_TW',
+                    'en': 'en_US'
+                };
+                ogLocale.setAttribute('content', localeMap[lang] || 'zh_CN');
+            }
+        }
+
+        // 客户端交互增强
+        function enhanceInteractivity() {
+            window.changeLanguage = function(lang) {
+                initLanguage(lang);
+            };
+            
+            // 语言选择器交互优化
+            document.getElementById('languageSelector').addEventListener('click', (e) => {
+                const dropdown = e.currentTarget.querySelector('.absolute');
+                dropdown.classList.toggle('hidden');
+            });
+            
+            // 点击外部关闭下拉菜单
+            document.addEventListener('click', (e) => {
+                const selector = document.getElementById('languageSelector');
+                if (!selector.contains(e.target)) {
+                    const dropdown = selector.querySelector('.absolute');
+                    dropdown.classList.add('hidden');
+                }
+            });
+        }
+        
+        // 初始化交互
+        enhanceInteractivity();
     </script>
+    
+    <!-- 无JS降级处理 -->
+    <noscript>
+        <style>
+            #languageSelector .absolute { display: none !important; }
+            .dream-btn { pointer-events: auto; cursor: pointer; }
+        </style>
+        <meta name="robots" content="index, follow">
+    </noscript>
 </body>
 </html>
