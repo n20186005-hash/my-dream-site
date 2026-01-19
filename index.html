@@ -5,13 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DreamWhispeAi - 听见梦的低语</title>
     
+    <!-- SEO & Metadata for Better "SSR" Support -->
+    <meta name="description" content="DreamWhispeAi - AI 驱动的梦境解析与心理疗愈平台。探索潜意识的秘密花园，解读梦境背后的情绪与隐喻。">
+    <meta name="keywords" content="解梦, 梦境解析, AI解梦, 心理疗愈, 象征字典, 潜意识, Dream Interpretation, Dream Analysis, Tarot, Astrology">
+    <meta name="author" content="DreamWhispeAi Team">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dreamwhisperai.com/">
+    <meta property="og:title" content="DreamWhispeAi - 听见梦的低语">
+    <meta property="og:description" content="每一个梦都是灵魂寄来的信笺。在这里，我们用温柔的科技，为您解读梦境背后的情绪与隐喻。">
+    <meta property="og:image" content="https://dreamwhisperai.com/card.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://dreamwhisperai.com/">
+    <meta property="twitter:title" content="DreamWhispeAi - 听见梦的低语">
+    <meta property="twitter:description" content="AI 驱动的梦境解析与心理疗愈平台。">
+    
     <!-- 浏览器图标 -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌙</text></svg>">
     <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌙</text></svg>">
 
     <script src="https://cdn.tailwindcss.com"></script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9279583389810634"
-     crossorigin="anonymous"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9279583389810634" crossorigin="anonymous"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Nunito:wght@300;400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -22,10 +40,11 @@
                 extend: {
                     colors: { dream: { dark: '#1A1625', purple: '#4F46E5', light: '#A78BFA', pink: '#F472B6' } },
                     fontFamily: { serif: ['"Noto Serif SC"', 'serif'], sans: ['"Nunito"', 'sans-serif'] },
-                    animation: { 'float': 'float 6s ease-in-out infinite', 'slide-up': 'slideUp 0.5s ease-out' },
+                    animation: { 'float': 'float 6s ease-in-out infinite', 'slide-up': 'slideUp 0.5s ease-out', 'fade-in': 'fadeIn 0.8s ease-out' },
                     keyframes: {
                         float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-20px)' } },
-                        slideUp: { '0%': { transform: 'translateY(20px)', opacity: '0' }, '100%': { transform: 'translateY(0)', opacity: '1' } }
+                        slideUp: { '0%': { transform: 'translateY(20px)', opacity: '0' }, '100%': { transform: 'translateY(0)', opacity: '1' } },
+                        fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } }
                     }
                 }
             }
@@ -61,6 +80,24 @@
     </style>
 </head>
 <body class="relative text-center">
+
+    <!-- SEO / NoScript Fallback for Crawlers (Better SSR Support) -->
+    <noscript>
+        <div style="padding: 20px; text-align: left; background: #1A1625; color: white;">
+            <h1>DreamWhispeAi - 听见梦的低语</h1>
+            <p>AI 驱动的心理疗愈. 探索你潜意识的秘密花园. 每一个梦都是灵魂寄来的信笺。</p>
+            <hr>
+            <h2>友情链接 (Friendship Links)</h2>
+            <ul>
+                <li><a href="https://nowgames.lol" target="_blank">NowGames - Free Online Games</a></li>
+                <li><a href="https://fungames.today" target="_blank">FunGames - Play Games Today</a></li>
+                <li><a href="https://toolboxpro.top" target="_blank">Toolbox Pro - Online Tools</a></li>
+                <li><a href="https://dreamwhisperai.com" target="_blank">DreamWhisperAi - Dream Interpretation</a></li>
+                <li><a href="https://statetaxcalc.com" target="_blank">State Tax Calc - Tax Calculator</a></li>
+                <li><a href="https://forgecalc.org" target="_blank">The Forge Calculator - Game Utilities</a></li>
+            </ul>
+        </div>
+    </noscript>
 
     <div id="toast">Message</div>
 
