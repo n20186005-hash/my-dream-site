@@ -336,19 +336,22 @@
         
         // 友情链接 HTML 内容
         const linksHtml = `
-            <div class="grid grid-cols-1 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- NowGames -->
                 <a href="https://nowgames.lol" target="_blank" class="glass-panel p-4 rounded-xl flex items-center justify-between hover:bg-white/5 transition-all group">
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 rounded-full bg-indigo-500/20 flex items-center justify-center text-indigo-300 border border-white/10 group-hover:border-indigo-400/50 transition-colors">
                             <i class="fa-solid fa-gamepad"></i>
                         </div>
                         <div>
-                            <div class="font-bold text-gray-200 group-hover:text-white transition-colors">Pips Game</div>
+                            <div class="font-bold text-gray-200 group-hover:text-white transition-colors">NowGames</div>
                             <div class="text-xs text-gray-500">nowgames.lol</div>
                         </div>
                     </div>
                     <i class="fa-solid fa-arrow-up-right-from-square text-gray-500 group-hover:text-pink-300 transition-colors"></i>
                 </a>
+
+                <!-- FunGames -->
                 <a href="https://fungames.today" target="_blank" class="glass-panel p-4 rounded-xl flex items-center justify-between hover:bg-white/5 transition-all group">
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-300 border border-white/10 group-hover:border-purple-400/50 transition-colors">
@@ -361,14 +364,58 @@
                     </div>
                     <i class="fa-solid fa-arrow-up-right-from-square text-gray-500 group-hover:text-pink-300 transition-colors"></i>
                 </a>
-                <a href="https://dreamwhisperai.com" target="_blank" class="glass-panel p-4 rounded-xl flex items-center justify-between hover:bg-white/5 transition-all group">
+
+                <!-- Toolbox Pro -->
+                <a href="https://toolboxpro.top" target="_blank" class="glass-panel p-4 rounded-xl flex items-center justify-between hover:bg-white/5 transition-all group">
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-full bg-pink-500/20 flex items-center justify-center text-pink-300 border border-white/10 group-hover:border-pink-400/50 transition-colors">
+                        <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-300 border border-white/10 group-hover:border-blue-400/50 transition-colors">
                             <i class="fa-solid fa-toolbox"></i>
                         </div>
                         <div>
                             <div class="font-bold text-gray-200 group-hover:text-white transition-colors">Toolbox Pro</div>
+                            <div class="text-xs text-gray-500">toolboxpro.top</div>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-gray-500 group-hover:text-pink-300 transition-colors"></i>
+                </a>
+
+                 <!-- DreamWhisperAi -->
+                <a href="https://dreamwhisperai.com" target="_blank" class="glass-panel p-4 rounded-xl flex items-center justify-between hover:bg-white/5 transition-all group">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-pink-500/20 flex items-center justify-center text-pink-300 border border-white/10 group-hover:border-pink-400/50 transition-colors">
+                            <i class="fa-solid fa-moon"></i>
+                        </div>
+                        <div>
+                            <div class="font-bold text-gray-200 group-hover:text-white transition-colors">DreamWhisperAi</div>
                             <div class="text-xs text-gray-500">dreamwhisperai.com</div>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-gray-500 group-hover:text-pink-300 transition-colors"></i>
+                </a>
+
+                <!-- State Tax Calc -->
+                <a href="https://statetaxcalc.com" target="_blank" class="glass-panel p-4 rounded-xl flex items-center justify-between hover:bg-white/5 transition-all group">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center text-green-300 border border-white/10 group-hover:border-green-400/50 transition-colors">
+                            <i class="fa-solid fa-file-invoice-dollar"></i>
+                        </div>
+                        <div>
+                            <div class="font-bold text-gray-200 group-hover:text-white transition-colors">State Tax Calc</div>
+                            <div class="text-xs text-gray-500">statetaxcalc.com</div>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-gray-500 group-hover:text-pink-300 transition-colors"></i>
+                </a>
+
+                 <!-- The Forge Calculator -->
+                <a href="https://forgecalc.org" target="_blank" class="glass-panel p-4 rounded-xl flex items-center justify-between hover:bg-white/5 transition-all group">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-orange-500/20 flex items-center justify-center text-orange-300 border border-white/10 group-hover:border-orange-400/50 transition-colors">
+                            <i class="fa-solid fa-fire-flame-curved"></i>
+                        </div>
+                        <div>
+                            <div class="font-bold text-gray-200 group-hover:text-white transition-colors">Forge Calculator</div>
+                            <div class="text-xs text-gray-500">The Forge Calculator</div>
                         </div>
                     </div>
                     <i class="fa-solid fa-arrow-up-right-from-square text-gray-500 group-hover:text-pink-300 transition-colors"></i>
@@ -394,7 +441,7 @@
                 sym_snake_title: "蛇 (Snake)", label_psych: "心理学视角", sym_snake_psych: "代表潜意识的智慧、治愈能力，或被压抑的原始冲动。",
                 footer_terms: "服务条款", footer_privacy: "隐私政策", footer_contact: "联系我们", footer_links: "友情链接", footer_copyright: "dreamwhisperai", footer_build: "DW-20241219-GOLD (点击调试)",
                 modal_about_title: "关于 dreamwhisperai",
-                modal_about_body: "你好呀，很高兴在这里与你相遇 ✨<br><br>我们是一群热爱解梦、痴迷塔罗牌的独立开发者，因对潜意识探索的共同热爱走到一起。<br><br>在日复一日的生活里，梦境是潜意识送给我们最温柔的礼物，塔罗则是与内心对话的奇妙媒介。我们相信，每一个梦境碎片、每一次牌面轮转，都藏着自我探索的线索——但这一切，都只为「娱乐与陪伴」而生。于是我们亲手搭建了 DreamWhispeAi 这个小天地：用AI技术解读梦境隐喻，用塔罗思维梳理情绪线索，分享我们摸索出的解梦思路、塔罗玩法，也想为同频的你提供一个轻松的交流角落。<br><br>⚠️ 重要提醒：本站所有解梦、塔罗相关解读与玩法，仅限娱乐参考，不构成专业心理指导、人生建议或决策依据。<br><br>如果你也痴迷于梦境的奥秘，喜欢塔罗牌的浪漫与思辨，<br><br>欢迎加入我们的小小社群——一起唠唠梦里的奇思妙想，聊聊塔罗牌的趣味玩法，让这份热爱成为生活里的小星光 💫。",
+                modal_about_body: "你好呀，很高兴在这里与你相遇 ✨<br><br>我们是一群热爱解梦、痴迷塔羅牌的独立开发者，因对潜意识探索的共同热爱走到一起。<br><br>在日复一日的生活里，梦境是潜意识送给我们最温柔的礼物，塔罗则是与内心对话的奇妙媒介。我们相信，每一个梦境碎片、每一次牌面轮转，都藏着自我探索的线索——但这一切，都只为「娱乐与陪伴」而生。于是我们亲手搭建了 DreamWhispeAi 这个小天地：用AI技术解读梦境隐喻，用塔罗思维梳理情绪线索，分享我们摸索出的解梦思路、塔罗玩法，也想为同频的你提供一个轻松的交流角落。<br><br>⚠️ 重要提醒：本站所有解梦、塔罗相关解读与玩法，仅限娱乐参考，不构成专业心理指导、人生建议或决策依据。<br><br>如果你也痴迷于梦境的奥秘，喜欢塔罗牌的浪漫与思辨，<br><br>欢迎加入我们的小小社群——一起唠唠梦里的奇思妙想，聊聊塔罗牌的趣味玩法，让这份热爱成为生活里的小星光 💫。",
                 modal_terms_title: "服务条款",
                 modal_terms_body: "<strong>1. 接受条款</strong><br>访问和使用 https://dreamwhisperai.com，即表示您接受并同意受本协议条款和条件的约束。<br><br><strong>2. 服务说明</strong><br>本服务仅供娱乐和自我探索之用，不构成专业的心理咨询或医疗建议。",
                 modal_privacy_title: "隐私政策",
