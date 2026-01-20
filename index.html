@@ -1,472 +1,1156 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DreamWhispeAi - 听见梦的低语</title>
+    <meta name="description" content="DreamWhispeAi - The premier AI dream interpretation platform. Integrating Jungian psychology, Tarot archetypes, and Chinese Zodiac wisdom for deep subconscious analysis.">
+    <meta name="keywords" content="Dream Interpretation, AI Dream Meaning, Jungian Analysis, Tarot Reading, Chinese Zodiac, Astrology, Dream Dictionary, Lucid Dreaming, Subconscious">
+    <title>DreamWhispeAi - Decode Your Dreams | AI-Powered Jungian & Esoteric Analysis</title>
+    <!-- SEO Canonical Tag -->
+    <link rel="canonical" href="https://dreamwhisperai.com/" />
     
-    <!-- SEO & Metadata for Better "SSR" Support -->
-    <meta name="description" content="DreamWhispeAi - AI 驱动的梦境解析与心理疗愈平台。探索潜意识的秘密花园，解读梦境背后的情绪与隐喻。">
-    <meta name="keywords" content="解梦, 梦境解析, AI解梦, 心理疗愈, 象征字典, 潜意识, Dream Interpretation, Dream Analysis, Tarot, Astrology">
-    <meta name="author" content="DreamWhispeAi Team">
-    <meta name="robots" content="index, follow">
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://dreamwhisperai.com/">
-    <meta property="og:title" content="DreamWhispeAi - 听见梦的低语">
-    <meta property="og:description" content="每一个梦都是灵魂寄来的信笺。在这里，我们用温柔的科技，为您解读梦境背后的情绪与隐喻。">
-    <meta property="og:image" content="https://dreamwhisperai.com/card.png">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://dreamwhisperai.com/">
-    <meta property="twitter:title" content="DreamWhispeAi - 听见梦的低语">
-    <meta property="twitter:description" content="AI 驱动的梦境解析与心理疗愈平台。">
-    
-    <!-- 浏览器图标 -->
+    <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌙</text></svg>">
     <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌙</text></svg>">
+
+    <!-- JSON-LD for WebApplication -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "DreamWhispeAi",
+      "url": "https://dreamwhisperai.com",
+      "description": "AI-powered dream interpretation tool based on Jungian psychology and traditional wisdom.",
+      "applicationCategory": "LifestyleApplication",
+      "operatingSystem": "Web",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+    <!-- JSON-LD for Article/Content -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Dream Interpretation System: Fusing Eastern & Western Wisdom",
+      "description": "A comprehensive guide to using AI, Tarot, and Astrology for dream analysis.",
+      "author": { "@type": "Organization", "name": "DreamWhispeAi Team" }
+    }
+    </script>
+    <!-- JSON-LD for FAQ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "Why is AI dream interpretation better than a human interpreter?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Human interpreters are limited by their personal knowledge, cultural background, and environment. Our AI accesses a vast, global database of psychology, folklore, and symbolism instantly, ensuring no cultural nuance is missed."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Is my dream data private? Do I need to login?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Your privacy is our top priority. We require NO login, NO registration, and collect NO personal information. We do not ask who you are, ensuring your subconscious thoughts remain your own."
+        }
+      }]
+    }
+    </script>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9279583389810634" crossorigin="anonymous"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Nunito:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Serif+SC:wght@300;400;700&family=Nunito:wght@300;400;600;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    colors: { dream: { dark: '#1A1625', purple: '#4F46E5', light: '#A78BFA', pink: '#F472B6' } },
-                    fontFamily: { serif: ['"Noto Serif SC"', 'serif'], sans: ['"Nunito"', 'sans-serif'] },
-                    animation: { 'float': 'float 6s ease-in-out infinite', 'slide-up': 'slideUp 0.5s ease-out', 'fade-in': 'fadeIn 0.8s ease-out' },
+                    colors: { 
+                        dream: { dark: '#0f0c29', purple: '#302b63', light: '#24243e', pink: '#ff00cc', gold: '#ffd700' } 
+                    },
+                    fontFamily: { 
+                        serif: ['"Cinzel"', '"Noto Serif SC"', 'serif'], 
+                        sans: ['"Nunito"', 'sans-serif'] 
+                    },
+                    animation: { 
+                        'float': 'float 8s ease-in-out infinite', 
+                        'slide-up': 'slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'orb-float': 'orbFloat 20s infinite linear'
+                    },
                     keyframes: {
                         float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-20px)' } },
-                        slideUp: { '0%': { transform: 'translateY(20px)', opacity: '0' }, '100%': { transform: 'translateY(0)', opacity: '1' } },
-                        fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } }
+                        slideUp: { '0%': { transform: 'translateY(40px)', opacity: '0' }, '100%': { transform: 'translateY(0)', opacity: '1' } },
+                        orbFloat: { '0%': { transform: 'rotate(0deg) translate(20px) rotate(0deg)' }, '100%': { transform: 'rotate(360deg) translate(20px) rotate(-360deg)' } }
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
                     }
                 }
             }
         }
     </script>
     <style>
-        body { background: linear-gradient(135deg, #1e1b4b 0%, #4c1d95 50%, #831843 100%); min-height: 100vh; color: white; font-family: 'Nunito', sans-serif; overflow-x: hidden; background-attachment: fixed; }
-        .glass-panel { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.08); transition: all 0.3s ease; }
-        .glass-card:hover { background: rgba(255, 255, 255, 0.08); transform: translateY(-5px); border-color: rgba(244, 114, 182, 0.3); }
-        .glass-input { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); outline: none; transition: 0.3s; }
-        .glass-input:focus { border-color: rgba(244, 114, 182, 0.5); box-shadow: 0 0 15px rgba(244, 114, 182, 0.2); }
-        .btn-gradient { background: linear-gradient(90deg, #ec4899 0%, #8b5cf6 100%); transition: all 0.3s ease; }
-        .btn-gradient:hover { transform: translateY(-2px); box-shadow: 0 10px 25px -5px rgba(236, 72, 153, 0.4); }
-        .page-section { display: none; animation: slideUp 0.5s ease-out; }
-        .page-section.active { display: block; }
-        
-        #toast { visibility: hidden; min-width: 220px; background: rgba(255, 255, 255, 0.95); color: #4c1d95; text-align: center; border-radius: 50px; padding: 12px 24px; position: fixed; z-index: 3000; left: 50%; bottom: 30px; transform: translateX(-50%); opacity: 0; transition: 0.3s; font-weight: bold; }
-        #toast.show { visibility: visible; opacity: 1; bottom: 50px; }
-        
-        .modal { display: none; position: fixed; z-index: 1000; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); align-items: center; justify-content: center; padding: 20px; }
-        .modal-content { background: #1A1625; border: 1px solid rgba(255,255,255,0.1); width: 100%; max-width: 650px; border-radius: 28px; padding: 40px; position: relative; animation: slideUp 0.3s ease-out; }
-        
-        #mobileMenu { transition: 0.4s ease-in-out; transform: translateX(100%); }
+        body { 
+            background-color: #0f0c29;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(76, 29, 149, 0.3) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(236, 72, 153, 0.3) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(59, 130, 246, 0.3) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, rgba(139, 92, 246, 0.3) 0px, transparent 50%);
+            min-height: 100vh; 
+            color: #e2e8f0; 
+            font-family: 'Nunito', sans-serif; 
+            overflow-x: hidden; 
+            position: relative;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: -1;
+        }
+        .glass-panel { 
+            background: rgba(255, 255, 255, 0.03); 
+            backdrop-filter: blur(24px); 
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.08); 
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            border-left: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .glass-card { 
+            background: rgba(255, 255, 255, 0.02); 
+            backdrop-filter: blur(12px); 
+            border: 1px solid rgba(255, 255, 255, 0.05); 
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+            position: relative;
+            overflow: hidden;
+        }
+        .glass-card:hover { 
+            background: rgba(255, 255, 255, 0.06); 
+            transform: translateY(-8px); 
+            border-color: rgba(244, 114, 182, 0.4); 
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5);
+        }
+        .glass-input { 
+            background: rgba(0, 0, 0, 0.2); 
+            backdrop-filter: blur(10px); 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            outline: none; 
+            transition: 0.3s; 
+            color: white;
+        }
+        .glass-input:focus { 
+            background: rgba(0, 0, 0, 0.4);
+            border-color: rgba(244, 114, 182, 0.6); 
+            box-shadow: 0 0 20px rgba(244, 114, 182, 0.15); 
+        }
+        .btn-gradient { 
+            background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #6366f1 100%); 
+            background-size: 200% 200%;
+            animation: gradientMove 5s ease infinite;
+            border: 1px solid rgba(255,255,255,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        @keyframes gradientMove { 0% { background-position: 0% 50% } 50% { background-position: 100% 50% } 100% { background-position: 0% 50% } }
+        .page-section { display: none; opacity: 0; transition: opacity 0.5s ease; }
+        .page-section.active { display: block; opacity: 1; }
+        #toast { visibility: hidden; min-width: 250px; background: rgba(15, 12, 41, 0.9); border: 1px solid rgba(255,255,255,0.2); color: #fff; text-align: center; border-radius: 12px; padding: 16px 24px; position: fixed; z-index: 3000; left: 50%; bottom: 30px; transform: translateX(-50%) translateY(20px); opacity: 0; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); font-weight: 600; box-shadow: 0 10px 30px rgba(0,0,0,0.5); backdrop-filter: blur(10px); }
+        #toast.show { visibility: visible; opacity: 1; transform: translateX(-50%) translateY(0); }
+        .modal { display: none; position: fixed; z-index: 1000; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(12px); align-items: center; justify-content: center; padding: 20px; }
+        .modal-content { background: #13111c; border: 1px solid rgba(255,255,255,0.1); width: 100%; max-width: 700px; border-radius: 24px; padding: 40px; position: relative; animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
+        #mobileMenu { transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); transform: translateX(100%); }
         #mobileMenu.open { transform: translateX(0); }
         .status-pulse { animation: statusPulse 2s infinite; }
-        @keyframes statusPulse { 0%, 100% { opacity: 0.5; transform: scale(0.9); } 50% { opacity: 1; transform: scale(1.1); } }
-        .voice-wave { display: inline-flex; align-items: center; height: 20px; gap: 2px; }
-        .voice-bar { width: 3px; background-color: #F472B6; animation: sound 0ms -800ms linear infinite alternate; }
-        @keyframes sound { 0% { height: 3px; opacity: .35; } 100% { height: 15px; opacity: 1; } }
-        .skeleton { background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 75%); background-size: 200% 100%; animation: loading 1.5s infinite; }
-        @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+        @keyframes statusPulse { 0%, 100% { opacity: 0.5; transform: scale(0.9); box-shadow: 0 0 0 0 rgba(255,255,255,0.2); } 50% { opacity: 1; transform: scale(1.1); box-shadow: 0 0 10px 4px rgba(255,255,255,0.1); } }
+        .voice-wave { display: inline-flex; align-items: center; height: 20px; gap: 3px; }
+        .voice-bar { width: 4px; background: linear-gradient(to top, #ec4899, #8b5cf6); border-radius: 2px; animation: sound 0ms -800ms linear infinite alternate; }
+        @keyframes sound { 0% { height: 4px; opacity: .5; } 100% { height: 24px; opacity: 1; } }
+        .list-card {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: 0.3s;
+        }
+        .list-card:hover {
+            background: rgba(255, 255, 255, 0.03);
+            border-color: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+        /* Table Styles for Comparison */
+        .glass-table { width: 100%; border-collapse: separate; border-spacing: 0; }
+        .glass-table th, .glass-table td { padding: 16px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .glass-table th { font-weight: 700; color: #f472b6; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.1em; }
+        .glass-table tr:last-child td { border-bottom: none; }
+        .glass-table tr:hover td { background: rgba(255,255,255,0.02); }
+        
+        /* Accordion for FAQ - Optimized for Default Open */
+        .accordion-item { border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .accordion-header { width: 100%; text-align: left; padding: 20px 0; font-weight: 600; color: white; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.3s; }
+        .accordion-header:hover { color: #f472b6; }
+        .accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; color: #9ca3af; font-size: 0.95rem; line-height: 1.6; }
+        /* Increased max-height for richer content when open */
+        .accordion-body.open { max-height: 1000px; padding-bottom: 20px; }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f0c29; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #555; }
+        .text-glow { text-shadow: 0 0 10px rgba(236, 72, 153, 0.5), 0 0 20px rgba(139, 92, 246, 0.3); }
     </style>
 </head>
-<body class="relative text-center">
+<body class="relative text-center selection:bg-pink-500 selection:text-white">
 
-    <!-- SEO / NoScript Fallback for Crawlers (Better SSR Support) -->
-    <noscript>
-        <div style="padding: 20px; text-align: left; background: #1A1625; color: white;">
-            <h1>DreamWhispeAi - 听见梦的低语</h1>
-            <p>AI 驱动的心理疗愈. 探索你潜意识的秘密花园. 每一个梦都是灵魂寄来的信笺。</p>
-            <hr>
-            <h2>友情链接 (Friendship Links)</h2>
-            <ul>
-                <li><a href="https://nowgames.lol" target="_blank">NowGames - Free Online Games</a></li>
-                <li><a href="https://fungames.today" target="_blank">FunGames - Play Games Today</a></li>
-                <li><a href="https://toolboxpro.top" target="_blank">Toolbox Pro - Online Tools</a></li>
-                <li><a href="https://dreamwhisperai.com" target="_blank">DreamWhisperAi - Dream Interpretation</a></li>
-                <li><a href="https://statetaxcalc.com" target="_blank">State Tax Calc - Tax Calculator</a></li>
-                <li><a href="https://forgecalc.org" target="_blank">The Forge Calculator - Game Utilities</a></li>
-            </ul>
-        </div>
-    </noscript>
+    <div class="fixed top-[-10%] left-[-10%] w-[40vw] h-[40vw] rounded-full bg-purple-900/20 blur-[100px] animate-orb-float -z-10"></div>
+    <div class="fixed bottom-[-10%] right-[-10%] w-[35vw] h-[35vw] rounded-full bg-pink-900/10 blur-[80px] animate-orb-float -z-10" style="animation-duration: 25s; animation-direction: reverse;"></div>
 
-    <div id="toast">Message</div>
+    <div id="toast"><i class="fa-solid fa-circle-info mr-2 text-pink-400"></i><span id="toastMsg">Message</span></div>
 
-    <!-- 导航栏 -->
-    <nav class="fixed w-full z-50 bg-[#1A1625]/80 backdrop-blur-md border-b border-white/5">
+    <nav class="fixed w-full z-50 top-0 transition-all duration-300 bg-[#0f0c29]/70 backdrop-blur-xl border-b border-white/5">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="javascript:void(0)" onclick="navigateTo('home')" class="flex items-center gap-2 group">
-                <i class="fa-solid fa-moon text-pink-400 text-2xl animate-pulse group-hover:rotate-12 transition-transform"></i>
-                <span class="text-2xl font-serif font-bold text-white tracking-tight">DreamWhispeAi</span>
+            <a href="javascript:void(0)" onclick="navigateTo('home')" class="flex items-center gap-3 group">
+                <div class="relative w-8 h-8 flex items-center justify-center">
+                    <div class="absolute inset-0 bg-pink-500 blur-lg opacity-40 group-hover:opacity-60 transition-opacity"></div>
+                    <i class="fa-solid fa-moon text-pink-300 text-2xl relative z-10 group-hover:rotate-12 transition-transform duration-500"></i>
+                </div>
+                <span class="text-2xl font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400 tracking-tight group-hover:to-pink-200 transition-all">DreamWhispeAi</span>
             </a>
             
-            <div class="hidden md:flex items-center gap-10 text-sm font-semibold text-gray-200">
-                <a href="javascript:void(0)" onclick="navigateTo('plaza')" class="hover:text-pink-300 transition-colors flex items-center gap-2">
-                    <i class="fa-solid fa-users-rays text-xs"></i> <span data-i18n="nav_square">解梦广场</span>
+            <div class="hidden md:flex items-center gap-8 text-sm font-semibold text-gray-300">
+                <a href="javascript:void(0)" onclick="navigateTo('plaza')" class="hover:text-pink-300 transition-colors flex items-center gap-2 group">
+                    <span class="w-1.5 h-1.5 rounded-full bg-pink-500 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                    <span data-i18n="nav_square">Plaza</span>
                 </a>
-                <a href="javascript:void(0)" onclick="navigateTo('dictionary')" class="hover:text-pink-300 transition-colors flex items-center gap-2">
-                    <i class="fa-solid fa-book-journal-whills text-xs"></i> <span data-i18n="nav_dict">象征字典</span>
+                <a href="javascript:void(0)" onclick="navigateTo('dictionary')" class="hover:text-pink-300 transition-colors flex items-center gap-2 group">
+                    <span class="w-1.5 h-1.5 rounded-full bg-purple-500 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                    <span data-i18n="nav_dict">Dictionary</span>
                 </a>
-                <button onclick="openModal('about')" class="hover:text-pink-300 transition-colors" data-i18n="nav_about">关于我们</button>
+                <button onclick="openModal('about')" class="hover:text-pink-300 transition-colors" data-i18n="nav_about">About</button>
                 
-                <div class="relative group cursor-pointer">
-                    <button class="flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 hover:bg-white/5 transition-all">
+                <div class="relative group cursor-pointer ml-4">
+                    <button class="flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 hover:border-pink-500/30 transition-all">
                         <i class="fa-solid fa-globe text-pink-300"></i>
-                        <span id="currentLangLabel">中文</span>
-                        <i class="fa-solid fa-chevron-down text-[10px] opacity-70"></i>
+                        <span id="currentLangLabel">English</span>
+                        <i class="fa-solid fa-chevron-down text-[10px] opacity-70 group-hover:rotate-180 transition-transform"></i>
                     </button>
-                    <div class="absolute right-0 pt-2 hidden group-hover:block w-40">
-                        <div class="glass-panel rounded-2xl overflow-hidden bg-[#1A1625] shadow-2xl py-2 border border-white/10">
-                            <button onclick="changeLanguage('zh')" class="block w-full text-left px-4 py-2 hover:bg-pink-500/20 text-xs">简体中文</button>
-                            <button onclick="changeLanguage('zh-TW')" class="block w-full text-left px-4 py-2 hover:bg-pink-500/20 text-xs">繁體中文</button>
-                            <button onclick="changeLanguage('en')" class="block w-full text-left px-4 py-2 hover:bg-pink-500/20 text-xs">English</button>
-                            <button onclick="changeLanguage('ru')" class="block w-full text-left px-4 py-2 hover:bg-pink-500/20 text-xs">Русский</button>
-                            <button onclick="changeLanguage('es')" class="block w-full text-left px-4 py-2 hover:bg-pink-500/20 text-xs">Español</button>
-                            <button onclick="changeLanguage('hi')" class="block w-full text-left px-4 py-2 hover:bg-pink-500/20 text-xs">हिन्दी</button>
-                            <button onclick="changeLanguage('pl')" class="block w-full text-left px-4 py-2 hover:bg-pink-500/20 text-xs">Polski</button>
+                    <div class="absolute right-0 pt-4 hidden group-hover:block w-40 transform origin-top-right transition-all">
+                        <div class="glass-panel rounded-xl overflow-hidden bg-[#1A1625] shadow-2xl py-2 border border-white/10">
+                            <button onclick="changeLanguage('en')" class="block w-full text-left px-4 py-2 hover:bg-pink-500/20 text-xs transition-colors">English</button>
+                            <button onclick="changeLanguage('zh')" class="block w-full text-left px-4 py-2 hover:bg-pink-500/20 text-xs transition-colors">简体中文</button>
+                            <button onclick="changeLanguage('zh-TW')" class="block w-full text-left px-4 py-2 hover:bg-pink-500/20 text-xs transition-colors">繁體中文</button>
+                            <button onclick="changeLanguage('es')" class="block w-full text-left px-4 py-2 hover:bg-pink-500/20 text-xs transition-colors">Español</button>
+                            <button onclick="changeLanguage('ru')" class="block w-full text-left px-4 py-2 hover:bg-pink-500/20 text-xs transition-colors">Русский</button>
+                            <button onclick="changeLanguage('hi')" class="block w-full text-left px-4 py-2 hover:bg-pink-500/20 text-xs transition-colors">हिन्दी</button>
+                            <button onclick="changeLanguage('pl')" class="block w-full text-left px-4 py-2 hover:bg-pink-500/20 text-xs transition-colors">Polski</button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <button onclick="toggleMobileMenu(true)" class="md:hidden text-2xl text-white p-2">
+            <button onclick="toggleMobileMenu(true)" class="md:hidden text-2xl text-white p-2 hover:bg-white/10 rounded-lg transition-colors">
                 <i class="fa-solid fa-bars-staggered"></i>
             </button>
         </div>
     </nav>
 
-    <!-- 移动端侧边栏 -->
-    <div id="mobileMenu" class="fixed inset-y-0 right-0 w-80 bg-[#1A1625] z-[100] md:hidden border-l border-white/10 flex flex-col p-10 shadow-3xl">
-        <button onclick="toggleMobileMenu(false)" class="self-end text-3xl text-gray-400 mb-12"><i class="fa-solid fa-xmark"></i></button>
-        <div class="flex flex-col gap-8 text-xl font-medium text-left">
-            <a href="javascript:void(0)" onclick="navigateTo('home'); toggleMobileMenu(false);" class="flex items-center gap-4 text-white"><i class="fa-solid fa-house text-pink-400"></i><span data-i18n="nav_home">首页</span></a>
-            <a href="javascript:void(0)" onclick="navigateTo('plaza'); toggleMobileMenu(false);" class="flex items-center gap-4 text-white"><i class="fa-solid fa-users-rays text-pink-400"></i><span data-i18n="nav_square">解梦广场</span></a>
-            <a href="javascript:void(0)" onclick="navigateTo('dictionary'); toggleMobileMenu(false);" class="flex items-center gap-4 text-white"><i class="fa-solid fa-book-journal-whills text-pink-400"></i><span data-i18n="nav_dict">象征字典</span></a>
-            <button onclick="openModal('about'); toggleMobileMenu(false);" class="flex items-center gap-4 text-white text-left"><i class="fa-solid fa-circle-info text-pink-400"></i><span data-i18n="nav_about">关于我们</span></button>
-            <div class="mt-12 border-t border-white/5 pt-10">
-                <p class="text-xs text-gray-500 uppercase tracking-widest mb-6">Language / 语言</p>
-                <div class="grid grid-cols-2 gap-3">
-                    <button onclick="changeLanguage('zh')" class="py-3 bg-white/5 rounded-xl text-sm">中文</button>
-                    <button onclick="changeLanguage('en')" class="py-3 bg-white/5 rounded-xl text-sm">EN</button>
-                    <button onclick="changeLanguage('es')" class="py-3 bg-white/5 rounded-xl text-sm">ES</button>
-                    <button onclick="changeLanguage('ru')" class="py-3 bg-white/5 rounded-xl text-sm">RU</button>
-                    <button onclick="changeLanguage('hi')" class="py-3 bg-white/5 rounded-xl text-sm">HI</button>
-                    <button onclick="changeLanguage('pl')" class="py-3 bg-white/5 rounded-xl text-sm">PL</button>
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="fixed inset-y-0 right-0 w-80 bg-[#0f0c29]/95 backdrop-blur-xl z-[100] md:hidden border-l border-white/10 flex flex-col p-8 shadow-3xl">
+        <button onclick="toggleMobileMenu(false)" class="self-end text-3xl text-gray-400 mb-12 hover:text-white hover:rotate-90 transition-all"><i class="fa-solid fa-xmark"></i></button>
+        <div class="flex flex-col gap-6 text-xl font-medium text-left">
+            <a href="javascript:void(0)" onclick="navigateTo('home'); toggleMobileMenu(false);" class="flex items-center gap-4 text-white p-3 rounded-xl hover:bg-white/5 transition-colors"><div class="w-8 text-center"><i class="fa-solid fa-house text-pink-400"></i></div><span data-i18n="nav_home">Home</span></a>
+            <a href="javascript:void(0)" onclick="navigateTo('plaza'); toggleMobileMenu(false);" class="flex items-center gap-4 text-white p-3 rounded-xl hover:bg-white/5 transition-colors"><div class="w-8 text-center"><i class="fa-solid fa-users-rays text-pink-400"></i></div><span data-i18n="nav_square">Plaza</span></a>
+            <a href="javascript:void(0)" onclick="navigateTo('dictionary'); toggleMobileMenu(false);" class="flex items-center gap-4 text-white p-3 rounded-xl hover:bg-white/5 transition-colors"><div class="w-8 text-center"><i class="fa-solid fa-book-journal-whills text-pink-400"></i></div><span data-i18n="nav_dict">Dictionary</span></a>
+            <button onclick="openModal('about'); toggleMobileMenu(false);" class="flex items-center gap-4 text-white text-left p-3 rounded-xl hover:bg-white/5 transition-colors"><div class="w-8 text-center"><i class="fa-solid fa-circle-info text-pink-400"></i></div><span data-i18n="nav_about">About</span></button>
+            <div class="mt-8 border-t border-white/10 pt-8">
+                <p class="text-xs text-gray-500 uppercase tracking-widest mb-6 px-3">Language</p>
+                <div class="grid grid-cols-3 gap-3">
+                    <button onclick="changeLanguage('en')" class="py-2 bg-white/5 hover:bg-pink-500/20 border border-white/5 rounded-lg text-xs transition-colors">EN</button>
+                    <button onclick="changeLanguage('zh')" class="py-2 bg-white/5 hover:bg-pink-500/20 border border-white/5 rounded-lg text-xs transition-colors">CN</button>
+                    <button onclick="changeLanguage('es')" class="py-2 bg-white/5 hover:bg-pink-500/20 border border-white/5 rounded-lg text-xs transition-colors">ES</button>
                 </div>
             </div>
         </div>
     </div>
-    <div id="menuOverlay" onclick="toggleMobileMenu(false)" class="fixed inset-0 bg-black/70 backdrop-blur-md z-[90] hidden"></div>
+    <div id="menuOverlay" onclick="toggleMobileMenu(false)" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[90] hidden transition-opacity"></div>
 
-    <main class="container mx-auto px-4 pt-32 pb-24 flex flex-col items-center">
+    <main class="container mx-auto px-4 pt-32 pb-24 flex flex-col items-center min-h-[calc(100vh-300px)]">
         
-        <!-- 首页模块 -->
-        <div id="page-home" class="page-section active flex flex-col items-center w-full">
-            <div class="text-center max-w-4xl mx-auto mb-16 animate-fade-in px-4">
-                <div class="inline-block px-5 py-1.5 rounded-full glass-panel mb-8 text-pink-200 text-xs font-bold tracking-[0.2em] border-pink-500/20" data-i18n="hero_badge">AI 驱动的心理疗愈</div>
-                <h1 class="text-5xl md:text-7xl font-serif font-bold mb-8 leading-[1.1] tracking-tight">
-                    <span data-i18n="hero_title_1">探索你潜意识的</span><br/>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-300" data-i18n="hero_title_2">秘密花园</span>
+        <section id="page-home" class="page-section active flex flex-col items-center w-full">
+            <!-- Hero Section -->
+            <div class="text-center max-w-5xl mx-auto mb-16 animate-slide-up px-4 relative">
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-pink-500/5 blur-[80px] rounded-full -z-10 pointer-events-none"></div>
+                
+                <div class="inline-flex items-center gap-2 px-5 py-1.5 rounded-full glass-panel mb-8 text-pink-200 text-xs font-bold tracking-[0.2em] border-pink-500/30 hover:border-pink-400 transition-colors cursor-default">
+                    <span class="w-2 h-2 rounded-full bg-pink-400 animate-pulse"></span>
+                    <span data-i18n="hero_badge">AI-Powered Healing</span>
+                </div>
+                <h1 class="text-5xl md:text-8xl font-serif font-bold mb-8 leading-[1.1] tracking-tight text-white drop-shadow-2xl">
+                    <span data-i18n="hero_title_1" class="block text-gray-100">Explore Your</span>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-300 text-glow" data-i18n="hero_title_2">Secret Garden</span>
                 </h1>
-                <p class="text-xl text-gray-300 font-light max-w-2xl mx-auto" data-i18n="hero_desc">每一个梦都是灵魂寄来的信笺。在这里，我们用温柔的科技，为您解读梦境背后的情绪与隐喻。</p>
+                <p class="text-lg md:text-xl text-gray-300 font-light max-w-3xl mx-auto leading-relaxed" data-i18n="hero_desc">Every dream is a letter from your soul. Here, we use gentle technology to decode the emotions and metaphors behind your dreams.</p>
             </div>
 
-            <!-- 输入区域 -->
-            <div class="w-full max-w-4xl glass-panel rounded-[2rem] p-6 md:p-10 shadow-3xl animate-float">
-                
-                <div class="flex gap-6 mb-6 border-b border-white/10 pb-4">
-                    <button onclick="switchInputMode('text')" id="tab-text" class="text-pink-300 font-semibold border-b-2 border-pink-300 pb-4 -mb-4.5 px-2 transition-colors">
-                        <i class="fa-solid fa-pen-nib mr-2"></i><span data-i18n="tab_write">记录梦境</span>
+            <!-- Input Area -->
+            <div class="w-full max-w-4xl glass-panel rounded-[2.5rem] p-6 md:p-12 shadow-3xl animate-slide-up" style="animation-delay: 0.1s;">
+                <div class="flex gap-8 mb-6 border-b border-white/5 pb-4 px-2">
+                    <button onclick="switchInputMode('text')" id="tab-text" class="relative text-pink-300 font-bold text-lg pb-4 -mb-4.5 px-2 transition-all">
+                        <i class="fa-solid fa-pen-nib mr-2"></i><span data-i18n="tab_write">Write</span>
+                        <div class="absolute bottom-0 left-0 w-full h-0.5 bg-pink-400 shadow-[0_0_10px_rgba(244,114,182,0.8)]"></div>
                     </button>
-                    <button onclick="switchInputMode('voice')" id="tab-voice" class="text-gray-400 hover:text-white transition-colors px-2 pb-4 -mb-4.5">
-                        <i class="fa-solid fa-microphone mr-2"></i><span data-i18n="tab_voice">语音述说</span>
+                    <button onclick="switchInputMode('voice')" id="tab-voice" class="text-gray-500 hover:text-gray-300 font-medium text-lg px-2 pb-4 -mb-4.5 transition-all">
+                        <i class="fa-solid fa-microphone mr-2"></i><span data-i18n="tab_voice">Speak</span>
                     </button>
                 </div>
 
                 <div class="relative group text-left">
-                    <textarea id="dreamInput" class="w-full h-56 md:h-64 glass-input rounded-2xl p-8 text-xl text-white placeholder-gray-400 resize-none mb-8 leading-relaxed" data-i18n-placeholder="placeholder_text" placeholder="昨晚，我梦见..."></textarea>
+                    <textarea id="dreamInput" class="w-full h-56 md:h-64 glass-input rounded-2xl p-6 md:p-8 text-lg text-white placeholder-gray-500 resize-none mb-8 leading-relaxed font-sans" data-i18n-placeholder="placeholder_text" placeholder="Last night, I dreamt... (e.g., I was flying over a glowing forest, feeling free but scared of falling)"></textarea>
                     
-                    <div id="voiceIndicator" class="hidden absolute inset-0 glass-input rounded-2xl flex-col items-center justify-center bg-black/40 backdrop-blur-md z-10 flex">
-                        <div class="text-pink-300 text-xl mb-4 font-semibold" data-i18n="voice_listening">正在聆听...</div>
-                        <div class="voice-wave">
-                            <div class="voice-bar" style="animation-duration: 474ms"></div>
-                            <div class="voice-bar" style="animation-duration: 433ms"></div>
-                            <div class="voice-bar" style="animation-duration: 407ms"></div>
-                            <div class="voice-bar" style="animation-duration: 458ms"></div>
-                            <div class="voice-bar" style="animation-duration: 400ms"></div>
-                            <div class="voice-bar" style="animation-duration: 427ms"></div>
+                    <div id="voiceIndicator" class="hidden absolute inset-0 glass-input rounded-2xl flex-col items-center justify-center bg-black/60 backdrop-blur-xl z-10 flex border-pink-500/30 border">
+                        <div class="w-20 h-20 rounded-full bg-pink-500/20 flex items-center justify-center mb-6 animate-pulse">
+                            <i class="fa-solid fa-microphone text-4xl text-pink-400"></i>
                         </div>
-                        <button onclick="stopVoiceRecognition()" class="mt-6 px-6 py-2 bg-red-500/80 hover:bg-red-500 text-white rounded-full text-sm transition" data-i18n="voice_stop">停止录音</button>
+                        <div class="text-pink-200 text-xl mb-6 font-serif tracking-wide" data-i18n="voice_listening">Listening...</div>
+                        <div class="voice-wave h-12">
+                            <div class="voice-bar bg-pink-400" style="animation-duration: 474ms"></div>
+                            <div class="voice-bar bg-purple-400" style="animation-duration: 433ms"></div>
+                            <div class="voice-bar bg-indigo-400" style="animation-duration: 407ms"></div>
+                            <div class="voice-bar bg-pink-400" style="animation-duration: 458ms"></div>
+                            <div class="voice-bar bg-purple-400" style="animation-duration: 400ms"></div>
+                            <div class="voice-bar bg-indigo-400" style="animation-duration: 427ms"></div>
+                        </div>
+                        <button onclick="stopVoiceRecognition()" class="mt-8 px-8 py-2.5 bg-red-500/80 hover:bg-red-500 text-white rounded-full text-sm font-bold tracking-wide transition shadow-lg hover:shadow-red-500/30" data-i18n="voice_stop">Stop</button>
                     </div>
                 </div>
 
                 <div class="flex flex-col md:flex-row justify-between items-center gap-8">
-                    <div class="flex items-center gap-4">
-                        <p class="text-sm text-gray-400 flex items-center gap-2"><i class="fa-regular fa-eye-slash"></i> <span data-i18n="privacy_note">您的梦境将完全匿名处理</span></p>
-                        <!-- API 状态指示器 -->
-                        <div id="apiStatusBadge" class="flex items-center gap-2.5 px-3 py-1.5 bg-black/30 rounded-full border border-white/10 group cursor-help" title="Checking...">
-                            <div id="apiStatusDot" class="w-2.5 h-2.5 rounded-full status-pulse bg-gray-500"></div>
+                    <div class="flex items-center gap-6 w-full md:w-auto justify-between md:justify-start">
+                        <p class="text-xs text-gray-500 flex items-center gap-2 bg-white/5 px-3 py-1.5 rounded-lg border border-white/5"><i class="fa-solid fa-shield-halved text-green-400"></i> <span data-i18n="privacy_note">Dreams are processed anonymously</span></p>
+                        <!-- API Status -->
+                        <div id="apiStatusBadge" class="flex items-center gap-2.5 px-3 py-1.5 bg-black/40 rounded-full border border-white/10 group cursor-help hover:bg-black/60 transition-colors" title="Checking...">
+                            <div id="apiStatusDot" class="w-2 h-2 rounded-full status-pulse bg-gray-500"></div>
                             <span id="apiStatusText" class="text-[10px] uppercase font-bold tracking-wider text-gray-400">Mode</span>
                         </div>
                     </div>
-                    <!-- 核心按钮 -->
-                    <button onclick="handleDreamAnalysis()" id="analyzeBtn" class="btn-gradient w-full md:w-auto px-16 py-5 rounded-full font-black text-lg text-white shadow-2xl flex items-center justify-center gap-4 active:scale-95 transition-all">
-                        <i class="fa-solid fa-wand-magic-sparkles"></i> <span data-i18n="btn_analyze">开始解析</span>
+                    <!-- Analyze Button -->
+                    <button onclick="handleDreamAnalysis()" id="analyzeBtn" class="btn-gradient w-full md:w-auto px-12 py-5 rounded-xl font-bold text-lg text-white shadow-[0_10px_40px_-10px_rgba(236,72,153,0.5)] hover:shadow-[0_20px_60px_-10px_rgba(236,72,153,0.7)] flex items-center justify-center gap-3 active:scale-95 transition-all group">
+                        <i class="fa-solid fa-wand-magic-sparkles group-hover:rotate-12 transition-transform"></i> <span data-i18n="btn_analyze">Analyze</span>
                     </button>
                 </div>
             </div>
 
-            <!-- 结果 -->
-            <div id="resultSection" class="hidden w-full max-w-4xl mt-16 animate-slide-up px-2">
-                <div class="glass-panel rounded-[2rem] p-10 md:p-14 border-t-4 border-pink-400 relative overflow-hidden text-left">
-                    <h3 class="text-3xl font-serif text-pink-100 mb-10 border-b border-white/5 pb-6" data-i18n="result_title">梦境回响</h3>
+            <!-- Result Section -->
+            <div id="resultSection" class="hidden w-full max-w-4xl mt-16 animate-slide-up px-2 scroll-mt-24">
+                <div class="glass-panel rounded-[2rem] p-8 md:p-14 border-t border-pink-500/50 relative overflow-hidden text-left bg-gradient-to-b from-pink-900/10 to-transparent">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-pink-500 to-transparent opacity-50"></div>
+                    
+                    <h3 class="text-3xl font-serif text-pink-100 mb-10 pb-6 border-b border-white/5 flex items-center gap-4">
+                        <i class="fa-solid fa-quote-left text-pink-500/30 text-4xl"></i>
+                        <span data-i18n="result_title">Dream Echo</span>
+                    </h3>
+                    
                     <div class="space-y-10">
-                        <div class="bg-black/20 rounded-[1.5rem] p-8">
-                            <h4 class="text-purple-200 font-bold mb-4 flex items-center gap-3 text-lg"><i class="fa-regular fa-lightbulb"></i> <span data-i18n="label_core">核心隐喻</span></h4>
-                            <p id="resCore" class="text-gray-200 leading-relaxed text-lg font-light"></p>
+                        <div class="bg-black/30 rounded-2xl p-8 border border-white/5 hover:border-purple-500/30 transition-colors">
+                            <h4 class="text-purple-200 font-bold mb-4 flex items-center gap-3 text-lg uppercase tracking-wider">
+                                <span class="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-400"><i class="fa-solid fa-lightbulb"></i></span>
+                                <span data-i18n="label_core">Metaphor</span>
+                            </h4>
+                            <p id="resCore" class="text-gray-100 leading-loose text-lg font-light tracking-wide pl-2 border-l-2 border-purple-500/50"></p>
                         </div>
+                        
                         <div class="grid md:grid-cols-2 gap-8">
-                            <div class="bg-black/20 rounded-[1.5rem] p-8">
-                                <h4 class="text-pink-200 font-bold mb-4 flex items-center gap-3 text-lg"><i class="fa-regular fa-heart"></i> <span data-i18n="label_emotion">情绪映射</span></h4>
+                            <div class="bg-black/30 rounded-2xl p-8 border border-white/5 hover:border-pink-500/30 transition-colors">
+                                <h4 class="text-pink-200 font-bold mb-4 flex items-center gap-3 text-lg uppercase tracking-wider">
+                                    <span class="w-8 h-8 rounded-lg bg-pink-500/20 flex items-center justify-center text-pink-400"><i class="fa-solid fa-heart-pulse"></i></span>
+                                    <span data-i18n="label_emotion">Emotions</span>
+                                </h4>
                                 <p id="resEmotion" class="text-gray-300 leading-relaxed font-light"></p>
                             </div>
-                            <div class="bg-black/20 rounded-[1.5rem] p-8">
-                                <h4 class="text-yellow-200 font-bold mb-4 flex items-center gap-3 text-lg"><i class="fa-regular fa-compass"></i> <span data-i18n="label_guide">生活指引</span></h4>
+                            <div class="bg-black/30 rounded-2xl p-8 border border-white/5 hover:border-blue-500/30 transition-colors">
+                                <h4 class="text-blue-200 font-bold mb-4 flex items-center gap-3 text-lg uppercase tracking-wider">
+                                    <span class="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400"><i class="fa-regular fa-compass"></i></span>
+                                    <span data-i18n="label_guide">Guidance</span>
+                                </h4>
                                 <p id="resGuide" class="text-gray-300 leading-relaxed font-light"></p>
                             </div>
                         </div>
-                        <div class="bg-white/5 rounded-2xl p-6 flex items-center gap-6 border border-white/10">
-                            <div class="w-14 h-14 rounded-full bg-pink-500/20 flex items-center justify-center text-pink-300 flex-shrink-0"><i class="fa-solid fa-gem text-xl"></i></div>
+                        
+                        <div class="bg-gradient-to-r from-pink-500/10 to-purple-500/10 rounded-2xl p-6 flex items-center gap-6 border border-pink-500/20">
+                            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center text-white shadow-lg flex-shrink-0 animate-pulse-slow">
+                                <i class="fa-solid fa-gem text-2xl"></i>
+                            </div>
                             <div>
-                                <div class="text-xs text-gray-500 uppercase tracking-widest mb-1" data-i18n="label_lucky">建议幸运物</div>
-                                <div id="resLucky" class="text-white font-bold text-lg"></div>
+                                <div class="text-xs text-pink-300 uppercase tracking-widest mb-1 font-bold" data-i18n="label_lucky">Lucky Item / Color</div>
+                                <div id="resLucky" class="text-white font-serif font-bold text-xl tracking-wide"></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- 解梦广场模块 -->
-        <div id="page-plaza" class="page-section px-4 w-full">
+            <!-- How it Works -->
+            <div class="w-full mt-32 max-w-6xl px-4">
+                <div class="text-center mb-16">
+                    <span class="text-pink-400 text-xs font-bold tracking-[0.3em] uppercase mb-4 block">Process</span>
+                    <h2 class="text-3xl md:text-5xl font-serif font-bold text-white mb-6">A Journey into the Soul</h2>
+                    <p class="text-gray-400 max-w-2xl mx-auto">Unveil the subconscious mystery in three simple steps.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+                    <div class="hidden md:block absolute top-12 left-[20%] right-[20%] h-0.5 bg-gradient-to-r from-transparent via-white/10 to-transparent -z-10"></div>
+
+                    <div class="glass-card p-8 rounded-3xl text-center group hover:-translate-y-2 transition-transform duration-500">
+                        <div class="w-20 h-20 mx-auto bg-black/40 rounded-full flex items-center justify-center text-3xl text-pink-400 mb-6 border border-white/10 group-hover:border-pink-500/50 group-hover:shadow-[0_0_30px_rgba(236,72,153,0.3)] transition-all relative z-10">
+                            <i class="fa-solid fa-pen-fancy"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3" data-i18n="step1_title">1. Record</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed" data-i18n="step1_desc">Use text or voice to record the scenes, plots, and feelings of your dream.</p>
+                    </div>
+
+                    <div class="glass-card p-8 rounded-3xl text-center group hover:-translate-y-2 transition-transform duration-500">
+                        <div class="w-20 h-20 mx-auto bg-black/40 rounded-full flex items-center justify-center text-3xl text-purple-400 mb-6 border border-white/10 group-hover:border-purple-500/50 group-hover:shadow-[0_0_30px_rgba(168,85,247,0.3)] transition-all relative z-10">
+                            <i class="fa-solid fa-microchip"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3" data-i18n="step2_title">2. AI Analysis</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed" data-i18n="step2_desc">Our AI engine, based on Jungian psychology, decodes the metaphors for you.</p>
+                    </div>
+
+                    <div class="glass-card p-8 rounded-3xl text-center group hover:-translate-y-2 transition-transform duration-500">
+                        <div class="w-20 h-20 mx-auto bg-black/40 rounded-full flex items-center justify-center text-3xl text-blue-400 mb-6 border border-white/10 group-hover:border-blue-500/50 group-hover:shadow-[0_0_30px_rgba(59,130,246,0.3)] transition-all relative z-10">
+                            <i class="fa-solid fa-spa"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3" data-i18n="step3_title">3. Guidance</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed" data-i18n="step3_desc">Receive exclusive emotional reports and life advice to transform insights into growth.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features -->
+            <div class="w-full mt-32 bg-black/20 backdrop-blur-sm py-24 border-y border-white/5">
+                <div class="max-w-6xl mx-auto px-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                        <div class="text-left">
+                            <span class="text-purple-400 text-xs font-bold tracking-[0.3em] uppercase mb-4 block">Features</span>
+                            <h2 class="text-3xl md:text-5xl font-serif font-bold text-white mb-8 leading-tight">More than a tool,<br>a spiritual companion.</h2>
+                            
+                            <div class="space-y-8">
+                                <div class="flex gap-5">
+                                    <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center text-purple-300">
+                                        <i class="fa-solid fa-brain"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-xl font-bold text-white mb-2" data-i18n="feat1_title">Jungian Model</h4>
+                                        <p class="text-gray-400 text-sm leading-relaxed" data-i18n="feat1_desc">Deeply integrates collective unconscious and archetype theory.</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-5">
+                                    <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-pink-500/20 flex items-center justify-center text-pink-300">
+                                        <i class="fa-solid fa-lock"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-xl font-bold text-white mb-2" data-i18n="feat2_title">Privacy First</h4>
+                                        <p class="text-gray-400 text-sm leading-relaxed" data-i18n="feat2_desc">Conversations are anonymous and only used for the current analysis.</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-5">
+                                    <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-blue-500/20 flex items-center justify-center text-blue-300">
+                                        <i class="fa-solid fa-language"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-xl font-bold text-white mb-2" data-i18n="feat3_title">Multi-language</h4>
+                                        <p class="text-gray-400 text-sm leading-relaxed" data-i18n="feat3_desc">Supports 7+ languages. We understand dreams in any language.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="relative">
+                            <div class="absolute inset-0 bg-gradient-to-tr from-purple-500/20 to-pink-500/20 blur-[60px] rounded-full animate-pulse-slow"></div>
+                            <div class="glass-panel p-8 rounded-[2rem] relative z-10 transform rotate-2 hover:rotate-0 transition-transform duration-700">
+                                <div class="flex items-center gap-4 mb-6 border-b border-white/10 pb-4">
+                                    <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                                    <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                                    <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                                    <span class="text-xs text-gray-500 ml-auto font-mono">Analysis.json</span>
+                                </div>
+                                <div class="space-y-4 font-mono text-sm">
+                                    <div class="flex gap-4">
+                                        <span class="text-pink-400">"dream"</span>: <span class="text-gray-300">"I was flying over a golden ocean..."</span>
+                                    </div>
+                                    <div class="flex gap-4">
+                                        <span class="text-purple-400">"meaning"</span>: <span class="text-gray-300">"Symbolizes liberation and spiritual wealth..."</span>
+                                    </div>
+                                    <div class="flex gap-4">
+                                        <span class="text-blue-400">"action"</span>: <span class="text-green-300">"Embrace new opportunities."</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cultural Wisdom -->
+            <div class="w-full mt-32 max-w-6xl px-4">
+                <div class="text-center mb-16">
+                    <span class="text-indigo-400 text-xs font-bold tracking-[0.3em] uppercase mb-4 block">Tradition & Mystery</span>
+                    <h2 class="text-3xl md:text-5xl font-serif font-bold text-white mb-6" data-i18n="culture_title">Modern Echoes of Ancient Wisdom</h2>
+                    <p class="text-gray-400 max-w-2xl mx-auto" data-i18n="culture_desc">We blend Eastern metaphysics with Western mysticism into our AI model, offering multi-dimensional perspectives.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+                    <!-- Zodiac -->
+                    <article class="glass-card p-8 rounded-3xl text-left hover:bg-white/5 transition-all group border-t border-red-500/30">
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="w-12 h-12 rounded-2xl bg-red-500/20 flex items-center justify-center text-red-400 text-xl group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-dragon"></i>
+                            </div>
+                            <span class="text-[10px] font-bold px-2 py-1 rounded bg-red-500/10 text-red-300 border border-red-500/20">East</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3 font-serif" data-i18n="zodiac_title">Chinese Zodiac</h3>
+                        <p class="text-gray-400 text-sm mb-4 leading-relaxed" data-i18n="zodiac_desc">Traditional 12-year cycle and personality archetypes. Animals represent years and inherent traits.</p>
+                        <div class="text-xs text-gray-500 pt-4 border-t border-white/5">
+                            <strong class="text-red-400" data-i18n="label_app">App:</strong> <span data-i18n="zodiac_app">Analyze resonance between dream animals and your birth sign.</span>
+                        </div>
+                    </article>
+
+                    <!-- Stems & Branches -->
+                    <article class="glass-card p-8 rounded-3xl text-left hover:bg-white/5 transition-all group border-t border-yellow-500/30">
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="w-12 h-12 rounded-2xl bg-yellow-500/20 flex items-center justify-center text-yellow-400 text-xl group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-scroll"></i>
+                            </div>
+                            <span class="text-[10px] font-bold px-2 py-1 rounded bg-yellow-500/10 text-yellow-300 border border-yellow-500/20">East</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3 font-serif" data-i18n="stems_title">Stems & Branches</h3>
+                        <p class="text-gray-400 text-sm mb-4 leading-relaxed" data-i18n="stems_desc">Coordinate system of ancient Chinese space-time. Reveals cosmic energy flow and elemental interactions.</p>
+                        <div class="text-xs text-gray-500 pt-4 border-t border-white/5">
+                            <strong class="text-yellow-400" data-i18n="label_app">App:</strong> <span data-i18n="stems_app">Interpret the significance of specific dream times and elemental fields.</span>
+                        </div>
+                    </article>
+
+                    <!-- Zhou Gong -->
+                    <article class="glass-card p-8 rounded-3xl text-left hover:bg-white/5 transition-all group border-t border-orange-500/30">
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="w-12 h-12 rounded-2xl bg-orange-500/20 flex items-center justify-center text-orange-400 text-xl group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-book-bookmark"></i>
+                            </div>
+                            <span class="text-[10px] font-bold px-2 py-1 rounded bg-orange-500/10 text-orange-300 border border-orange-500/20">Classic</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3 font-serif" data-i18n="zhou_title">Duke of Zhou</h3>
+                        <p class="text-gray-400 text-sm mb-4 leading-relaxed" data-i18n="zhou_desc">China's most famous dream dictionary. Treats dreams as omens with a vast index of symbols.</p>
+                        <div class="text-xs text-gray-500 pt-4 border-t border-white/5">
+                            <strong class="text-orange-400" data-i18n="label_app">App:</strong> <span data-i18n="zhou_app">Provide traditional folklore interpretations for symbols.</span>
+                        </div>
+                    </article>
+
+                    <!-- Tarot -->
+                    <article class="glass-card p-8 rounded-3xl text-left hover:bg-white/5 transition-all group border-t border-purple-500/30">
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="w-12 h-12 rounded-2xl bg-purple-500/20 flex items-center justify-center text-purple-400 text-xl group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-layer-group"></i>
+                            </div>
+                            <span class="text-[10px] font-bold px-2 py-1 rounded bg-purple-500/10 text-purple-300 border border-purple-500/20">West</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3 font-serif" data-i18n="tarot_title">Tarot Guidance</h3>
+                        <p class="text-gray-400 text-sm mb-4 leading-relaxed" data-i18n="tarot_desc">Wisdom of Western mysticism. 78 cards mapping the subconscious journey and psychological states.</p>
+                        <div class="text-xs text-gray-500 pt-4 border-t border-white/5">
+                            <strong class="text-purple-400" data-i18n="label_app">App:</strong> <span data-i18n="tarot_app">Visualizing abstract dream emotions into concrete archetypes.</span>
+                        </div>
+                    </article>
+
+                    <!-- Astrology -->
+                    <article class="glass-card p-8 rounded-3xl text-left hover:bg-white/5 transition-all group border-t border-blue-500/30 md:col-span-2 lg:col-span-2">
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="w-12 h-12 rounded-2xl bg-blue-500/20 flex items-center justify-center text-blue-400 text-xl group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-star-and-crescent"></i>
+                            </div>
+                            <span class="text-[10px] font-bold px-2 py-1 rounded bg-blue-500/10 text-blue-300 border border-blue-500/20">Cosmos</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3 font-serif" data-i18n="astro_title">Astrology</h3>
+                        <p class="text-gray-400 text-sm mb-4 leading-relaxed" data-i18n="astro_desc">Study of celestial movements. Planetary positions reveal character blueprints and energy cycles.</p>
+                        <div class="text-xs text-gray-500 pt-4 border-t border-white/5">
+                            <strong class="text-blue-400" data-i18n="label_app">App:</strong> <span data-i18n="astro_app">Analyze cosmic background meanings combining current celestial events.</span>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- Deep Dive Section -->
+                <div class="glass-panel rounded-[2.5rem] p-8 md:p-16 border-t border-white/10 text-left relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-[100px] pointer-events-none"></div>
+                    
+                    <h2 class="text-2xl md:text-4xl font-serif font-bold text-white mb-12 flex items-center gap-4">
+                        <span class="w-2 h-8 bg-pink-500 rounded-full"></span>
+                        <span data-i18n="deep_title">Deep System Analysis</span>
+                    </h2>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                        <!-- Eastern System -->
+                        <div>
+                            <div class="flex items-center gap-3 mb-6">
+                                <i class="fa-solid fa-yin-yang text-2xl text-white/50"></i>
+                                <h3 class="text-xl font-bold text-gray-200" data-i18n="sys_east">Eastern Wisdom System</h3>
+                            </div>
+                            <div class="space-y-4">
+                                <div class="list-card">
+                                    <h4 class="text-lg font-bold text-red-300 mb-2 flex justify-between">
+                                        <span data-i18n="zodiac_title">Chinese Zodiac</span>
+                                        <i class="fa-solid fa-dragon text-white/20"></i>
+                                    </h4>
+                                    <p class="text-sm text-gray-400 leading-relaxed mb-3"><strong data-i18n="def">Definition:</strong> <span data-i18n="zodiac_def">Based on the Jupiter cycle, a 12-year system where each year corresponds to a symbolic animal.</span></p>
+                                    <p class="text-sm text-gray-300 border-l-2 border-red-500/30 pl-3"><strong data-i18n="core_app">Core Application:</strong> <span data-i18n="zodiac_core">Analyzes conflicts or harmony between dream animals and your birth sign to determine internal conflict or external aid.</span></p>
+                                </div>
+                                <div class="list-card">
+                                    <h4 class="text-lg font-bold text-yellow-300 mb-2 flex justify-between">
+                                        <span data-i18n="stems_title">Stems & Branches</span>
+                                        <i class="fa-solid fa-scroll text-white/20"></i>
+                                    </h4>
+                                    <p class="text-sm text-gray-400 leading-relaxed mb-3"><strong data-i18n="def">Definition:</strong> <span data-i18n="stems_def">A 60-year cycle formed by 10 Heavenly Stems and 12 Earthly Branches, serving as ancient time-space coordinates.</span></p>
+                                    <p class="text-sm text-gray-300 border-l-2 border-yellow-500/30 pl-3"><strong data-i18n="core_app">Core Application:</strong> <span data-i18n="stems_core">If dream time is clear (e.g., sunset, midnight), we analyze its influence on your subconscious using elemental energy.</span></p>
+                                </div>
+                                <div class="list-card">
+                                    <h4 class="text-lg font-bold text-orange-300 mb-2 flex justify-between">
+                                        <span data-i18n="zhou_title">Duke of Zhou Omen</span>
+                                        <i class="fa-solid fa-book-journal-whills text-white/20"></i>
+                                    </h4>
+                                    <p class="text-sm text-gray-400 leading-relaxed mb-3"><strong data-i18n="def">Definition:</strong> <span data-i18n="zhou_def">Traditional dream omen index rooted in the culture of Rites of Zhou.</span></p>
+                                    <p class="text-sm text-gray-300 border-l-2 border-orange-500/30 pl-3"><strong data-i18n="core_app">Core Application:</strong> <span data-i18n="zhou_core">Provides traditional auspicious/ominous warnings for classic symbols like 'teeth falling out' or 'flying'.</span></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Western System -->
+                        <div>
+                            <div class="flex items-center gap-3 mb-6">
+                                <i class="fa-solid fa-eye text-2xl text-white/50"></i>
+                                <h3 class="text-xl font-bold text-gray-200" data-i18n="sys_west">Western Mysticism System</h3>
+                            </div>
+                            <div class="space-y-4">
+                                <div class="list-card">
+                                    <h4 class="text-lg font-bold text-purple-300 mb-2 flex justify-between">
+                                        <span data-i18n="tarot_title">Tarot Archetypes</span>
+                                        <i class="fa-solid fa-layer-group text-white/20"></i>
+                                    </h4>
+                                    <p class="text-sm text-gray-400 leading-relaxed mb-3"><strong data-i18n="def">Definition:</strong> <span data-i18n="tarot_def">A subconscious mapping tool consisting of 22 Major Arcana and 56 Minor Arcana cards.</span></p>
+                                    <p class="text-sm text-gray-300 border-l-2 border-purple-500/30 pl-3"><strong data-i18n="core_app">Core Application:</strong> <span data-i18n="tarot_core">Maps dream plots to Tarot imagery (e.g., 'Death' for rebirth, 'The Tower' for sudden change) to understand psychological stages.</span></p>
+                                </div>
+                                <div class="list-card">
+                                    <h4 class="text-lg font-bold text-blue-300 mb-2 flex justify-between">
+                                        <span data-i18n="astro_title">Astrology</span>
+                                        <i class="fa-solid fa-star-and-crescent text-white/20"></i>
+                                    </h4>
+                                    <p class="text-sm text-gray-400 leading-relaxed mb-3"><strong data-i18n="def">Definition:</strong> <span data-i18n="astro_def">Cosmic meteorology analyzing energy flow through planetary positions.</span></p>
+                                    <p class="text-sm text-gray-300 border-l-2 border-blue-500/30 pl-3"><strong data-i18n="core_app">Core Application:</strong> <span data-i18n="astro_core">Analyzes external environmental triggers for chaotic or heightened emotions in dreams based on current celestial events.</span></p>
+                                </div>
+                                <!-- Jungian -->
+                                <div class="list-card bg-pink-500/5 border-pink-500/20">
+                                    <h4 class="text-lg font-bold text-pink-300 mb-2 flex justify-between">
+                                        <span data-i18n="jung_title">Jungian Psychology</span>
+                                        <i class="fa-solid fa-brain text-white/20"></i>
+                                    </h4>
+                                    <p class="text-sm text-gray-400 leading-relaxed mb-3"><strong data-i18n="def">Definition:</strong> <span data-i18n="jung_def">The foundation of our AI model, emphasizing collective unconscious and archetypes.</span></p>
+                                    <p class="text-sm text-gray-300 border-l-2 border-pink-500/30 pl-3"><strong data-i18n="core_app">Core Application:</strong> <span data-i18n="jung_core">The cornerstone of all analysis, integrating traditional symbols into specific guidance for personal growth.</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= NEW SECTIONS BELOW DEEP DIVE ================= -->
+
+            <!-- 1. Why Choose Us / Comparison (Redesigned for Richness) -->
+            <div class="w-full mt-32 max-w-6xl px-4">
+                <div class="text-center mb-16">
+                    <span class="text-pink-400 text-xs font-bold tracking-[0.3em] uppercase mb-4 block">Comparison</span>
+                    <h2 class="text-3xl md:text-4xl font-serif font-bold text-white mb-6" data-i18n="comp_title">Why Choose DreamWhispeAi?</h2>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Feature 1: Knowledge Breadth -->
+                    <div class="glass-card p-10 rounded-3xl relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-purple-500/20 rounded-full blur-[50px] group-hover:bg-purple-500/30 transition-all"></div>
+                        <div class="relative z-10 text-left">
+                            <div class="w-14 h-14 rounded-2xl bg-purple-500/20 flex items-center justify-center text-purple-300 text-2xl mb-6">
+                                <i class="fa-solid fa-network-wired"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white mb-4" data-i18n="comp_ai_title">Comprehensive Intelligence</h3>
+                            <p class="text-gray-300 leading-relaxed mb-6" data-i18n="comp_ai_desc">
+                                Unlike individual dream interpreters who are limited by personal experience and cultural background, our AI integrates millions of data points from Jungian psychology, Eastern folklore, and Western mysticism.
+                            </p>
+                            <ul class="space-y-3 text-sm text-gray-400">
+                                <li class="flex items-center gap-3"><i class="fa-solid fa-check text-green-400"></i> <span>Cross-cultural symbolism database</span></li>
+                                <li class="flex items-center gap-3"><i class="fa-solid fa-check text-green-400"></i> <span>Unbiased, objective analysis</span></li>
+                                <li class="flex items-center gap-3"><i class="fa-solid fa-check text-green-400"></i> <span>Instant access to global wisdom</span></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Feature 2: Privacy -->
+                    <div class="glass-card p-10 rounded-3xl relative overflow-hidden group border border-blue-500/20">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-blue-500/20 rounded-full blur-[50px] group-hover:bg-blue-500/30 transition-all"></div>
+                        <div class="relative z-10 text-left">
+                            <div class="w-14 h-14 rounded-2xl bg-blue-500/20 flex items-center justify-center text-blue-300 text-2xl mb-6">
+                                <i class="fa-solid fa-shield-halved"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white mb-4" data-i18n="comp_priv_title">Absolute Privacy</h3>
+                            <p class="text-gray-300 leading-relaxed mb-6" data-i18n="comp_priv_desc">
+                                We believe your subconscious is a sanctuary. We require no login, collect no personal information, and track no identities. Your dreams are processed anonymously and encrypted.
+                            </p>
+                            <ul class="space-y-3 text-sm text-gray-400">
+                                <li class="flex items-center gap-3"><i class="fa-solid fa-check text-green-400"></i> <span>No Account Required</span></li>
+                                <li class="flex items-center gap-3"><i class="fa-solid fa-check text-green-400"></i> <span>Zero Data Persistence</span></li>
+                                <li class="flex items-center gap-3"><i class="fa-solid fa-check text-green-400"></i> <span>SSL Encrypted Transmission</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. User Guide / Best Practices -->
+            <div class="w-full mt-32 max-w-4xl px-4">
+                <div class="flex flex-col md:flex-row gap-12 items-center">
+                    <div class="w-full md:w-1/2 text-left">
+                        <span class="text-blue-400 text-xs font-bold tracking-[0.3em] uppercase mb-4 block">Guide</span>
+                        <h2 class="text-3xl md:text-4xl font-serif font-bold text-white mb-6" data-i18n="guide_title">How to Capture a Dream</h2>
+                        <p class="text-gray-400 mb-8 leading-relaxed" data-i18n="guide_desc">Dreams are fleeting. Follow these best practices to get the most accurate interpretation from our AI.</p>
+                        <ul class="space-y-4">
+                            <li class="flex items-start gap-4">
+                                <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-300 font-bold shrink-0">1</div>
+                                <p class="text-gray-300 text-sm" data-i18n="guide_step1"><strong>Record Immediately:</strong> Write or speak as soon as you wake up. 90% of detail is lost within 10 minutes.</p>
+                            </li>
+                            <li class="flex items-start gap-4">
+                                <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-300 font-bold shrink-0">2</div>
+                                <p class="text-gray-300 text-sm" data-i18n="guide_step2"><strong>Focus on Emotion:</strong> How did you feel? Scared? Elated? Emotions are the compass of the subconscious.</p>
+                            </li>
+                            <li class="flex items-start gap-4">
+                                <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-300 font-bold shrink-0">3</div>
+                                <p class="text-gray-300 text-sm" data-i18n="guide_step3"><strong>Note Colors & Numbers:</strong> These often hold specific archetypal meanings in our dictionary.</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <div class="glass-card p-8 rounded-3xl border border-blue-500/20 relative">
+                            <div class="absolute -top-4 -right-4 bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-full animate-bounce">PRO TIP</div>
+                            <h4 class="text-white font-bold mb-4" data-i18n="guide_example_title">Example Input</h4>
+                            <p class="text-gray-400 italic text-sm mb-4">"I was walking in a <strong>red</strong> desert (Color). I felt <strong>thirsty but peaceful</strong> (Emotion). A <strong>snake</strong> (Symbol) offered me water."</p>
+                            <div class="h-1 w-full bg-white/10 rounded-full overflow-hidden">
+                                <div class="h-full bg-blue-500 w-3/4"></div>
+                            </div>
+                            <p class="text-xs text-blue-400 mt-2 text-right">Context Quality: High</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. FAQ Section (Default Expanded) -->
+            <div class="w-full mt-32 max-w-3xl px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-serif font-bold text-white mb-4" data-i18n="faq_title">Frequently Asked Questions</h2>
+                </div>
+                <div class="space-y-4">
+                    <!-- Q1 -->
+                    <div class="accordion-item">
+                        <div class="accordion-header text-pink-300" onclick="toggleAccordion(this)">
+                            <span data-i18n="faq_q4">Why is AI better than a human interpreter?</span>
+                            <i class="fa-solid fa-chevron-up"></i>
+                        </div>
+                        <div class="accordion-body open">
+                            <p data-i18n="faq_a4">Human interpreters are limited by their personal knowledge scope, cultural bias, and environment. DreamWhispeAi draws from millions of sources simultaneously—combining Jungian psychology, Eastern folklore, and Western mysticism—to provide a comprehensive and objective analysis that no single individual could achieve.</p>
+                        </div>
+                    </div>
+                    <!-- Q2 -->
+                    <div class="accordion-item">
+                        <div class="accordion-header text-pink-300" onclick="toggleAccordion(this)">
+                            <span data-i18n="faq_q5">Is my privacy protected? Do I need to login?</span>
+                            <i class="fa-solid fa-chevron-up"></i>
+                        </div>
+                        <div class="accordion-body open">
+                            <p data-i18n="faq_a5">Yes, absolutely. We have designed our system with a "Privacy First" architecture. We do not require registration, do not ask for your name, and do not store your personal data. You are completely anonymous here, allowing you to explore your deepest subconscious without fear of judgment or tracking.</p>
+                        </div>
+                    </div>
+                    <!-- Q3 -->
+                    <div class="accordion-item">
+                        <div class="accordion-header text-pink-300" onclick="toggleAccordion(this)">
+                            <span data-i18n="faq_q1">Is this service free?</span>
+                            <i class="fa-solid fa-chevron-up"></i>
+                        </div>
+                        <div class="accordion-body open">
+                            <p data-i18n="faq_a1">Yes, DreamWhispeAi is currently free to use. We believe spiritual healing should be accessible to everyone.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonials -->
+            <div class="w-full mt-32 max-w-6xl px-4 mb-20">
+                <h2 class="text-3xl font-serif font-bold text-white mb-12">Dream Echoes</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="glass-card p-6 rounded-2xl text-left">
+                        <div class="flex items-center gap-1 text-yellow-500 mb-4 text-xs">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-gray-300 text-sm mb-6 leading-relaxed">"Never thought AI could interpret my anxiety so accurately. That dream about chasing haunted me for a long time, but the analysis gave me relief."</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-gray-600"></div>
+                            <div class="text-xs">
+                                <div class="text-white font-bold">Sarah L.</div>
+                                <div class="text-gray-500">Artist</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl text-left bg-white/5 border-pink-500/20">
+                        <div class="flex items-center gap-1 text-yellow-500 mb-4 text-xs">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-gray-300 text-sm mb-6 leading-relaxed">"The interface is beautiful, like entering a dream space. Voice input is convenient for recording when half-awake."</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-gray-600"></div>
+                            <div class="text-xs">
+                                <div class="text-white font-bold">Mike Chen</div>
+                                <div class="text-gray-500">Developer</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl text-left">
+                        <div class="flex items-center gap-1 text-yellow-500 mb-4 text-xs">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <div class="text-xs font-bold text-pink-400 mb-2 uppercase tracking-wide">From Spanish User</div>
+                        <p class="text-gray-300 text-sm mb-6 leading-relaxed">"Increíble. La interpretación fue muy profunda y conmovedora."</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-gray-600"></div>
+                            <div class="text-xs">
+                                <div class="text-white font-bold">Elena R.</div>
+                                <div class="text-gray-500">Student</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Plaza Section -->
+        <section id="page-plaza" class="page-section px-4 w-full">
             <div class="text-center max-w-2xl mx-auto mb-16">
-                <h2 class="text-4xl font-serif font-bold mb-4 text-white" data-i18n="plaza_title">解梦广场</h2>
-                <p class="text-gray-400" data-i18n="plaza_desc">在这里，梦境不再是个人的孤岛。共鸣，是治愈的开始。</p>
+                <h2 class="text-4xl md:text-5xl font-serif font-bold mb-6 text-white text-glow" data-i18n="plaza_title">Dream Plaza</h2>
+                <p class="text-gray-400 text-lg" data-i18n="plaza_desc">Here, dreams are no longer isolated islands. Resonance is the beginning of healing.</p>
             </div>
+            
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="glass-card p-8 rounded-3xl h-full flex flex-col cursor-pointer hover:scale-[1.02] active:scale-[0.98] transition-all text-left" onclick="fillDreamFromCard(this)">
-                    <div class="flex gap-2 mb-6 text-left">
-                        <span class="text-[10px] font-bold px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/20" data-i18n="card_1_tag_1">#追逐</span>
-                        <span class="text-[10px] font-bold px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/20" data-i18n="card_1_tag_2">#焦虑</span>
+                <!-- Card 1 -->
+                <div class="glass-card p-8 rounded-3xl h-full flex flex-col cursor-pointer group text-left" onclick="fillDreamFromCard(this)">
+                    <div class="flex gap-2 mb-6">
+                        <span class="text-[10px] font-bold px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/20 group-hover:bg-purple-500 group-hover:text-white transition-colors" data-i18n="card_1_tag_1">#Chase</span>
+                        <span class="text-[10px] font-bold px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/20 group-hover:bg-blue-500 group-hover:text-white transition-colors" data-i18n="card_1_tag_2">#Anxiety</span>
                     </div>
-                    <h3 class="text-xl font-bold text-pink-50 mb-4 text-left" data-i18n="card_1_title">总是梦见在旧学校里找不到教室</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-8 flex-grow text-left" data-i18n="card_1_desc">走廊变得无限长，所有的门都打不开，感觉有一种无法逃脱的压迫感。</p>
+                    <h3 class="text-xl font-serif font-bold text-pink-50 mb-4 group-hover:text-pink-300 transition-colors" data-i18n="card_1_title">Lost in an old school, can't find classroom</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-8 flex-grow" data-i18n="card_1_desc">The corridors stretched infinitely, doors wouldn't open, feeling an inescapable pressure.</p>
                     <div class="mt-auto pt-6 border-t border-white/5 flex justify-between items-center text-xs text-gray-500">
-                        <span><i class="fa-solid fa-robot mr-1 text-pink-400"></i> <span data-i18n="label_ai_analyzed">AI 已解析</span></span>
-                        <div class="flex gap-4"><i class="fa-regular fa-heart"></i> <i class="fa-regular fa-comment"></i></div>
+                        <span class="flex items-center gap-2"><i class="fa-solid fa-robot text-pink-400"></i> <span data-i18n="label_ai_analyzed">AI Analyzed</span></span>
+                        <div class="flex gap-4 opacity-50 group-hover:opacity-100 transition-opacity">
+                            <span class="flex items-center gap-1 hover:text-pink-400"><i class="fa-regular fa-heart"></i> 128</span>
+                            <span class="flex items-center gap-1 hover:text-blue-400"><i class="fa-regular fa-comment"></i> 42</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Placeholder Card 2 -->
+                <div class="glass-card p-8 rounded-3xl h-full flex flex-col cursor-pointer group text-left relative overflow-hidden">
+                    <div class="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity z-20">
+                         <span class="px-4 py-2 rounded-full bg-white/10 border border-white/20 text-xs font-bold text-white">Click to View</span>
+                    </div>
+                    <div class="flex gap-2 mb-6">
+                        <span class="text-[10px] font-bold px-3 py-1 rounded-full bg-green-500/20 text-green-300 border border-green-500/20">#Flying</span>
+                        <span class="text-[10px] font-bold px-3 py-1 rounded-full bg-yellow-500/20 text-yellow-300 border border-yellow-500/20">#Freedom</span>
+                    </div>
+                    <h3 class="text-xl font-serif font-bold text-pink-50 mb-4">Flying over a golden ocean as a bird</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-8 flex-grow">Body felt light, sound of wings clear, ocean below like melted gold...</p>
+                    <div class="mt-auto pt-6 border-t border-white/5 flex justify-between items-center text-xs text-gray-500">
+                        <span class="flex items-center gap-2"><i class="fa-solid fa-robot text-pink-400"></i> <span>AI Analyzed</span></span>
+                         <div class="flex gap-4 opacity-50"><span><i class="fa-regular fa-heart"></i> 89</span></div>
+                    </div>
+                </div>
+                 <!-- Placeholder Card 3 -->
+                <div class="glass-card p-8 rounded-3xl h-full flex flex-col cursor-pointer group text-left">
+                     <div class="flex gap-2 mb-6">
+                        <span class="text-[10px] font-bold px-3 py-1 rounded-full bg-red-500/20 text-red-300 border border-red-500/20">#Teeth</span>
+                        <span class="text-[10px] font-bold px-3 py-1 rounded-full bg-gray-500/20 text-gray-300 border border-gray-500/20">#Loss</span>
+                    </div>
+                    <h3 class="text-xl font-serif font-bold text-pink-50 mb-4">Teeth falling out</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-8 flex-grow">Touched them and they fell into my hand, no blood, but panicked and couldn't speak.</p>
+                    <div class="mt-auto pt-6 border-t border-white/5 flex justify-between items-center text-xs text-gray-500">
+                        <span class="flex items-center gap-2"><i class="fa-solid fa-robot text-pink-400"></i> <span>AI Analyzed</span></span>
+                         <div class="flex gap-4 opacity-50"><span><i class="fa-regular fa-heart"></i> 256</span></div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- 字典模块 -->
-        <div id="page-dictionary" class="page-section px-4 w-full">
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <h2 class="text-4xl font-serif font-bold mb-8 text-white" data-i18n="dict_title">象征字典</h2>
-                <p class="text-gray-400 mb-8" data-i18n="dict_desc">万物皆有隐喻。</p>
-                <div class="relative max-w-xl mx-auto mb-12">
-                    <input type="text" id="dictSearch" oninput="searchDict()" onkeydown="if(event.key==='Enter') triggerSearch()" class="w-full glass-input h-16 rounded-full px-16 text-xl text-center shadow-2xl" data-i18n-placeholder="dict_search_placeholder" placeholder="搜索意象...">
-                    <i class="fa-solid fa-magnifying-glass absolute left-6 top-1/2 -translate-y-1/2 text-pink-300 text-xl cursor-pointer hover:scale-110 transition-transform" onclick="triggerSearch()"></i>
+        <!-- Dictionary Section -->
+        <section id="page-dictionary" class="page-section px-4 w-full">
+            <div class="text-center max-w-4xl mx-auto mb-16">
+                <h2 class="text-4xl md:text-5xl font-serif font-bold mb-8 text-white" data-i18n="dict_title">Symbol Dictionary</h2>
+                <p class="text-gray-400 mb-10 text-lg" data-i18n="dict_desc">Everything is a metaphor.</p>
+                
+                <div class="relative max-w-2xl mx-auto mb-12 group">
+                    <div class="absolute inset-0 bg-pink-500/20 rounded-full blur-xl group-hover:bg-pink-500/30 transition-all opacity-50"></div>
+                    <input type="text" id="dictSearch" oninput="searchDict()" onkeydown="if(event.key==='Enter') triggerSearch()" class="relative w-full glass-input h-16 rounded-full px-16 text-xl text-center shadow-2xl border-white/20 focus:border-pink-500/50" data-i18n-placeholder="dict_search_placeholder" placeholder="Search symbol...">
+                    <i class="fa-solid fa-magnifying-glass absolute left-6 top-1/2 -translate-y-1/2 text-pink-300 text-xl cursor-pointer hover:scale-110 hover:text-white transition-all z-10" onclick="triggerSearch()"></i>
+                    <button class="absolute right-3 top-1/2 -translate-y-1/2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-full text-xs font-bold text-white transition-colors" onclick="triggerSearch()">SEARCH</button>
                 </div>
-                <div class="flex flex-wrap justify-center gap-8 mb-16">
-                    <div class="cursor-pointer group text-center" onclick="setSearch(translations[currentLang].cat_animals)">
-                        <div class="w-16 h-16 rounded-2xl glass-panel group-hover:bg-pink-500/20 flex items-center justify-center mb-3 transition-all border border-white/10"><i class="fa-solid fa-cat text-2xl text-pink-300"></i></div>
-                        <span class="text-sm text-gray-400 group-hover:text-white transition-colors" data-i18n="cat_animals">动物</span>
-                    </div>
-                    <div class="cursor-pointer group text-center" onclick="setSearch(translations[currentLang].cat_nature)">
-                        <div class="w-16 h-16 rounded-2xl glass-panel group-hover:bg-blue-500/20 flex items-center justify-center mb-3 transition-all border border-white/10"><i class="fa-solid fa-cloud-showers-heavy text-2xl text-blue-300"></i></div>
-                        <span class="text-sm text-gray-400 group-hover:text-white transition-colors" data-i18n="cat_nature">自然</span>
-                    </div>
-                    <div class="cursor-pointer group text-center" onclick="setSearch(translations[currentLang].cat_behavior)">
-                        <div class="w-16 h-16 rounded-2xl glass-panel group-hover:bg-purple-500/20 flex items-center justify-center mb-3 transition-all border border-white/10"><i class="fa-solid fa-person-falling text-2xl text-purple-300"></i></div>
-                        <span class="text-sm text-gray-400 group-hover:text-white transition-colors" data-i18n="cat_behavior">行为</span>
-                    </div>
+                
+                <div class="flex flex-wrap justify-center gap-6 mb-16">
+                    <button class="flex items-center gap-2 px-5 py-2 rounded-full glass-panel hover:bg-pink-500/20 border border-white/10 transition-all" onclick="setSearch(translations[currentLang].cat_animals)">
+                        <i class="fa-solid fa-cat text-pink-400"></i> <span data-i18n="cat_animals">Animals</span>
+                    </button>
+                    <button class="flex items-center gap-2 px-5 py-2 rounded-full glass-panel hover:bg-blue-500/20 border border-white/10 transition-all" onclick="setSearch(translations[currentLang].cat_nature)">
+                        <i class="fa-solid fa-cloud-sun text-blue-400"></i> <span data-i18n="cat_nature">Nature</span>
+                    </button>
+                    <button class="flex items-center gap-2 px-5 py-2 rounded-full glass-panel hover:bg-purple-500/20 border border-white/10 transition-all" onclick="setSearch(translations[currentLang].cat_behavior)">
+                        <i class="fa-solid fa-person-running text-purple-400"></i> <span data-i18n="cat_behavior">Behavior</span>
+                    </button>
                 </div>
             </div>
+            
             <div id="dictGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="glass-card dict-card p-8 rounded-3xl border-t-4 border-green-500/40 text-left" data-keywords="蛇 snake animal 动物 爬行">
+                <div class="glass-card dict-card p-8 rounded-3xl border-t-4 border-green-500/50 text-left hover:bg-white/5 transition-all" data-keywords="snake animal reptile 蛇 动物 爬行">
                     <div class="flex justify-between items-start mb-6">
-                        <h3 class="text-2xl font-serif font-bold text-white" data-i18n="sym_snake_title">蛇 (Snake)</h3>
-                        <i class="fa-solid fa-staff-snake text-3xl text-green-400/30"></i>
+                        <h3 class="text-3xl font-serif font-bold text-white" data-i18n="sym_snake_title">Snake</h3>
+                        <div class="w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center text-2xl text-green-400 border border-green-500/20">
+                            <i class="fa-solid fa-staff-snake"></i>
+                        </div>
                     </div>
-                    <p class="text-[10px] text-gray-500 mb-3 font-black uppercase tracking-widest" data-i18n="label_psych">心理学视角</p>
-                    <p class="text-gray-300 text-sm leading-relaxed" data-i18n="sym_snake_psych">代表潜意识的智慧、治愈能力，或被压抑的原始冲动。</p>
+                    <div class="mb-4">
+                        <p class="text-[10px] text-green-400 mb-2 font-black uppercase tracking-widest flex items-center gap-2"><i class="fa-solid fa-brain"></i> <span data-i18n="label_psych">Psychological Perspective</span></p>
+                        <p class="text-gray-300 text-sm leading-relaxed" data-i18n="sym_snake_psych">Represents subconscious wisdom, healing power, or repressed primal urges. In Jungian view, a symbol of transformation.</p>
+                    </div>
                 </div>
             </div>
-            <div id="aiResultContainer" class="hidden mt-8 max-w-xl mx-auto"></div>
-            <div id="noSearchResult" class="hidden text-center text-gray-400 py-10"><i class="fa-solid fa-wand-magic-sparkles text-4xl mb-4 text-pink-300 animate-pulse"></i><p data-i18n="no_result_msg">正在唤醒 AI 为您解析...</p></div>
-        </div>
+            
+            <div id="aiResultContainer" class="hidden mt-8 max-w-2xl mx-auto"></div>
+            <div id="noSearchResult" class="hidden text-center text-gray-400 py-20 bg-black/20 rounded-3xl border border-white/5">
+                <div class="w-20 h-20 mx-auto bg-pink-500/10 rounded-full flex items-center justify-center mb-6 animate-pulse">
+                     <i class="fa-solid fa-wand-magic-sparkles text-3xl text-pink-300"></i>
+                </div>
+                <p class="text-lg" data-i18n="no_result_msg">Awakening AI for analysis...</p>
+            </div>
+        </section>
     </main>
 
-    <footer class="border-t border-white/5 bg-black/40 py-20 mt-20 text-left">
-        <div class="container mx-auto px-10">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-12 text-left">
-                <div class="max-w-sm">
-                    <div class="flex items-center gap-2 mb-6"><i class="fa-solid fa-moon text-pink-400 text-xl"></i><span class="text-xl font-serif font-bold text-white">DreamWhispeAi</span></div>
-                    <div class="flex gap-6">
-                        <button onclick="openModal('terms')" class="hover:text-pink-300 underline text-xs text-gray-400 transition-colors" data-i18n="footer_terms">服务条款</button>
-                        <button onclick="openModal('privacy')" class="hover:text-pink-300 underline text-xs text-gray-400 transition-colors" data-i18n="footer_privacy">隐私政策</button>
-                        <button onclick="openModal('contact')" class="hover:text-pink-300 underline text-xs text-gray-400 transition-colors" data-i18n="footer_contact">联系我们</button>
-                        <button onclick="openModal('links')" class="hover:text-pink-300 underline text-xs text-gray-400 transition-colors" data-i18n="footer_links">友情链接</button>
+    <footer class="border-t border-white/5 bg-[#0a0910] py-20 mt-20 text-left relative overflow-hidden">
+        <div class="absolute top-0 left-1/4 w-1/2 h-1 bg-gradient-to-r from-transparent via-pink-500/30 to-transparent"></div>
+        
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 text-left mb-16">
+                <div class="md:col-span-1">
+                    <div class="flex items-center gap-2 mb-6">
+                        <i class="fa-solid fa-moon text-pink-400 text-2xl"></i>
+                        <span class="text-2xl font-serif font-bold text-white">DreamWhispeAi</span>
+                    </div>
+                    <p class="text-gray-500 text-sm leading-relaxed mb-6">
+                        Explore your subconscious. <br> Heal your soul.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-pink-500 hover:text-white transition-all"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-pink-500 hover:text-white transition-all"><i class="fa-brands fa-instagram"></i></a>
                     </div>
                 </div>
-                <div class="flex flex-col items-center md:items-end gap-4">
-                    <p class="text-gray-600 text-[10px] tracking-widest uppercase">&copy; 2024 <span data-i18n="footer_copyright">dreamwhisperai</span></p>
-                    <div class="text-[10px] text-gray-800 select-none cursor-default font-mono transition-colors hover:text-gray-600" ondblclick="openModal('settings')">
-                        BUILD ID: <span data-i18n="footer_build">DW-20241219-GOLD (Click to Debug)</span>
-                    </div>
+                
+                <div>
+                    <h4 class="text-white font-bold mb-6 text-sm uppercase tracking-widest">Resources</h4>
+                    <ul class="space-y-4 text-gray-400 text-sm">
+                        <li><a href="#" onclick="navigateTo('plaza')" class="hover:text-pink-300 transition-colors">Dream Plaza</a></li>
+                        <li><a href="#" onclick="navigateTo('dictionary')" class="hover:text-pink-300 transition-colors">Symbol Dictionary</a></li>
+                        <li><a href="#" class="hover:text-pink-300 transition-colors">Blog</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-bold mb-6 text-sm uppercase tracking-widest">Legal</h4>
+                    <ul class="space-y-4 text-gray-400 text-sm">
+                        <li><button onclick="openModal('terms')" class="hover:text-pink-300 transition-colors text-left">Terms of Service</button></li>
+                        <li><button onclick="openModal('privacy')" class="hover:text-pink-300 transition-colors text-left">Privacy Policy</button></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-bold mb-6 text-sm uppercase tracking-widest">Contact</h4>
+                    <button onclick="openModal('contact')" class="text-gray-400 hover:text-pink-300 transition-colors text-sm mb-4 block">Contact Support</button>
+                    <button onclick="openModal('links')" class="text-gray-400 hover:text-pink-300 transition-colors text-sm block" data-i18n="footer_links">Friendship Links</button>
+                </div>
+            </div>
+
+            <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-600 text-xs tracking-widest uppercase">&copy; 2024 <span data-i18n="footer_copyright">dreamwhisperai</span>. All rights reserved.</p>
+                <div class="text-[10px] text-gray-800 select-none cursor-default font-mono transition-colors hover:text-gray-600" ondblclick="openModal('settings')">
+                    BUILD ID: <span data-i18n="footer_build">DW-20241219-PLATINUM</span>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- 通用模态框 -->
+    <!-- Modal -->
     <div id="modal" class="modal" onclick="closeModal(event)">
-        <div class="modal-content">
-            <button onclick="closeModal(null)" class="absolute top-8 right-8 text-gray-500 text-3xl hover:text-white transition-colors">&times;</button>
-            <h2 id="modalTitle" class="text-3xl font-serif text-pink-200 mb-8 flex items-center gap-3 text-left">Title</h2>
-            <div id="modalBody" class="text-gray-300 leading-relaxed text-base max-h-[60vh] overflow-y-auto pr-4 text-left"></div>
+        <div class="modal-content relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-pink-500/5 rounded-full blur-[60px] pointer-events-none"></div>
+            
+            <button onclick="closeModal(null)" class="absolute top-6 right-6 w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-gray-400 hover:text-white transition-all z-20">&times;</button>
+            <h2 id="modalTitle" class="text-3xl font-serif text-pink-200 mb-8 flex items-center gap-3 text-left relative z-10">Title</h2>
+            <div id="modalBody" class="text-gray-300 leading-relaxed text-base max-h-[60vh] overflow-y-auto pr-4 text-left relative z-10 custom-scrollbar"></div>
         </div>
     </div>
 
-    <!-- API 设置 -->
+    <!-- API Settings -->
     <div id="settingsModal" class="modal" onclick="closeModal(event)">
-        <div class="modal-content bg-[#1A1625]">
+        <div class="modal-content bg-[#1A1625] border border-white/10">
             <h2 class="text-2xl font-serif text-pink-200 mb-6 flex items-center gap-3"><i class="fa-solid fa-sliders"></i> API Configuration</h2>
             <div class="space-y-6">
-                <p class="text-gray-400 text-sm">
-                    Leave blank to use the built-in server proxy (Environment Variable).<br>
-                    Enter a key to use Local Client Mode.
-                </p>
-                <input type="password" id="apiKeyInput" class="w-full glass-input rounded-xl p-4 text-white font-mono text-sm text-left" placeholder="AIzaSy... (Optional)">
+                <div class="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4">
+                    <p class="text-blue-200 text-sm flex gap-3">
+                        <i class="fa-solid fa-circle-info mt-1"></i>
+                        <span>Leave blank to use the built-in server proxy (Recommended). Enter a Google Gemini API Key only if you want to use Local Client Mode.</span>
+                    </p>
+                </div>
+                <input type="password" id="apiKeyInput" class="w-full glass-input rounded-xl p-4 text-white font-mono text-sm text-left focus:border-pink-500 transition-colors" placeholder="AIzaSy... (Optional)">
                 <div class="flex gap-4 text-center">
-                    <button onclick="saveApiKey()" class="flex-grow py-4 btn-gradient rounded-xl font-black shadow-xl">保存配置</button>
-                    <button onclick="clearApiKey()" class="flex-grow py-4 bg-red-500/20 hover:bg-red-500/40 text-red-200 border border-red-500/30 rounded-xl font-bold shadow-xl transition-all">清除本地 Key</button>
+                    <button onclick="saveApiKey()" class="flex-grow py-3 btn-gradient rounded-xl font-bold shadow-lg text-sm uppercase tracking-wide">Save Config</button>
+                    <button onclick="clearApiKey()" class="flex-grow py-3 bg-red-500/10 hover:bg-red-500/20 text-red-300 border border-red-500/30 rounded-xl font-bold transition-all text-sm uppercase tracking-wide">Clear Local Key</button>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // 【重要】移除硬编码的 DEFAULT_API_KEY，改用空字符串
-        // 这将强制代码在使用默认模式时走 Server Proxy
         const DEFAULT_API_KEY = ""; 
         
-        // 友情链接 HTML 内容
         const linksHtml = `
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <!-- NowGames -->
-                <a href="https://nowgames.lol" target="_blank" class="glass-panel p-4 rounded-xl flex items-center justify-between hover:bg-white/5 transition-all group">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-full bg-indigo-500/20 flex items-center justify-center text-indigo-300 border border-white/10 group-hover:border-indigo-400/50 transition-colors">
-                            <i class="fa-solid fa-gamepad"></i>
+            <div class="grid grid-cols-1 gap-4">
+                <a href="https://nowgames.lol" target="_blank" class="glass-panel p-4 rounded-xl flex items-center justify-between hover:bg-white/5 transition-all group border border-white/5 hover:border-indigo-500/30">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-indigo-500/20 flex items-center justify-center text-indigo-300 border border-white/10 group-hover:border-indigo-400/50 transition-colors">
+                            <i class="fa-solid fa-gamepad text-xl"></i>
                         </div>
                         <div>
-                            <div class="font-bold text-gray-200 group-hover:text-white transition-colors">NowGames</div>
-                            <div class="text-xs text-gray-500">nowgames.lol</div>
+                            <div class="font-bold text-gray-200 group-hover:text-white transition-colors text-lg">Pips Game</div>
+                            <div class="text-xs text-gray-500 font-mono">nowgames.lol</div>
                         </div>
                     </div>
-                    <i class="fa-solid fa-arrow-up-right-from-square text-gray-500 group-hover:text-pink-300 transition-colors"></i>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-gray-600 group-hover:text-pink-300 transition-colors"></i>
                 </a>
-
-                <!-- FunGames -->
-                <a href="https://fungames.today" target="_blank" class="glass-panel p-4 rounded-xl flex items-center justify-between hover:bg-white/5 transition-all group">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-300 border border-white/10 group-hover:border-purple-400/50 transition-colors">
-                            <i class="fa-solid fa-dice"></i>
+                <a href="https://fungames.today" target="_blank" class="glass-panel p-4 rounded-xl flex items-center justify-between hover:bg-white/5 transition-all group border border-white/5 hover:border-purple-500/30">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-300 border border-white/10 group-hover:border-purple-400/50 transition-colors">
+                            <i class="fa-solid fa-dice text-xl"></i>
                         </div>
                         <div>
-                            <div class="font-bold text-gray-200 group-hover:text-white transition-colors">FunGames</div>
-                            <div class="text-xs text-gray-500">fungames.today</div>
+                            <div class="font-bold text-gray-200 group-hover:text-white transition-colors text-lg">FunGames</div>
+                            <div class="text-xs text-gray-500 font-mono">fungames.today</div>
                         </div>
                     </div>
-                    <i class="fa-solid fa-arrow-up-right-from-square text-gray-500 group-hover:text-pink-300 transition-colors"></i>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-gray-600 group-hover:text-pink-300 transition-colors"></i>
                 </a>
-
-                <!-- Toolbox Pro -->
-                <a href="https://toolboxpro.top" target="_blank" class="glass-panel p-4 rounded-xl flex items-center justify-between hover:bg-white/5 transition-all group">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-300 border border-white/10 group-hover:border-blue-400/50 transition-colors">
-                            <i class="fa-solid fa-toolbox"></i>
+                <a href="https://dreamwhisperai.com" target="_blank" class="glass-panel p-4 rounded-xl flex items-center justify-between hover:bg-white/5 transition-all group border border-white/5 hover:border-pink-500/30">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-pink-500/20 flex items-center justify-center text-pink-300 border border-white/10 group-hover:border-pink-400/50 transition-colors">
+                            <i class="fa-solid fa-toolbox text-xl"></i>
                         </div>
                         <div>
-                            <div class="font-bold text-gray-200 group-hover:text-white transition-colors">Toolbox Pro</div>
-                            <div class="text-xs text-gray-500">toolboxpro.top</div>
+                            <div class="font-bold text-gray-200 group-hover:text-white transition-colors text-lg">Toolbox Pro</div>
+                            <div class="text-xs text-gray-500 font-mono">dreamwhisperai.com</div>
                         </div>
                     </div>
-                    <i class="fa-solid fa-arrow-up-right-from-square text-gray-500 group-hover:text-pink-300 transition-colors"></i>
-                </a>
-
-                 <!-- DreamWhisperAi -->
-                <a href="https://dreamwhisperai.com" target="_blank" class="glass-panel p-4 rounded-xl flex items-center justify-between hover:bg-white/5 transition-all group">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-full bg-pink-500/20 flex items-center justify-center text-pink-300 border border-white/10 group-hover:border-pink-400/50 transition-colors">
-                            <i class="fa-solid fa-moon"></i>
-                        </div>
-                        <div>
-                            <div class="font-bold text-gray-200 group-hover:text-white transition-colors">DreamWhisperAi</div>
-                            <div class="text-xs text-gray-500">dreamwhisperai.com</div>
-                        </div>
-                    </div>
-                    <i class="fa-solid fa-arrow-up-right-from-square text-gray-500 group-hover:text-pink-300 transition-colors"></i>
-                </a>
-
-                <!-- State Tax Calc -->
-                <a href="https://statetaxcalc.com" target="_blank" class="glass-panel p-4 rounded-xl flex items-center justify-between hover:bg-white/5 transition-all group">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center text-green-300 border border-white/10 group-hover:border-green-400/50 transition-colors">
-                            <i class="fa-solid fa-file-invoice-dollar"></i>
-                        </div>
-                        <div>
-                            <div class="font-bold text-gray-200 group-hover:text-white transition-colors">State Tax Calc</div>
-                            <div class="text-xs text-gray-500">statetaxcalc.com</div>
-                        </div>
-                    </div>
-                    <i class="fa-solid fa-arrow-up-right-from-square text-gray-500 group-hover:text-pink-300 transition-colors"></i>
-                </a>
-
-                 <!-- The Forge Calculator -->
-                <a href="https://forgecalc.org" target="_blank" class="glass-panel p-4 rounded-xl flex items-center justify-between hover:bg-white/5 transition-all group">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-full bg-orange-500/20 flex items-center justify-center text-orange-300 border border-white/10 group-hover:border-orange-400/50 transition-colors">
-                            <i class="fa-solid fa-fire-flame-curved"></i>
-                        </div>
-                        <div>
-                            <div class="font-bold text-gray-200 group-hover:text-white transition-colors">Forge Calculator</div>
-                            <div class="text-xs text-gray-500">The Forge Calculator</div>
-                        </div>
-                    </div>
-                    <i class="fa-solid fa-arrow-up-right-from-square text-gray-500 group-hover:text-pink-300 transition-colors"></i>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-gray-600 group-hover:text-pink-300 transition-colors"></i>
                 </a>
             </div>
         `;
 
         const translations = {
+            'en': {
+                nav_home: "Home", nav_square: "Plaza", nav_dict: "Dictionary", nav_about: "About",
+                hero_badge: "AI-Powered Healing", hero_title_1: "Explore Your", hero_title_2: "Secret Garden",
+                hero_desc: "Every dream is a letter from your soul. Here, we use gentle technology to decode the emotions and metaphors behind your dreams.",
+                tab_write: "Write", tab_voice: "Speak", voice_listening: "Listening...", voice_stop: "Stop",
+                placeholder_text: "Last night, I dreamt... (e.g., I was flying over a glowing forest, feeling free but scared of falling)", 
+                privacy_note: "Dreams are processed anonymously", btn_analyze: "Analyze",
+                result_title: "Dream Echo", label_core: "Metaphor", label_emotion: "Emotions", label_guide: "Guidance", label_lucky: "Lucky Item",
+                status_ready: "Ready", status_default: "Proxy Mode", status_local: "Local Mode", status_proxy: "Server Proxy",
+                plaza_title: "Dream Plaza", plaza_desc: "Here, dreams are no longer isolated islands. Resonance is the beginning of healing.",
+                card_1_tag_1: "#Chase", card_1_tag_2: "#Anxiety", label_ai_analyzed: "AI Analyzed",
+                card_1_title: "Lost in an old school, can't find classroom", card_1_desc: "The corridors stretched infinitely, doors wouldn't open, feeling an inescapable pressure.",
+                dict_title: "Symbol Dictionary", dict_desc: "Everything is a metaphor. Explore psychological and cultural meanings.",
+                dict_search_placeholder: "Search symbol (e.g., snake, exam...)",
+                cat_animals: "Animals", cat_nature: "Nature", cat_behavior: "Behavior",
+                sym_snake_title: "Snake", label_psych: "Psychological Perspective", sym_snake_psych: "Represents subconscious wisdom, healing power, or repressed primal urges. In Jungian view, a symbol of transformation.",
+                step1_title: "1. Record", step1_desc: "Use text or voice to record the scenes, plots, and feelings of your dream.",
+                step2_title: "2. AI Analysis", step2_desc: "Our AI engine, based on Jungian psychology, decodes the metaphors for you.",
+                step3_title: "3. Guidance", step3_desc: "Receive exclusive emotional reports and life advice to transform insights into growth.",
+                feat1_title: "Jungian Model", feat1_desc: "Deeply integrates collective unconscious and archetype theory.",
+                feat2_title: "Privacy First", feat2_desc: "Conversations are anonymous and only used for the current analysis.",
+                feat3_title: "Multi-language", feat3_desc: "Supports 7+ languages. We understand dreams in any language.",
+                culture_title: "Modern Echoes of Ancient Wisdom", culture_desc: "We blend Eastern metaphysics with Western mysticism into our AI model, offering multi-dimensional perspectives.",
+                zodiac_title: "Chinese Zodiac", zodiac_desc: "Traditional 12-year cycle and personality archetypes. Animals represent years and inherent traits.", zodiac_app: "Analyze resonance between dream animals and your birth sign.",
+                stems_title: "Stems & Branches", stems_desc: "Coordinate system of ancient Chinese space-time. Reveals cosmic energy flow and elemental interactions.", stems_app: "Interpret the significance of specific dream times and elemental fields.",
+                zhou_title: "Duke of Zhou", zhou_desc: "China's most famous dream dictionary. Treats dreams as omens with a vast index of symbols.", zhou_app: "Provide traditional folklore interpretations for symbols.",
+                tarot_title: "Tarot Guidance", tarot_desc: "Wisdom of Western mysticism. 78 cards mapping the subconscious journey and psychological states.", tarot_app: "Visualizing abstract dream emotions into concrete archetypes.",
+                astro_title: "Astrology", astro_desc: "Study of celestial movements. Planetary positions reveal character blueprints and energy cycles.", astro_app: "Analyze cosmic background meanings combining current celestial events.",
+                deep_title: "Deep System Analysis", sys_east: "Eastern Wisdom System", sys_west: "Western Mysticism System",
+                def: "Definition:", core_app: "Core Application:", label_app: "App:",
+                zodiac_def: "Based on the Jupiter cycle, a 12-year system where each year corresponds to a symbolic animal.",
+                zodiac_core: "Analyzes conflicts or harmony between dream animals and your birth sign to determine internal conflict or external aid.",
+                stems_def: "A 60-year cycle formed by 10 Heavenly Stems and 12 Earthly Branches, serving as ancient time-space coordinates.",
+                stems_core: "If dream time is clear (e.g., sunset, midnight), we analyze its influence on your subconscious using elemental energy.",
+                zhou_def: "Traditional dream omen index rooted in the culture of Rites of Zhou.",
+                zhou_core: "Provides traditional auspicious/ominous warnings for classic symbols like 'teeth falling out' or 'flying'.",
+                tarot_def: "A subconscious mapping tool consisting of 22 Major Arcana and 56 Minor Arcana cards.",
+                tarot_core: "Maps dream plots to Tarot imagery (e.g., 'Death' for rebirth, 'The Tower' for sudden change) to understand psychological stages.",
+                astro_def: "Cosmic meteorology analyzing energy flow through planetary positions.",
+                astro_core: "Analyzes external environmental triggers for chaotic or heightened emotions in dreams based on current celestial events.",
+                jung_title: "Jungian Psychology", jung_def: "The foundation of our AI model, emphasizing collective unconscious and archetypes.",
+                jung_core: "The cornerstone of all analysis, integrating traditional symbols into specific guidance for personal growth.",
+                comp_title: "Why Choose DreamWhispeAi?", comp_ai_title: "Comprehensive Intelligence", comp_ai_desc: "Unlike individual dream interpreters who are limited by personal experience and cultural background, our AI integrates millions of data points from Jungian psychology, Eastern folklore, and Western mysticism.",
+                comp_priv_title: "Absolute Privacy", comp_priv_desc: "We believe your subconscious is a sanctuary. We require no login, collect no personal information, and track no identities. Your dreams are processed anonymously and encrypted.",
+                guide_title: "How to Capture a Dream", guide_desc: "Dreams are fleeting. Follow these best practices to get the most accurate interpretation from our AI.",
+                guide_step1: "<strong>Record Immediately:</strong> Write or speak as soon as you wake up. 90% of detail is lost within 10 minutes.",
+                guide_step2: "<strong>Focus on Emotion:</strong> How did you feel? Scared? Elated? Emotions are the compass of the subconscious.",
+                guide_step3: "<strong>Note Colors & Numbers:</strong> These often hold specific archetypal meanings in our dictionary.",
+                guide_example_title: "Example Input",
+                faq_title: "Frequently Asked Questions", 
+                faq_q4: "Why is AI better than a human interpreter?", 
+                faq_a4: "Human interpreters are limited by their personal knowledge scope, cultural bias, and environment. DreamWhispeAi draws from millions of sources simultaneously—combining Jungian psychology, Eastern folklore, and Western mysticism—to provide a comprehensive and objective analysis that no single individual could achieve.",
+                faq_q5: "Is my privacy protected? Do I need to login?", 
+                faq_a5: "Yes, absolutely. We have designed our system with a 'Privacy First' architecture. We do not require registration, do not ask for your name, and do not store your personal data. You are completely anonymous here, allowing you to explore your deepest subconscious without fear of judgment or tracking.",
+                faq_q1: "Is this service free?", faq_a1: "Yes, DreamWhispeAi is currently free to use. We believe spiritual healing should be accessible to everyone.",
+                footer_terms: "Terms of Service", footer_privacy: "Privacy Policy", footer_contact: "Contact Us", footer_links: "Friendship Links", footer_copyright: "dreamwhisperai", footer_build: "DW-20241219-PLATINUM",
+                modal_about_title: "About dreamwhisperai",
+                modal_about_body: "Hello there! Delighted to meet you ✨<br><br>We are independent developers passionate about dreams and tarot. In daily life, dreams are gifts from the subconscious. We built DreamWhispeAi to decode metaphors using AI and provide a space for soul connection.<br><br>⚠️ Note: All content is for entertainment only.",
+                modal_terms_title: "Terms of Service", modal_terms_body: "<strong>1. Acceptance</strong><br>By using dreamwhisperai.com you agree to the terms.<br><br><strong>2. Description</strong><br>For entertainment and self-exploration only.",
+                modal_privacy_title: "Privacy Policy", modal_privacy_body: "We value privacy.<br><br>1. Inputs are SSL encrypted.<br>2. No personal data sold.",
+                modal_contact_title: "Contact Us", modal_contact_body: "Email: <span class='text-pink-300 font-bold'>n20186005@gmail.com</span><br><br>Response within 24h.",
+                modal_links_title: "Friendship Links", modal_links_body: linksHtml,
+                toast_analyzing: "Awakening AI...", toast_done: "Done", no_result_msg: "Awakening AI for analysis..."
+            },
             'zh': {
                 nav_home: "首页", nav_square: "解梦广场", nav_dict: "象征字典", nav_about: "关于我们",
                 hero_badge: "AI 驱动的心理疗愈", hero_title_1: "探索你潜意识的", hero_title_2: "秘密花园",
                 hero_desc: "每一个梦都是灵魂寄来的信笺。在这里，我们用温柔的科技，为您解读梦境背后的情绪与隐喻，找回内心的平静。",
                 tab_write: "记录梦境", tab_voice: "语音述说", voice_listening: "正在聆听...", voice_stop: "停止录音",
-                placeholder_text: "昨晚，我梦见...", privacy_note: "您的梦境将完全匿名处理", btn_analyze: "开始解析",
+                placeholder_text: "昨晚，我梦见... (例如：我在一片发光的森林里飞行，感觉非常自由，但又有点害怕掉下来)", privacy_note: "您的梦境将完全匿名处理", btn_analyze: "开始解析",
                 result_title: "梦境回响", label_core: "核心隐喻", label_emotion: "情绪映射", label_guide: "生活指引", label_lucky: "建议幸运物",
                 status_ready: "就绪", status_default: "代理模式", status_local: "本地模式", status_proxy: "服务器代理",
                 plaza_title: "解梦广场", plaza_desc: "在这里，梦境不再是个人的孤岛。共鸣，是治愈的开始。",
@@ -476,9 +1160,48 @@
                 dict_search_placeholder: "搜索意象（如：蛇、考试、下雨...）",
                 cat_animals: "动物", cat_nature: "自然", cat_behavior: "行为",
                 sym_snake_title: "蛇 (Snake)", label_psych: "心理学视角", sym_snake_psych: "代表潜意识的智慧、治愈能力，或被压抑的原始冲动。",
-                footer_terms: "服务条款", footer_privacy: "隐私政策", footer_contact: "联系我们", footer_links: "友情链接", footer_copyright: "dreamwhisperai", footer_build: "DW-20241219-GOLD (点击调试)",
+                step1_title: "1. 记录梦境", step1_desc: "用文字或语音记录下梦中的画面、情节与感受，哪怕只是零碎的片段。",
+                step2_title: "2. AI 深度解析", step2_desc: "基于荣格心理学与象征学大数据的 AI 引擎，为您拆解梦境中的隐喻符号。",
+                step3_title: "3. 获得疗愈指引", step3_desc: "接收专属的情绪报告与生活建议，将梦境的启示转化为现实成长的动力。",
+                feat1_title: "荣格心理学模型", feat1_desc: "深度整合集体潜意识与原型理论，分析不仅仅停留在表面，更深入灵魂深处。",
+                feat2_title: "隐私至上", feat2_desc: "我们理解梦境的私密性。所有对话仅用于当次分析，绝不留存或用于训练。",
+                feat3_title: "跨文化多语言", feat3_desc: "支持 7 种以上语言，无论你用什么语言做梦，我们都能听懂。",
+                culture_title: "古老智慧的现代回响", culture_desc: "我们将东方玄学与西方神秘学融入 AI 模型，为您提供多维度的梦境解读视角。",
+                zodiac_title: "十二生肖", zodiac_desc: "中国传统的纪年与性格原型系统。鼠、牛、虎、兔等十二种灵物，不仅代表年份，更隐喻着人的本能性格与流年运势。", zodiac_app: "分析梦中动物意象与本命能量的共鸣。",
+                stems_title: "天干地支", stems_desc: "构建中国古代时空观的坐标系。十天干与十二地支的循环，揭示了宇宙能量（气）的流动规律与五行生克。", stems_app: "解读梦境发生的时辰吉凶与五行能量场。",
+                zhou_title: "周公解梦", zhou_desc: "中国流传最广的梦境典籍。它将梦境视为神示或预兆，建立了一套庞大的意象吉凶索引系统。", zhou_app: "提供梦境意象在传统民俗语境下的直观解释。",
+                tarot_title: "塔罗牌", tarot_desc: "西方神秘学的智慧图典。78张牌通过丰富的原型图像，映射人类潜意识的旅程（愚人之旅）与心灵状态。", tarot_app: "将抽象的梦境情绪具象化，揭示潜意识指引。",
+                astro_title: "星辰星座", astro_desc: "探索天体运行与人事关联的学问。通过分析行星位置与相位，解读个体的性格蓝图与能量周期。星盘是灵魂的地图。", astro_app: "结合当前天象（如水逆、满月），分析梦境出现的宇宙背景意义。",
+                deep_title: "体系深度解析", sys_east: "东方智慧系统", sys_west: "西方神秘学系统",
+                def: "定义：", core_app: "核心应用：", label_app: "应用：",
+                zodiac_def: "基于木星纪年法的十二年循环系统，每年对应一种象征动物。",
+                zodiac_core: "AI 模型会分析梦中出现的动物是否与您的本命生肖犯冲或相合，从而判断是内在冲突还是外部助力。",
+                stems_def: "十天干与十二地支组成的60甲子循环，是中国古代的时空坐标。",
+                stems_core: "如果您在梦中清晰记得时间（如日落、午夜），我们将结合五行能量分析该时辰对您潜意识的影响。",
+                zhou_def: "依托《周礼》文化的传统梦兆吉凶索引。",
+                zhou_core: "对于“掉牙”、“飞行”等经典意象，我们会提供传统的吉凶预警，作为心理学分析的补充视角。",
+                tarot_def: "由22张大阿卡纳和56张小阿卡纳组成的潜意识映射工具。",
+                tarot_core: "我们将梦境情节映射到塔罗牌面（如“死神”代表重生，“高塔”代表突变），帮助您直观理解当下的心理阶段。",
+                astro_def: "通过行星位置分析能量流动的宇宙气象学。",
+                astro_core: "结合当前的天象（如水星逆行、满月），分析梦境中混乱或高昂情绪的外部环境诱因。",
+                jung_title: "荣格心理学", jung_def: "AI 核心模型的基础，强调集体潜意识与原型。",
+                jung_core: "这是我们所有分析的基石，将上述传统符号统合为对您个人成长的具体指引。",
+                comp_title: "为什么选择 DreamWhispeAi?", comp_ai_title: "全知全能的 AI 智慧", comp_ai_desc: "个人解梦师受限于知识盲区和环境局限。而我们的 AI 瞬时调用数百万条荣格心理学、东方民俗与西方神秘学数据，确保解析无死角。",
+                comp_priv_title: "绝对隐私保护", comp_priv_desc: "我们深知梦境是潜意识的私密领地。这里无需登录，不收集个人信息，不询问您是谁。您的梦境全程匿名加密处理。",
+                guide_title: "如何捕捉一个梦", guide_desc: "梦是稍纵即逝的。遵循这些最佳实践，让 AI 为您提供最精准的解读。",
+                guide_step1: "<strong>醒来即刻记录：</strong> 90% 的梦境细节会在醒来 10 分钟后消失。",
+                guide_step2: "<strong>关注情绪：</strong> 害怕？欣喜？情绪是潜意识的指南针。",
+                guide_step3: "<strong>标记颜色与数字：</strong> 它们在我们的字典中通常具有特定的原型意义。",
+                guide_example_title: "输入示例",
+                faq_title: "常见问题", 
+                faq_q4: "AI 解梦为什么比人类解梦师更好？", 
+                faq_a4: "人类解梦师受限于个人的知识储备、文化偏见和成长环境。DreamWhispeAi 能够同时调用荣格心理学、东方周公解梦和西方神秘学的庞大数据库，提供个人无法企及的全面客观分析。",
+                faq_q5: "我的隐私安全吗？需要登录吗？", 
+                faq_a5: "绝对安全。我们采用“隐私至上”的架构设计。无需注册，不收集姓名，不存储个人数据。您在这里是完全匿名的，可以毫无顾虑地探索最深层的潜意识。",
+                faq_q1: "这项服务免费吗？", faq_a1: "是的，DreamWhispeAi 目前完全免费。我们相信心灵疗愈应触手可及。",
+                footer_terms: "服务条款", footer_privacy: "隐私政策", footer_contact: "联系我们", footer_links: "友情链接", footer_copyright: "dreamwhisperai", footer_build: "DW-20241219-PLATINUM",
                 modal_about_title: "关于 dreamwhisperai",
-                modal_about_body: "你好呀，很高兴在这里与你相遇 ✨<br><br>我们是一群热爱解梦、痴迷塔羅牌的独立开发者，因对潜意识探索的共同热爱走到一起。<br><br>在日复一日的生活里，梦境是潜意识送给我们最温柔的礼物，塔罗则是与内心对话的奇妙媒介。我们相信，每一个梦境碎片、每一次牌面轮转，都藏着自我探索的线索——但这一切，都只为「娱乐与陪伴」而生。于是我们亲手搭建了 DreamWhispeAi 这个小天地：用AI技术解读梦境隐喻，用塔罗思维梳理情绪线索，分享我们摸索出的解梦思路、塔罗玩法，也想为同频的你提供一个轻松的交流角落。<br><br>⚠️ 重要提醒：本站所有解梦、塔罗相关解读与玩法，仅限娱乐参考，不构成专业心理指导、人生建议或决策依据。<br><br>如果你也痴迷于梦境的奥秘，喜欢塔罗牌的浪漫与思辨，<br><br>欢迎加入我们的小小社群——一起唠唠梦里的奇思妙想，聊聊塔罗牌的趣味玩法，让这份热爱成为生活里的小星光 💫。",
+                modal_about_body: "你好呀，很高兴在这里与你相遇 ✨<br><br>我们是一群热爱解梦、痴迷塔罗牌的独立开发者，因对潜意识探索的共同热爱走到一起。<br><br>在日复一日的生活里，梦境是潜意识送给我们最温柔的礼物，塔罗则是与内心对话的奇妙媒介。我们相信，每一个梦境碎片、每一次牌面轮转，都藏着自我探索的线索——但这一切，都只为「娱乐与陪伴」而生。于是我们亲手搭建了 DreamWhispeAi 这个小天地：用AI技术解读梦境隐喻，用塔罗思维梳理情绪线索，分享我们摸索出的解梦思路、塔罗玩法，也想为同频的你提供一个轻松的交流角落。<br><br>⚠️ 重要提醒：本站所有解梦、塔罗相关解读与玩法，仅限娱乐参考，不构成专业心理指导、人生建议或决策依据。<br><br>如果你也痴迷于梦境的奥秘，喜欢塔罗牌的浪漫与思辨，<br><br>欢迎加入我们的小小社群——一起唠唠梦里的奇思妙想，聊聊塔罗牌的趣味玩法，让这份热爱成为生活里的小星光 💫。",
                 modal_terms_title: "服务条款",
                 modal_terms_body: "<strong>1. 接受条款</strong><br>访问和使用 https://dreamwhisperai.com，即表示您接受并同意受本协议条款和条件的约束。<br><br><strong>2. 服务说明</strong><br>本服务仅供娱乐和自我探索之用，不构成专业的心理咨询或医疗建议。",
                 modal_privacy_title: "隐私政策",
@@ -504,6 +1227,39 @@
                 dict_search_placeholder: "搜索意象...",
                 cat_animals: "動物", cat_nature: "自然", cat_behavior: "行為",
                 sym_snake_title: "蛇 (Snake)", label_psych: "心理學視角", sym_snake_psych: "代表潛意識的智慧、治愈能力。",
+                step1_title: "1. 記錄夢境", step1_desc: "用文字或語音記錄下夢中的畫面、情節與感受。",
+                step2_title: "2. AI 深度解析", step2_desc: "基於榮格心理學與象徵學大數據的 AI 引擎。",
+                step3_title: "3. 獲得療癒指引", step3_desc: "接收專屬的情緒報告與生活建議。",
+                feat1_title: "榮格心理學模型", feat1_desc: "深度整合集體潛意識與原型理論。",
+                feat2_title: "隱私至上", feat2_desc: "我們理解夢境的私密性。所有對話僅用於當次分析。",
+                feat3_title: "跨文化多語言", feat3_desc: "支持 7 種以上語言。",
+                culture_title: "古老智慧的現代回響", culture_desc: "將東方玄學與西方神秘學融入 AI 模型。",
+                zodiac_title: "十二生肖", zodiac_desc: "中國傳統的紀年與性格原型系統。", zodiac_app: "分析夢中動物意象與本命能量的共鳴。",
+                stems_title: "天干地支", stems_desc: "構建中國古代時空觀的座標系。", stems_app: "解讀夢境發生的時辰吉凶。",
+                zhou_title: "周公解夢", zhou_desc: "中國流傳最廣的夢境典籍。", zhou_app: "提供夢境意象在傳統民俗語境下的直觀解釋。",
+                tarot_title: "塔羅牌", tarot_desc: "西方神秘學的智慧圖典。", tarot_app: "將抽象的夢境情緒具象化。",
+                astro_title: "星辰星座", astro_desc: "探索天體運行與人事關聯的學問。", astro_app: "結合當前天象分析宇宙背景意義。",
+                deep_title: "體系深度解析", sys_east: "東方智慧系統", sys_west: "西方神秘學系統",
+                def: "定義：", core_app: "核心應用：", label_app: "應用：",
+                zodiac_def: "基於木星紀年法的十二年循環系統。", zodiac_core: "分析生肖犯沖或相合。",
+                stems_def: "十天干與十二地支組成的60甲子循環。", stems_core: "結合五行能量分析時辰影響。",
+                zhou_def: "依托《周禮》文化的傳統夢兆吉凶索引。", zhou_core: "提供傳統吉凶預警。",
+                tarot_def: "由22張大阿卡納和56張小阿卡納組成的潛意識映射工具。", tarot_core: "映射夢境情節到塔羅牌面。",
+                astro_def: "通過行星位置分析能量流動。", astro_core: "分析外部環境誘因。",
+                jung_title: "榮格心理學", jung_def: "AI 核心模型的基礎。", jung_core: "所有分析的基石。",
+                comp_title: "為什麼選擇 DreamWhispeAi?", comp_ai_title: "全知全能的 AI 智慧", comp_ai_desc: "個人解夢師受限于知識盲區和環境局限。而我們的 AI 瞬時調用數百萬條數據，確保解析無死角。",
+                comp_priv_title: "絕對隱私保護", comp_priv_desc: "無需登錄，不收集個人信息，不詢問您是誰。您的夢境全程匿名加密處理。",
+                guide_title: "如何捕捉一個夢", guide_desc: "夢是稍縱即逝的。遵循這些最佳實踐，讓 AI 為您提供最精準的解讀。",
+                guide_step1: "<strong>醒來即刻記錄：</strong> 90% 的夢境細節會在醒來 10 分鐘後消失。",
+                guide_step2: "<strong>關注情緒：</strong> 害怕？欣喜？情緒是潛意識的指南針。",
+                guide_step3: "<strong>標記顏色與數字：</strong> 它們在我們的字典中通常具有特定的原型意義。",
+                guide_example_title: "輸入示例",
+                faq_title: "常見問題", 
+                faq_q4: "AI 解夢為什麼比人類解夢師更好？", 
+                faq_a4: "人類解夢師受限於個人的知識儲備和環境。DreamWhispeAi 能夠同時調用龐大數據庫，提供個人無法企及的全面客觀分析。",
+                faq_q5: "我的隱私安全嗎？需要登錄嗎？", 
+                faq_a5: "絕對安全。我們採用“隱私至上”的架構設計。無需註冊，不收集姓名，您在這裡是完全匿名的。",
+                faq_q1: "這項服務免費嗎？", faq_a1: "是的，DreamWhispeAi 目前完全免費。",
                 footer_terms: "服務條款", footer_privacy: "隱私政策", footer_contact: "聯繫我們", footer_links: "友情連結", footer_copyright: "dreamwhisperai", footer_build: "DW-20241219-GOLD (點擊調試)",
                 modal_about_title: "關於 dreamwhisperai", modal_about_body: "你好呀，很高興在這裡與你相遇 ✨<br><br>我們是一群熱愛解夢、痴迷塔羅牌的獨立開發者，因對潛意識探索的共同熱愛而走到一起。<br><br>在平平淡淡的日常裡，夢境是潛意識送給我們最溫柔的禮物，塔羅則是與內心對話的奇妙媒介。我們相信，每一個夢境碎片、每一次牌面轉動，都藏著自我探索的線索——但這一切，都只為「娛樂與陪伴」而生。於是我們親手搭建了 DreamWhispeAi 這個小天地：用 AI 技術解讀夢境隱喻，用塔羅思維梳理情緒線索，分享我們摸索出的解夢思路、塔羅玩法，也想為同頻的你提供一個輕鬆的交流角落。<br><br>⚠️ 重要提醒：本站所有解夢、塔羅相關解讀與玩法，僅限娛樂參考，不構成專業心理指導、人生建議或決策依據。<br><br>如果你也痴迷於夢境的奧秘，喜歡塔羅牌的浪漫與思辨，<br>歡迎加入我們的小小社群——一起聊聊夢裡的奇思妙想，侃侃塔羅牌的趣味玩法，讓這份熱愛成為生活裡的小星光 💫。",
                 modal_terms_title: "服務條款", modal_terms_body: "<strong>1. 接受條款</strong><br>訪問和使用 https://dreamwhisperai.com，即表示您接受並同意受本協議條款和條件的約束。<br><br><strong>2. 服務說明</strong><br>本服務僅供娛樂和自我探索之用，不構成專業的心理諮詢或醫療建議。",
@@ -511,46 +1267,6 @@
                 modal_contact_title: "聯繫我們", modal_contact_body: "合作郵件：<span class='text-pink-300 font-bold'>n20186005@gmail.com</span>",
                 modal_links_title: "友情連結", modal_links_body: linksHtml,
                 toast_analyzing: "正在喚醒 AI 導師...", toast_done: "解析已呈上"
-            },
-            'en': {
-                nav_home: "Home", nav_square: "Plaza", nav_dict: "Dict", nav_about: "About Us",
-                hero_badge: "AI-Powered Healing", hero_title_1: "Explore Your", hero_title_2: "Secret Garden",
-                hero_desc: "Every dream is a letter from your soul.",
-                tab_write: "Write", tab_voice: "Speak", voice_listening: "Listening...", voice_stop: "Stop",
-                placeholder_text: "Last night...", privacy_note: "Processed anonymously", btn_analyze: "Analyze",
-                result_title: "Dream Echo", label_core: "Metaphor", label_emotion: "Emotions", label_guide: "Guidance", label_lucky: "Lucky Item",
-                status_ready: "Ready", status_default: "Proxy Mode", status_local: "Local Mode", status_proxy: "Server Proxy",
-                plaza_title: "Plaza", plaza_desc: "Dreams are no longer isolated islands.",
-                card_1_tag_1: "#Chase", card_1_tag_2: "#Anxiety", label_ai_analyzed: "AI Analyzed",
-                card_1_title: "Lost in Old School", card_1_desc: "I was in a rush but couldn't find the classroom.",
-                dict_title: "Dictionary", dict_desc: "Everything is a metaphor.",
-                dict_search_placeholder: "Search symbols...",
-                cat_animals: "Animals", cat_nature: "Nature", cat_behavior: "Behavior",
-                footer_terms: "Terms", footer_privacy: "Privacy", footer_contact: "Contact", footer_links: "Links", footer_copyright: "dreamwhisperai", footer_build: "DW-20241219-GOLD (Click to Debug)",
-                modal_about_title: "About dreamwhisperai", modal_about_body: "Hello there! It's such a delight to meet you here ✨<br><br>We are a group of independent developers who are passionate about dream interpretation and obsessed with tarot cards. We came together because of our shared love for exploring the subconscious.<br><br>In the humdrum of daily life, dreams are the gentlest gifts from our subconscious, and tarot is a wonderful medium for conversing with our inner selves. We believe that every fragment of a dream and every turn of a tarot card holds clues to self-discovery — but all of this is solely for <strong>entertainment and companionship</strong>. That’s why we built DreamWhispeAi with our own hands: an intimate little space where we use AI technology to decode the metaphors in dreams, sort out emotional cues through tarot-inspired thinking, share the dream interpretation approaches and tarot gameplay we’ve figured out, and hope to provide a relaxed corner for like-minded souls like you to connect.<br><br>⚠️ Important Reminder: All dream interpretation, tarot readings and gameplay content on this site are for <strong>entertainment purposes only</strong>. They do not constitute professional psychological guidance, life advice, or a basis for making any decisions.<br><br>If you’re also fascinated by the mysteries of dreams and drawn to the romance and introspection of tarot cards,<br>we welcome you to join our little community — let’s chat about the whimsical ideas in our dreams and the fun ways to play with tarot together, and let this passion become a little shining light in our lives 💫.",
-                modal_terms_title: "Terms of Service", modal_terms_body: "<strong>1. Acceptance</strong><br>By using dreamwhisperai.com... <strong>2. Description</strong><br>For entertainment only.",
-                modal_privacy_title: "Privacy Policy", modal_privacy_body: "We value your privacy.<br><br>1. Inputs are SSL encrypted.",
-                modal_contact_title: "Contact Us", modal_contact_body: "Email: <span class='text-pink-300 font-bold'>n20186005@gmail.com</span>",
-                modal_links_title: "Friendship Links", modal_links_body: linksHtml,
-                toast_analyzing: "Awakening AI...", toast_done: "Done"
-            },
-            'ru': {
-                nav_home: "Главная", nav_square: "Площадь", nav_dict: "Словарь", nav_about: "О нас",
-                hero_badge: "ИИ-исцеление", hero_title_1: "Исследуй", hero_title_2: "Секретный сад",
-                hero_desc: "Каждый сон — письмо от твоей души.",
-                tab_write: "Писать", tab_voice: "Говорить", voice_listening: "Слушаю...", voice_stop: "Стоп",
-                placeholder_text: "Прошлой ночью...", btn_analyze: "Анализ",
-                result_title: "Эхо сна", label_core: "Метафора", label_emotion: "Эмоции", label_guide: "Совет", label_lucky: "Талисман",
-                status_ready: "Готово", status_default: "Прокси", status_local: "Локал", status_proxy: "Прокси",
-                plaza_title: "Площадь", plaza_desc: "Сны больше не одинокие острова.",
-                dict_title: "Словарь", cat_animals: "Животные", cat_nature: "Природа", cat_behavior: "Поведение",
-                footer_terms: "Условия", footer_privacy: "Приватность", footer_contact: "Контакты", footer_links: "Ссылки", footer_copyright: "dreamwhisperai",
-                modal_about_title: "О dreamwhisperai", modal_about_body: "Здравствуйте! Очень рад встрече с вами здесь ✨<br>Мы — группа независимых разработчиков, увлеченных толкованием снов и обожающих таро. Мы собрались вместе благодаря общей любви к исследованию подсознания.<br><br>В будничной суете жизни сны — это самые нежные подарки от подсознания, а таро — чудесный средство для диалога с внутренним собой. Мы верим, что каждый фрагмент сна и каждый расклад карт хранят подсказки для самопознания — но всё это создано исключительно для <strong>развлечения и компании</strong>. Поэтому мы сами создали этот маленький уголок под названием DreamWhispeAi: здесь мы используем технологию ИИ для расшифровки метафор снов, анализируем эмоциональные подтексты с помощью таро-мышления, делимся своими подходами к толкованию снов и вариантами игры в таро, и хотим предоставить вам, нашему единомышленнику, расслабленное место для общения.<br><br>⚠️ Важное напоминание: Все материалы на этом сайте, связанные с толкованием снов, таро-раскладами и игровыми вариантами, предназначены <strong>только для развлечения</strong>. Они не являются профессиональным психологическим консультированием, рекомендациями по жизни или основанием для принятия каких-либо решений.<br><br>Если вы тоже очарованы тайнами снов и привлекаетесь романтикой и размышлениями, которые дарит таро,<br>присоединяйтесь к нашей маленькой сообществу — давайте вместе обсудим причудливые идеи из снов и интересные способы игры в таро, и пусть эта страсть станет маленьким светом в нашей жизни 💫.",
-                modal_terms_title: "Условия", modal_terms_body: "<strong>1. Согласие</strong><br>Используя сайт, вы соглашаетесь с условиями.",
-                modal_privacy_title: "Конфиденциальность", modal_privacy_body: "Мы ценим вашу приватность. Данные зашифрованы по SSL.",
-                modal_contact_title: "Контакты", modal_contact_body: "Email: <span class='text-pink-300 font-bold'>n20186005@gmail.com</span>",
-                modal_links_title: "Дружеские ссылки", modal_links_body: linksHtml,
-                toast_analyzing: "ИИ думает...", toast_done: "Готово"
             },
             'es': {
                 nav_home: "Inicio", nav_square: "Plaza", nav_dict: "Diccionario", nav_about: "Nosotros",
@@ -562,57 +1278,36 @@
                 status_ready: "Listo", status_default: "Por defecto", status_local: "Local", status_proxy: "Proxy",
                 plaza_title: "Plaza", plaza_desc: "Aquí, los sueños ya no son islas.",
                 dict_title: "Diccionario", cat_animals: "Animales", cat_nature: "Naturaleza", cat_behavior: "Comportamiento",
+                comp_title: "¿Por qué DreamWhispeAi?", comp_ai_title: "Inteligencia Integral", comp_ai_desc: "A diferencia de los intérpretes humanos limitados, nuestra IA accede a una base de conocimientos ilimitada.",
+                comp_priv_title: "Privacidad Absoluta", comp_priv_desc: "Sin registro. Sin seguimiento. Tu subconsciente es tuyo.",
+                guide_title: "Cómo Capturar un Sueño", guide_desc: "Los sueños son fugaces. Sigue estas prácticas para obtener la mejor interpretación.", guide_step1: "Graba inmediatamente", guide_step2: "Enfócate en la emoción", guide_step3: "Nota colores y números", guide_example_title: "Ejemplo",
+                faq_title: "Preguntas Frecuentes", 
+                faq_q4: "¿Por qué IA es mejor?", faq_a4: "La IA tiene acceso instantáneo a conocimientos globales y no tiene sesgos personales.",
+                faq_q5: "¿Es privado?", faq_a5: "Sí, no requerimos inicio de sesión ni recopilamos datos personales.",
+                faq_q1: "¿Es gratis?", faq_a1: "Sí, actualmente es gratis.",
                 footer_terms: "Términos", footer_privacy: "Privacidad", footer_contact: "Contacto", footer_links: "Enlaces",
-                modal_about_title: "Sobre dreamwhisperai", modal_about_body: "¡Hola! Es un placer conocerte aquí ✨<br>Somos un grupo de desarrolladores independientes apasionados por la interpretación de sueños y obsesionados con el tarot. Nos unimos por nuestro amor compartido por la exploración del subconsciente.<br><br>En la monotonía de la vida diaria, los sueños son los regalos más tiernos que nos envía el subconsciente, y el tarot es un medio maravilloso para conversar con nuestro yo interior. Creemos que cada fragmento de un sueño y cada giro de las cartas guardan pistas para el autodescubrimiento — pero todo esto es exclusivamente para <strong>entretenimiento y compañía</strong>. Por eso construimos DreamWhispeAi con nuestras propias manos: un pequeño rincón donde usamos tecnología de IA para descifrar las metáforas de los sueños, organizar las pistas emocionales con el pensamiento inspirado en el tarot, compartir nuestros métodos de interpretación de sueños y modos de juego del tarot, y esperamos ofrecerte, a ti nuestro alma gemela, un espacio relajado para comunicarte.<br><br>⚠️ Recordatorio importante: Todas las interpretaciones de sueños, lecturas de tarot y contenidos de juego en este sitio son <strong>solo para fines de entretenimiento</strong>. No constituyen orientación psicológica profesional, consejos de vida ni base para tomar ninguna decisión.<br><br>Si también estás fascinado por los misterios de los sueños y te atrae el romanticismo y el pensamiento reflexivo del tarot,<br>te invitamos a unirte a nuestra pequeña comunidad — hablemos juntos de las ideas caprichosas de nuestros sueños y los divertidos modos de jugar al tarot, y dejemos que esta pasión sea una pequeña luz brillante en nuestras vidas 💫.",
+                modal_about_title: "Sobre dreamwhisperai", modal_about_body: "¡Hola! Es un placer conocerte aquí ✨<br>Somos un grupo de desarrolladores independientes apasionados por la interpretación de sueños.",
                 modal_terms_title: "Términos", modal_terms_body: "<strong>1. Aceptación</strong><br>Al usar este sitio, aceptas los términos.",
                 modal_privacy_title: "Privacidad", modal_privacy_body: "Valoramos tu privacidad. SSL encriptado.",
                 modal_contact_title: "Contacto", modal_contact_body: "Email: <span class='text-pink-300 font-bold'>n20186005@gmail.com</span>",
                 modal_links_title: "Enlaces amigos", modal_links_body: linksHtml,
                 toast_analyzing: "IA analizando...", toast_done: "Listo"
-            },
-            'hi': {
-                nav_home: "होम", nav_square: "प्लाजा", nav_dict: "शब्दकोश", nav_about: "हमारे बारे में",
-                hero_badge: "AI संचालित हीलिंग", hero_title_1: "अपने अवचेतन को", hero_title_2: "खोजें",
-                hero_desc: "हर सपना आपकी आत्मा का एक पत्र है।",
-                tab_write: "लिखें", tab_voice: "बोलें", voice_listening: "सुन रहे हैं...", voice_stop: "रुकें",
-                btn_analyze: "विश्लेषण करें", status_ready: "तैयार", status_default: "डिफ़ॉल्ट", status_local: "स्थानीय", status_proxy: "प्रॉक्सी",
-                plaza_title: "सपना प्लाजा", plaza_desc: "Resonance is the beginning of healing.",
-                dict_title: "शब्दकोश", cat_animals: "जानवर", cat_nature: "प्रकृति", cat_behavior: "व्यवहार",
-                footer_terms: "शर्तें", footer_privacy: "गोपनीयता", footer_contact: "संपर्क", footer_links: "लिंक",
-                modal_about_title: "dreamwhisperai के बारे में", modal_about_body: "नमस्ते! यहां आपके साथ मिलकर बहुत खुशी हुई ✨<br>हम स्वप्न विश्लेषण से प्रेम करने वाले और टैरो कार्ड से मुग्ध स्वतंत्र डेवलपर्स का एक समूह हैं। हम सबको मिलकर एक साथ आए हैं क्योंकि हम सबको अवचेतन की खोज करने का समान प्यार है।<br><br>रोजमर्रा की जिंदगी की थकाऊ दौड़ में, स्वप्न अवचेतन द्वारा दिए गए सबसे कोमल उपहार हैं, और टैरो अपने आंतरिक स्वयं के साथ बातचीत करने का एक अद्भुत माध्यम है। हमारा मानना है कि स्वप्न का हर टुकड़ा और टैरो कार्ड का हर मोड़ आत्म-खोज के संकेत रखता है — लेकिन यह सब कुछ केवल <strong>मनोरंजन और संगति</strong> के लिए है। इसलिए हमने खुद हाथ से DreamWhispeAi नाम का यह छोटा सा जगह बनाया है: यहां हम AI तकनीक का उपयोग स्वप्नों के रूपकों को समझने के लिए करते हैं, टैरो के सोचने के तरीके से भावनात्मक संकेतों को व्यवस्थित करते हैं, हमारे खुद के स्वप्न विश्लेषण के तरीके और टैरो के खेल को साझा करते हैं, और आशा करते हैं कि हम आपके लिए एक आरामदायक संवाद का कोना प्रदान कर सकें, जो हमारे साथ इस मुद्दे पर एकमत हैं।<br><br>⚠️ महत्वपूर्ण सूचना: इस साइट पर उपलब्ध सभी स्वप्न विश्लेषण, टैरो से संबंधित व्याख्याएं और खेल केवल <strong>मनोरंजन के उद्देश्यों के लिए हैं</strong>। ये कोई पेशेवर मानसिक मार्गदर्शन, जीवन के सलाह या किसी भी निर्णय लेने का आधार नहीं बनते हैं।<br><br>अगर आप भी स्वप्नों के रहस्यों से मुग्ध हैं और टैरो कार्ड के रोमांस और चिंतन से प्रभावित होते हैं,<br>तो हमारे छोटे से समुदाय में शामिल हों — आइए मिलकर अपने स्वप्नों की अजीबोगरीब विचारों और टैरो कार्ड के मजेदार खेल के बारे में बातें करें, और इस प्यार को अपनी जिंदगी का एक छोटा सा चमकदार सितारा बनाएं 💫。",
-                modal_terms_title: "शर्तें", modal_terms_body: "<strong>1. स्वीकृति</strong><br>इस साइट का उपयोग शर्तों की स्वीकृति है।",
-                modal_privacy_title: "गोपनीयता", modal_privacy_body: "SSL एन्क्रिप्शन।",
-                modal_contact_title: "संपर्क", modal_contact_body: "ईमेल: <span class='text-pink-300 font-bold'>n20186005@gmail.com</span>",
-                modal_links_title: "मित्र लिंक", modal_links_body: linksHtml
-            },
-            'pl': {
-                nav_home: "Główna", nav_square: "Plac", nav_dict: "Słownik", nav_about: "O nas",
-                hero_badge: "Uzdrowienie przez AI", hero_title_1: "Odkryj Swój", hero_title_2: "Sekretny Ogród",
-                hero_desc: "Każdy sen to list od Twojej duszy.",
-                tab_write: "Pisanie", tab_voice: "Mówienie", voice_listening: "Słuchanie...", voice_stop: "Stop",
-                btn_analyze: "Analizuj", status_ready: "Gotowe", status_default: "Domyślny", status_local: "Lokalny", status_proxy: "Proxy",
-                plaza_title: "Plac Snów", plaza_desc: "Sny nie są już samotnymi wyspami.",
-                dict_title: "Słownik", cat_animals: "Zwierzęta", cat_nature: "Natura", cat_behavior: "Zachowanie",
-                footer_terms: "Warunki", footer_privacy: "Prywatność", footer_contact: "Kontakt", footer_links: "Linki",
-                modal_about_title: "O dreamwhisperai", modal_about_body: "Cześć! Bardzo miło cię tu spotkać ✨<br>Jesteśmy grupą niezależnych developerów, pasjonatów interpretacji snów i zakochanych w tarocie. Zeszliśmy się razem z powodu wspólnej miłości do eksplorowania podświadomości.<br><br>W codziennej, monotonne rutynie sny są najdelikatniejszym darem od podświadomości, a tarot to wspaniały środek do rozmów z własnym wewnętrznym sobą. Uważamy, że każdy fragment snu i każde odwrócenie karty ukrywa wskazówki do samopoznania — ale wszystko to stworzone jest wyłącznie dla <strong>rozrywki i towarzystwa</strong>. Dlatego sami zbudowaliśmy to małe miejsce o nazwie DreamWhispeAi: tutaj używamy technologii AI do dekodowania metafor snów, uporządkowujemy emocjonalne wskazówki myśleniem inspirowanym tarotem, dzielimy się własnymi sposobami interpretacji snów i zabaw z tarotem, oraz mamy nadzieję, że zapewnimy tobie, naszemu myślącemu tak samo, relaksujący kąt do rozmów.<br><br>⚠️ Ważna uwaga: Wszystkie interpretacje snów, czytania tarota i propozycje zabaw dostępne na tej stronie są przeznaczone **wyłącznie do celów rozrywkowych**. Nie stanowią one profesjonalnej porady psychologicznej, rady życiowej ani podstawy do podejmowania jakichkolwiek decyzji.<br><br>Jeśli ty też jesteś fascynowany tajemnicami snów i przyciąga cię romantyzm oraz refleksja, jaką niesie tarot,<br>dołącz do naszej małej społeczności — porozmawiajmy wspólnie o dziwnych pomysłach z snów i zabawnych sposobach na grę w tarota, a niech ta pasja stanie się małym błyszczącym światłem w naszym życiu 💫.",
-                modal_terms_title: "Warunki", modal_terms_body: "<strong>1. Akceptacja</strong><br>Korzystanie z witryny oznacza akceptację.",
-                modal_privacy_title: "Prywatność", modal_privacy_body: "Szyfrowanie SSL.",
-                modal_contact_title: "Kontakt", modal_contact_body: "Email: <span class='text-pink-300 font-bold'>n20186005@gmail.com</span>",
-                modal_links_title: "Przyjazne linki", modal_links_body: linksHtml
             }
         };
 
-        let currentLang = 'zh';
+        let currentLang = 'en'; // Changed default to English for SSR consistency
 
         window.onload = () => {
             const params = new URLSearchParams(window.location.search);
-            changeLanguage(params.get('lang') || 'zh', false);
+            // Default to 'en' if not specified
+            changeLanguage(params.get('lang') || 'en', false);
             navigateTo(params.get('page') || 'home', false);
             updateApiStatus();
         };
 
         function changeLanguage(lang, updateURL = true) {
-            currentLang = translations[lang] ? lang : 'zh';
+            // Fallback to English if lang not found
+            currentLang = translations[lang] ? lang : 'en';
             document.documentElement.lang = currentLang;
             const labels = { 'zh': '简体中文', 'zh-TW': '繁體中文', 'en': 'English', 'es': 'Español', 'ru': 'Русский', 'hi': 'हिन्दी', 'pl': 'Polski' };
             const labelEl = document.getElementById('currentLangLabel');
@@ -658,18 +1353,26 @@
             const tabText = document.getElementById('tab-text');
             const tabVoice = document.getElementById('tab-voice');
             if (mode === 'voice') {
-                tabVoice.className = "text-pink-300 font-semibold border-b-2 border-pink-300 pb-4 -mb-4.5 px-2 transition-colors";
-                tabText.className = "text-gray-400 hover:text-white transition-colors px-2 pb-4 -mb-4.5";
+                tabVoice.className = "relative text-pink-300 font-bold text-lg pb-4 -mb-4.5 px-2 transition-all";
+                tabText.className = "text-gray-500 hover:text-gray-300 font-medium text-lg px-2 pb-4 -mb-4.5 transition-all";
+                // Add indicator to voice
+                tabVoice.innerHTML = `<i class="fa-solid fa-microphone mr-2"></i><span data-i18n="tab_voice">${translations[currentLang].tab_voice}</span><div class="absolute bottom-0 left-0 w-full h-0.5 bg-pink-400 shadow-[0_0_10px_rgba(244,114,182,0.8)]"></div>`;
+                tabText.innerHTML = `<i class="fa-solid fa-pen-nib mr-2"></i><span data-i18n="tab_write">${translations[currentLang].tab_write}</span>`;
+                
                 startVoiceRecognition();
             } else {
-                tabText.className = "text-pink-300 font-semibold border-b-2 border-pink-300 pb-4 -mb-4.5 px-2 transition-colors";
-                tabVoice.className = "text-gray-400 hover:text-white transition-colors px-2 pb-4 -mb-4.5";
+                tabText.className = "relative text-pink-300 font-bold text-lg pb-4 -mb-4.5 px-2 transition-all";
+                tabVoice.className = "text-gray-500 hover:text-gray-300 font-medium text-lg px-2 pb-4 -mb-4.5 transition-all";
+                // Add indicator to text
+                tabText.innerHTML = `<i class="fa-solid fa-pen-nib mr-2"></i><span data-i18n="tab_write">${translations[currentLang].tab_write}</span><div class="absolute bottom-0 left-0 w-full h-0.5 bg-pink-400 shadow-[0_0_10px_rgba(244,114,182,0.8)]"></div>`;
+                tabVoice.innerHTML = `<i class="fa-solid fa-microphone mr-2"></i><span data-i18n="tab_voice">${translations[currentLang].tab_voice}</span>`;
+                
                 stopVoiceRecognition();
             }
         }
 
         function startVoiceRecognition() {
-            if (!('webkitSpeechRecognition' in window)) { showToast("浏览器不支持语音输入"); return; }
+            if (!('webkitSpeechRecognition' in window)) { showToast("Browser does not support voice input"); return; }
             recognition = new webkitSpeechRecognition();
             recognition.lang = currentLang === 'en' ? 'en-US' : 'zh-CN';
             recognition.continuous = true;
@@ -682,7 +1385,16 @@
 
         function stopVoiceRecognition() { if (recognition) recognition.stop(); document.getElementById('voiceIndicator').classList.add('hidden'); }
 
-        // 更新状态指示灯：本地Key显示绿色，服务器代理模式显示蓝色
+        function toggleAccordion(el) {
+            el.classList.toggle('text-pink-300');
+            const body = el.nextElementSibling;
+            body.classList.toggle('open');
+            const icon = el.querySelector('i');
+            icon.classList.toggle('fa-chevron-down');
+            icon.classList.toggle('fa-chevron-up');
+        }
+
+        // API Status Indicator
         function updateApiStatus() {
             const dot = document.getElementById('apiStatusDot');
             const badge = document.getElementById('apiStatusBadge');
@@ -693,30 +1405,26 @@
             if (localKey && localKey.trim() !== '') {
                 dot.className = "w-2.5 h-2.5 rounded-full status-pulse bg-green-500 shadow-[0_0_12px_rgba(34,197,94,0.7)]";
                 badge.title = trans.status_local || "Local Mode";
-                text.innerText = "LOCAL (2.5)";
-                text.className = "text-[10px] uppercase font-bold tracking-wider text-green-400/80 ml-1";
+                text.innerText = "LOCAL MODE";
+                text.className = "text-[10px] uppercase font-bold tracking-wider text-green-400 ml-1";
             } else {
-                // 如果没有本地 Key，则使用 Server Proxy 模式 (Env Var)
                 dot.className = "w-2.5 h-2.5 rounded-full status-pulse bg-blue-500 shadow-[0_0_12px_rgba(59,130,246,0.7)]";
                 badge.title = trans.status_proxy || "Server Proxy";
-                text.innerText = "PROXY (2.5)";
-                text.className = "text-[10px] uppercase font-bold tracking-wider text-blue-400/80 ml-1";
+                text.innerText = "PROXY MODE";
+                text.className = "text-[10px] uppercase font-bold tracking-wider text-blue-400 ml-1";
             }
             document.getElementById('apiStatusText').classList.remove('hidden');
         }
         
-        // 辅助函数：休眠
         const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-        // 统一的 AI 调用入口：根据是否有 Key 决定走本地还是走代理
         async function queryAI(type, payload) {
             const localKey = localStorage.getItem('dreamwhisper_api_key');
             
             if (localKey && localKey.trim() !== "") {
-                // 1. 本地模式：直接在前端构建 Prompt 并调用 Google API
                 let prompt = "";
                 const languageNames = { 'zh': 'Chinese', 'en': 'English', 'es': 'Spanish', 'fr': 'French', 'ru': 'Russian', 'hi': 'Hindi', 'pl': 'Polish', 'zh-TW': 'Traditional Chinese' };
-                const targetLang = languageNames[currentLang] || 'Chinese';
+                const targetLang = languageNames[currentLang] || 'English';
 
                 if (type === 'dream') {
                     prompt = `
@@ -724,22 +1432,20 @@
                       Analyze this dream: "${payload.dream}"
                       Return raw JSON:
                       {
-                          "core_metaphor": "One sentence summary.",
-                          "emotions": "Emotional analysis.",
-                          "guidance": "Actionable life guidance.",
-                          "lucky_item": "A suggested lucky color or item."
+                          "core_metaphor": "One sentence summary (Metaphorical).",
+                          "emotions": "Emotional analysis (2-3 sentences).",
+                          "guidance": "Actionable life guidance (2-3 sentences).",
+                          "lucky_item": "A suggested lucky color or item (Short)."
                       }
                       Language: ${targetLang}.
                     `;
                 } else if (type === 'symbol') {
-                    prompt = `Define dream symbol "${payload.symbol}" as JSON: {"psych": "", "trad": ""}. Language: ${targetLang}.`;
+                    prompt = `Define dream symbol "${payload.symbol}" as JSON: {"psych": "Psychological meaning", "trad": "Traditional folklore meaning"}. Language: ${targetLang}. Keep it concise.`;
                 }
                 
                 return await callGeminiClientSide(prompt, localKey);
 
             } else {
-                // 2. 代理模式：调用 /api/interpret，让服务器用环境变量的 Key
-                // 也可以把本地 Key 传给服务器（虽然直接走 client side 更快，但这里作为 fallback）
                 const response = await fetch('/api/interpret', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -750,18 +1456,13 @@
                     })
                 });
                 
-                // 处理特定的 400 错误 (可能因为 Cloudflare 上的 Key 过期，或者后端返回了错误)
                 if (!response.ok) {
                     let errData;
                     try { errData = await response.json(); } catch(e) {}
-                    
                     const errMsg = errData?.error || `Server Error: ${response.status}`;
-                    
-                    // 如果后端返回 API Key 失效，提示用户
                     if (errMsg.includes('API Key Invalid or Expired')) {
                         throw new Error("Server API Key Expired. Please contact admin.");
                     }
-                    
                     throw new Error(errMsg);
                 }
                 
@@ -769,41 +1470,36 @@
             }
         }
 
-        // 梦境解析按钮处理函数
         async function handleDreamAnalysis() {
             const input = document.getElementById('dreamInput').value.trim();
             const btn = document.getElementById('analyzeBtn');
             
-            if (!input) { showToast("请输入内容"); return; }
+            if (!input) { showToast("Please input dream content"); return; }
             
             btn.disabled = true;
             btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Analyzing...`;
             showToast(translations[currentLang].toast_analyzing);
             
             try {
-                // 调用统一接口
                 const data = await queryAI('dream', { dream: input });
                 renderResult(data);
             } catch (error) {
                 console.error(error);
-                let displayMsg = "解析遇到问题";
-                
-                // 智能错误提示
+                let displayMsg = "Analysis Failed";
                 if (error.message.includes('Failed to fetch')) {
-                    displayMsg = "网络连接失败 (请检查VPN)";
+                    displayMsg = "Network Error (Check Connection)";
                 } else if (error.message.includes('403') || error.message.includes('API key expired') || error.message.includes('API Key Invalid')) {
-                    // 关键修复：如果在本地模式遇到 Key 错误，提示清除
                     if (localStorage.getItem('dreamwhisper_api_key')) {
-                        displayMsg = "本地 Key 已失效，建议清除";
-                        if(confirm("检测到您的本地 API Key 可能已过期或无效。是否清除并切换回服务器代理模式？")) {
+                        displayMsg = "Local Key Expired";
+                        if(confirm("Your Local API Key seems expired or invalid. Clear it and switch to Proxy Mode?")) {
                             clearApiKey();
-                            return; // 清除后退出，用户需重试
+                            return; 
                         }
                     } else {
-                        displayMsg = "服务器配置错误 (API Key)";
+                        displayMsg = "Server Config Error (API Key)";
                     }
                 } else if (error.message.includes('429')) {
-                    displayMsg = "服务器繁忙 (429)，请稍后重试";
+                    displayMsg = "Server Busy (429), please retry later";
                 } else {
                     displayMsg = "Error: " + error.message;
                 }
@@ -814,27 +1510,18 @@
             }
         }
 
-        // 客户端直接调用逻辑 (Local Mode)
-        // 修复：升级至 gemini-2.5-flash 并关闭 thinking
-        async function callGeminiClientSide(promptText, apiKey, maxRetries = 3) {
-            // 更新模型端点
+        async function callGeminiClientSide(promptText, apiKey, maxRetries = 2) {
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent`;
             let delay = 1000;
 
             for (let i = 0; i <= maxRetries; i++) {
                 try {
-                    const response = await fetch(apiUrl, {
+                    const response = await fetch(`${apiUrl}?key=${apiKey}`, {
                         method: 'POST',
-                        headers: { 
-                            'Content-Type': 'application/json',
-                            'X-goog-api-key': apiKey
-                        },
+                        headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
                             contents: [{ parts: [{ text: promptText }] }],
-                            generationConfig: {
-                                // 显式关闭思考功能以提高速度
-                                thinkingConfig: { includeThoughts: false }
-                            }
+                            generationConfig: { thinkingConfig: { includeThoughts: false } }
                         })
                     });
 
@@ -843,23 +1530,19 @@
                         return extractJson(data.candidates[0].content.parts[0].text);
                     }
 
-                    // 429 或 503 重试
                     if (response.status === 429 || response.status === 503) {
                         if (i === maxRetries) throw new Error(`API Busy (${response.status}) after retries`);
-                        console.warn(`Local Mode Hit ${response.status}. Retrying...`);
                         await sleep(delay);
                         delay *= 2;
                         continue;
                     }
 
-                    // 其他错误抛出
                     const err = await response.json();
                     throw new Error(err.error?.message || `API Error: ${response.status}`);
 
                 } catch (e) {
                     if (i === maxRetries) throw e;
                     if (e.message.includes('Failed to fetch')) {
-                        // 网络错误也重试
                         await sleep(delay);
                         delay *= 2;
                         continue;
@@ -869,40 +1552,67 @@
             }
         }
 
-        function extractJson(text) { try { return JSON.parse(text); } catch (e) { const match = text.match(/\{[\s\S]*\}/); return match ? JSON.parse(match[0]) : {}; } }
+        function extractJson(text) { 
+            try { return JSON.parse(text); } 
+            catch (e) { 
+                const match = text.match(/\{[\s\S]*\}/); 
+                return match ? JSON.parse(match[0]) : {}; 
+            } 
+        }
 
         function renderResult(data) {
             if (!data || typeof data !== 'object') return;
-            document.getElementById('resCore').innerText = data.core_metaphor || "";
-            document.getElementById('resEmotion').innerText = data.emotions || "";
-            document.getElementById('resGuide').innerText = data.guidance || "";
-            document.getElementById('resLucky').innerText = data.lucky_item || "";
+            document.getElementById('resCore').innerText = data.core_metaphor || "No metaphor found";
+            document.getElementById('resEmotion').innerText = data.emotions || "No emotion analysis";
+            document.getElementById('resGuide').innerText = data.guidance || "No guidance";
+            document.getElementById('resLucky').innerText = data.lucky_item || "None";
             document.getElementById('resultSection').classList.remove('hidden');
-            document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
+            setTimeout(() => {
+                 document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
         }
 
-        function showToast(msg) { const t = document.getElementById('toast'); t.innerText = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3000); }
+        function showToast(msg) { 
+            const t = document.getElementById('toast'); 
+            document.getElementById('toastMsg').innerText = msg;
+            t.classList.add('show'); 
+            setTimeout(() => t.classList.remove('show'), 3000); 
+        }
 
         function openModal(type) {
             if (type === 'settings') { document.getElementById('settingsModal').style.display = 'flex'; return; }
             const m = document.getElementById('modal');
             const titleEl = document.getElementById('modalTitle');
             const bodyEl = document.getElementById('modalBody');
-            titleEl.innerText = translations[currentLang][`modal_${type}_title`] || translations[currentLang][`nav_${type}`] || "Info";
-            bodyEl.innerHTML = translations[currentLang][`modal_${type}_body`] || "Detail content is missing...";
+            
+            const title = translations[currentLang][`modal_${type}_title`] || translations[currentLang][`nav_${type}`] || "Info";
+            const body = translations[currentLang][`modal_${type}_body`] || "Detail content is missing...";
+            
+            titleEl.innerText = title;
+            bodyEl.innerHTML = body;
             m.style.display = 'flex';
         }
 
         function closeModal(e) { if (!e || e.target.classList.contains('modal') || e.target.innerText === '×') { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); } }
 
-        function saveApiKey() { localStorage.setItem('dreamwhisper_api_key', document.getElementById('apiKeyInput').value.trim()); updateApiStatus(); closeModal(); showToast("Saved"); }
+        function saveApiKey() { 
+            const key = document.getElementById('apiKeyInput').value.trim();
+            if(key) {
+                localStorage.setItem('dreamwhisper_api_key', key); 
+                updateApiStatus(); 
+                closeModal(); 
+                showToast("Configuration Saved");
+            } else {
+                showToast("Please enter a key");
+            }
+        }
         
         function clearApiKey() { 
             localStorage.removeItem('dreamwhisper_api_key'); 
             document.getElementById('apiKeyInput').value = ''; 
             updateApiStatus(); 
             closeModal(); 
-            showToast("本地 Key 已清除，切换至代理模式"); 
+            showToast("Local Key Cleared"); 
         }
 
         function toggleMobileMenu(open) { document.getElementById('mobileMenu').classList.toggle('open', open); document.getElementById('menuOverlay').classList.toggle('hidden', !open); }
@@ -938,28 +1648,40 @@
             const noResult = document.getElementById('noSearchResult');
             noResult.classList.remove('hidden');
             container.classList.add('hidden');
-            container.innerHTML = `<div class="glass-card p-6 rounded-3xl skeleton h-32 opacity-20"></div>`;
+            noResult.innerHTML = `<div class="w-16 h-16 mx-auto bg-pink-500/10 rounded-full flex items-center justify-center mb-6 animate-pulse"><i class="fa-solid fa-spinner fa-spin text-2xl text-pink-300"></i></div><p>Searching for meaning...</p>`;
+            
             try {
-                // 使用新的统一调用接口
                 const data = await queryAI('symbol', { symbol: keyword });
                 
                 if (data) {
                     noResult.classList.add('hidden');
                     container.classList.remove('hidden');
-                    container.innerHTML = `<div class="glass-card p-8 rounded-3xl border-t-4 border-pink-500/40 animate-fade-in text-left"><h3 class="text-2xl font-serif font-bold text-white mb-4">${keyword}</h3><p class="text-[10px] text-gray-500 uppercase mb-2">Psychology</p><p class="text-gray-300 text-sm mb-4">${data.psych || ""}</p><p class="text-[10px] text-gray-500 uppercase mb-2">Folklore</p><p class="text-gray-300 text-sm">${data.trad || ""}</p></div>`;
+                    container.innerHTML = `
+                        <div class="glass-card p-8 rounded-3xl border-t-4 border-pink-500/40 animate-slide-up text-left">
+                            <div class="flex justify-between items-center mb-6">
+                                <h3 class="text-3xl font-serif font-bold text-white">${keyword}</h3>
+                                <i class="fa-solid fa-book-open text-2xl text-pink-500/30"></i>
+                            </div>
+                            <div class="space-y-6">
+                                <div>
+                                    <p class="text-[10px] text-pink-400 uppercase tracking-widest font-bold mb-2">Psychological Perspective</p>
+                                    <p class="text-gray-300 text-sm leading-relaxed">${data.psych || "No data"}</p>
+                                </div>
+                                <div class="h-px bg-white/5 w-full"></div>
+                                <div>
+                                    <p class="text-[10px] text-purple-400 uppercase tracking-widest font-bold mb-2">Folklore & Tradition</p>
+                                    <p class="text-gray-300 text-sm leading-relaxed">${data.trad || "No data"}</p>
+                                </div>
+                            </div>
+                        </div>`;
                 }
             } catch (e) { 
                 console.error(e);
                 container.classList.add('hidden'); 
-                
-                // 同样增加智能提示
                 if (e.message.includes('API key expired') && localStorage.getItem('dreamwhisper_api_key')) {
-                    if(confirm("本地 Key 已失效，是否清除？")) {
-                        clearApiKey();
-                    }
+                    if(confirm("Local Key Expired. Clear it?")) { clearApiKey(); }
                 }
-                
-                showToast("Symbol search failed: " + e.message);
+                noResult.innerHTML = `<p class="text-red-400">Search failed: ${e.message}</p>`;
             }
         }
     </script>
